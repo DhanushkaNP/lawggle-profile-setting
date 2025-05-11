@@ -2153,6 +2153,13 @@ async function updateallthefields(email, member = {}) {
 
       let caseWins = jsonUser["notable case wins"];
       if (caseWins.length > 0) {
+        caseWins <= 3
+          ? $("#case-wins-error-text").hide()
+          : $("#case-wins-error-text").show();
+        caseWins > 3
+          ? $("#save-cases").hide()
+          : $("#case-wins-error-text").show();
+
         let thecaseslider = document.getElementById("casewinsContainer");
         thecaseslider.innerHTML = "";
         for (let eachcase in caseWins) {
