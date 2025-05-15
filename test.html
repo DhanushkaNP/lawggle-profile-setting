@@ -1,0 +1,94 @@
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+    function updateElementsBasedOnTestimonialCount() {
+      const videoTestimonialContainer = document.querySelector(
+        "#clientvideotestimonialshow"
+      );
+      if (!videoTestimonialContainer) {
+        console.warn("Container #clientvideotestimonialshow not found.");
+        return;
+      }
+
+      const testimonials = videoTestimonialContainer.querySelectorAll(
+        ".slide-5c.videotestimonials"
+      );
+      const testimonialsCount = testimonials.length;
+
+      const testimonialUploader = document.querySelector(
+        "#testimonialUploader"
+      );
+      if (!testimonialUploader) {
+        console.warn("Uploader #testimonialUploader not found.");
+        return;
+      }
+
+      if (testimonialsCount >= 3) {
+        testimonialUploader.style.display = "none";
+      } else {
+        testimonialUploader.style.display = "flex";
+      }
+    }
+
+    updateElementsBasedOnTestimonialCount();
+
+    const videoTestimonialContainer = document.querySelector(
+      "#clientvideotestimonialshow"
+    );
+    if (videoTestimonialContainer) {
+      const observer = new MutationObserver(
+        updateElementsBasedOnTestimonialCount
+      );
+      observer.observe(videoTestimonialContainer, {
+        childList: true,
+        subtree: true,
+      });
+    } else {
+      console.warn("Cannot observe: #clientvideotestimonialshow not found.");
+    }
+  });
+</script>
+
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+    function updateElementsBasedOnCaseStudyCount() {
+      const caseStudyContainer = document.querySelector(
+        "#casestudyeditshowcase"
+      );
+      if (!caseStudyContainer) {
+        console.warn("Container #caseStudyContainer not found.");
+        return;
+      }
+
+      const caseStudies =
+        caseStudyContainer.querySelectorAll(".slide-img.w-slide");
+      const caseStudiesCount = caseStudies.length;
+
+      const caseStudyUploader = document.querySelector("#caseStudyUploader");
+      if (!caseStudyUploader) {
+        console.warn("Uploader #testimonialUploader not found.");
+        return;
+      }
+
+      if (caseStudiesCount >= 3) {
+        caseStudyUploader.style.display = "none";
+      } else {
+        caseStudyUploader.style.display = "flex";
+      }
+    }
+
+    updateElementsBasedOnCaseStudyCount();
+
+    const caseStudyContainer = document.querySelector("#casestudyeditshowcase");
+    if (caseStudyContainer) {
+      const observer = new MutationObserver(
+        updateElementsBasedOnCaseStudyCount
+      );
+      observer.observe(caseStudyContainer, {
+        childList: true,
+        subtree: true,
+      });
+    } else {
+      console.warn("Cannot observe: #casestudyeditshowcase not found.");
+    }
+  });
+</script>
