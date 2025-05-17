@@ -1836,9 +1836,8 @@ async function updateallthefields(email, member = {}) {
         }
       } else {
         theuserGeolocation = await getUserautoGeoLocation();
-        console.log("theuserGeolocation", theuserGeolocation);
-        let lati = thegeolocationaddress.lat;
-        let longi = thegeolocationaddress.long;
+        let lati = theuserGeolocation.lat;
+        let longi = theuserGeolocation.long;
         if (lati & longi) {
           let themapstart = mapBoxMap(lati, longi);
         }
