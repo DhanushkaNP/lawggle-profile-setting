@@ -772,56 +772,54 @@ document.addEventListener("DOMContentLoaded", async () => {
 });
 
 async function getUserautoGeoLocation() {
-  let userLongitude = "";
-  let userLat = "";
-  if (navigator.geolocation) {
-    navigator.geolocation.getCurrentPosition(
-      (position) => {
-        userLongitude = position.coords.latitude;
-        userLat = position.coords.longitude;
+  return new Promise((resolve, reject) => {
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition(
+        (position) => {
+          const userLongitude = position.coords.longitude;
+          const userLat = position.coords.latitude;
 
-        console.log("Latitude:", userLat || 0);
-        console.log("Longitude:", userLongitude || 0);
-        thelocationdata = {
-          lat: userLat,
-          long: userLongitude,
-          city: "",
-          province: "",
-          postalcode: "",
-          country: "",
-        };
+          console.log("Latitude:", userLat || 0);
+          console.log("Longitude:", userLongitude || 0);
+          const thelocationdata = {
+            lat: userLat,
+            long: userLongitude,
+            city: "",
+            province: "",
+            postalcode: "",
+            country: "",
+          };
 
-        return thelocationdata;
+          resolve(thelocationdata);
+        },
+        (error) => {
+          console.warn("Geolocation error:", error.message);
+          const thelocationdata = {
+            lat: 0,
+            long: 0,
+            city: "",
+            province: "",
+            postalcode: "",
+            country: "",
+          };
 
-        // You can now send this to your backend, use it on a map, etc.
-      },
-      (error) => {
-        console.warn("Geolocation error:", error.message);
-        thelocationdata = {
-          lat: 0,
-          long: 0,
-          city: "",
-          province: "",
-          postalcode: "",
-          country: "",
-        };
+          resolve(thelocationdata);
+        }
+      );
+    } else {
+      console.log("Geolocation is not supported by this browser.");
+      const thelocationdata = {
+        lat: 0,
+        long: 0,
+        city: "",
+        province: "",
+        postalcode: "",
+        country: "",
+      };
 
-        return thelocationdata;
-      }
-    );
-  } else {
-    console.log("Geolocation is not supported by this browser.");
-    thelocationdata = {
-      lat: coords[1],
-      long: coords[0],
-      city: city,
-      province: province,
-      postalcode: postalCode,
-      country: country,
-    };
-
-    return thelocationdata;
-  }
+      resolve(thelocationdata);
+    }
+  });
 }
 
 $(document).ready(async function () {
