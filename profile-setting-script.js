@@ -2320,6 +2320,7 @@ async function updateallthefields(email, member = {}) {
           sliderelement4.classList.add("slide-img", "2ni", "w-slide");
           let casediv = document.createElement("div");
           casediv.classList.add("img-wrap", "editpage");
+          casediv.style.display = "flex";
           let casevideo = document.createElement("video");
           casevideo.controls = true;
           casevideo.classList.add("videoclass2");
