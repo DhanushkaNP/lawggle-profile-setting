@@ -1038,7 +1038,9 @@ $(document).ready(async function () {
         let mongodbuser = JSON.parse(dbuser);
         let userData = mongodbuser.data.body;
         let jsonUser = JSON.parse(JSON.parse(userData));
-        let savededucation = jsonUser["AllEducation"];
+        let savededucation = jsonUser["AllEducation"]
+          ? jsonUser["AllEducation"]
+          : ["education"];
         savededucation.splice(theindextodelete, 1);
 
         console.log(savededucation);
@@ -1294,7 +1296,9 @@ $(document).ready(async function () {
         let mongodbuser = JSON.parse(dbuser);
         let userData = mongodbuser.data.body;
         let jsonUser = JSON.parse(JSON.parse(userData));
-        let savededucation = jsonUser["AllEducation"];
+        let savededucation = jsonUser["AllEducation"]
+          ? jsonUser["AllEducation"]
+          : ["education"];
 
         document.getElementById("theloadingwait").style.display = "flex";
         let pronouns = await readselectnoImage("selectpronouns");
@@ -1911,7 +1915,9 @@ async function updateallthefields(email, member = {}) {
         theprofyImage.style.backgroundRepeat = "no-repeat";
       }
 
-      let allEducation = jsonUser["AllEducation"];
+      let allEducation = jsonUser["AllEducation"]
+        ? jsonUser["AllEducation"]
+        : jsonUser["education"];
 
       let thecaseslider5 = document.getElementById("educationCarrier");
       thecaseslider5.innerHTML = "";
@@ -2485,7 +2491,7 @@ async function updateallthefields(email, member = {}) {
         "firm url": "",
         "expertise category": [],
         "expertise subcategory": [],
-        AllEducation: [],
+        education: [],
         address: "",
         "free consultation": "",
         "offer contingency": "",
