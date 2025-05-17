@@ -2222,7 +2222,8 @@ async function updateallthefields(email, member = {}) {
           "editclientvideotestimonials"
         );
         thecaseslider2.innerHTML = "";
-        thecaseslider2.style.display = "block";
+        thecaseslider2.style.setProperty("display", "block", "important");
+        console.warn("reached editclientvideotestimonials");
 
         for (let testimonialvideos in clientTestimonials) {
           let sliderelement2 = document.createElement("div");
@@ -2274,7 +2275,8 @@ async function updateallthefields(email, member = {}) {
           "themediaslidingcontainer"
         );
         thecaseslider3.innerHTML = "";
-        thecaseslider3.style.display = "block";
+        thecaseslider3.style.setProperty("display", "block", "important");
+        console.warn("reached themediaslidingcontainer");
 
         for (let pressbrief in mediaPressBriefs) {
           let thepressSlider = document.createElement("div");
@@ -2318,7 +2320,8 @@ async function updateallthefields(email, member = {}) {
           "thecasestudywalkthriughedit"
         );
         thecaseslider4.innerHTML = "";
-        thecaseslider4.style.display = "block";
+        thecaseslider4.style.setProperty("display", "block", "important");
+        console.warn("reached thecasestudywalkthriughedit");
 
         for (let eachcasestudy in caseStudyWalkthroughs) {
           let sliderelement4 = document.createElement("div");
@@ -2425,7 +2428,8 @@ async function updateallthefields(email, member = {}) {
       if (mongodbcertificates.length > 0) {
         let thecaseslider6 = document.getElementById("thecertimaincontainer");
         thecaseslider6.innerHTML = "";
-        thecaseslider6.style.display = "block";
+        thecaseslider6.style.setProperty("display", "block", "important");
+        console.warn("reached thecertimaincontainer");
 
         for (let eachcert in mongodbcertificates) {
           let certcontain = document.createElement("div");
