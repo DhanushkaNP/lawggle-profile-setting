@@ -1846,7 +1846,7 @@ async function updateallthefields(email, member = {}) {
       }
 
       let theSocialMedias = jsonUser["social media"];
-      if (socialMedias != null && socialMedias != undefined) {
+      if (theSocialMedias != null && theSocialMedias != undefined) {
         let linkedinObject = theSocialMedias[1];
         if (linkedinObject != null && linkedinObject != undefined) {
           let theurl = linkedinObject.url;
