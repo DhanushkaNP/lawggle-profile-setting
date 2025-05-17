@@ -2264,8 +2264,7 @@ async function updateallthefields(email, member = {}) {
           "editclientvideotestimonials"
         );
         thecaseslider2.innerHTML = "";
-        document.getElementById("clientvideotestimonialshow").style.display =
-          "none";
+        thecaseslider2.setAttribute("style", "display: block !important");
       }
 
       let mediaPressBriefs = jsonUser["media press mentions"] ?? [];
