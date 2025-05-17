@@ -1704,6 +1704,7 @@ async function updateItem(email, data) {
     );
     const result = await response.text();
     console.log(result);
+    location.reload();
   } catch (error) {
     console.error("Error updating item:", error);
   }
