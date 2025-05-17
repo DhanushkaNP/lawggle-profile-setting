@@ -2152,7 +2152,7 @@ async function updateallthefields(email, member = {}) {
         }
       }
 
-      let caseWins = jsonUser["notable case wins"];
+      let caseWins = jsonUser["notable case wins"] ?? [];
       if (caseWins.length > 0) {
         caseWins <= 3
           ? $("#case-wins-error-text").hide()
@@ -2215,7 +2215,7 @@ async function updateallthefields(email, member = {}) {
         thecaseslider.innerHTML = "";
       }
 
-      let clientTestimonials = jsonUser["client video testimonials"];
+      let clientTestimonials = jsonUser["client video testimonials"] ?? [];
       if (clientTestimonials.length > 0) {
         let thecaseslider2 = document.getElementById(
           "editclientvideotestimonials"
@@ -2268,7 +2268,7 @@ async function updateallthefields(email, member = {}) {
           "none";
       }
 
-      let mediaPressBriefs = jsonUser["media press mentions"];
+      let mediaPressBriefs = jsonUser["media press mentions"] ?? [];
       if (mediaPressBriefs.length > 0) {
         let thecaseslider3 = document.getElementById(
           "themediaslidingcontainer"
@@ -2312,7 +2312,7 @@ async function updateallthefields(email, member = {}) {
         document.getElementById("themediapressy").style.display = "none";
       }
 
-      let caseStudyWalkthroughs = jsonUser["case study walkthroughs"];
+      let caseStudyWalkthroughs = jsonUser["case study walkthroughs"] ?? [];
 
       if (caseStudyWalkthroughs.length > 0) {
         let thecaseslider4 = document.getElementById(
@@ -2365,7 +2365,7 @@ async function updateallthefields(email, member = {}) {
         document.getElementById("casestudyeditshowcase").style.display = "none";
       }
 
-      let questionsAndAnswers = jsonUser["personal qa"];
+      let questionsAndAnswers = jsonUser["personal qa"] ?? [];
       if (questionsAndAnswers.length > 0) {
         let thecaseslider5 = document.getElementById("qaquzicontainer");
         thecaseslider5.innerHTML = "";
@@ -2423,7 +2423,7 @@ async function updateallthefields(email, member = {}) {
       } else {
       }
 
-      let mongodbcertificates = jsonUser["certificates"];
+      let mongodbcertificates = jsonUser["certificates"] ?? [];
       if (mongodbcertificates.length > 0) {
         let thecaseslider6 = document.getElementById("thecertimaincontainer");
         thecaseslider6.innerHTML = "";
