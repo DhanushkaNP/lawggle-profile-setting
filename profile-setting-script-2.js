@@ -2485,7 +2485,7 @@ async function updateallthefields(email, member = {}) {
         "firm url": "",
         "expertise category": [],
         "expertise subcategory": [],
-        education: [],
+        AllEducation: [],
         address: "",
         "free consultation": "",
         "offer contingency": "",
