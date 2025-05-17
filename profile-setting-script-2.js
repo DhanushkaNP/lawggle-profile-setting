@@ -1842,47 +1842,47 @@ async function updateallthefields(email, member = {}) {
       }
 
       let theSocialMedias = jsonUser["social media"];
+      if (socialMedias != null && socialMedias != undefined) {
+        let linkedinObject = theSocialMedias[1];
+        if (linkedinObject != null && linkedinObject != undefined) {
+          let theurl = linkedinObject.url;
 
-      let linkedinObject = theSocialMedias[1];
-      if (linkedinObject != null && linkedinObject != undefined) {
-        let theurl = linkedinObject.url;
+          if (theurl != null && theurl != undefined) {
+            document.getElementById("thelinkedinlink").value = theurl;
+            document.getElementById("linkedinnavigate").href = theurl;
+          }
+        }
 
-        if (theurl != null && theurl != undefined) {
-          document.getElementById("thelinkedinlink").value = theurl;
-          document.getElementById("linkedinnavigate").href = theurl;
+        let twitterObject = theSocialMedias[0];
+        if (twitterObject != null && twitterObject != undefined) {
+          let theurl = twitterObject.url;
+
+          if (theurl != null && theurl != undefined) {
+            document.getElementById("thexlink").value = theurl;
+            document.getElementById("thexnavigate").href = theurl;
+          }
+        }
+
+        let facebookObject = theSocialMedias[2];
+        if (facebookObject != null && facebookObject != undefined) {
+          let theurl = facebookObject.url;
+
+          if (theurl != null && theurl != undefined) {
+            document.getElementById("thefacebooklink").value = theurl;
+            document.getElementById("thefacebooknavigate").href = theurl;
+          }
+        }
+
+        let instagramObject = theSocialMedias[3];
+        if (instagramObject != null && instagramObject != undefined) {
+          let theurl = instagramObject.url;
+
+          if (theurl != null && theurl != undefined) {
+            document.getElementById("theinstagramlink").value = theurl;
+            document.getElementById("theinstagramnavigate").href = theurl;
+          }
         }
       }
-
-      let twitterObject = theSocialMedias[0];
-      if (twitterObject != null && twitterObject != undefined) {
-        let theurl = twitterObject.url;
-
-        if (theurl != null && theurl != undefined) {
-          document.getElementById("thexlink").value = theurl;
-          document.getElementById("thexnavigate").href = theurl;
-        }
-      }
-
-      let facebookObject = theSocialMedias[2];
-      if (facebookObject != null && facebookObject != undefined) {
-        let theurl = facebookObject.url;
-
-        if (theurl != null && theurl != undefined) {
-          document.getElementById("thefacebooklink").value = theurl;
-          document.getElementById("thefacebooknavigate").href = theurl;
-        }
-      }
-
-      let instagramObject = theSocialMedias[3];
-      if (instagramObject != null && instagramObject != undefined) {
-        let theurl = instagramObject.url;
-
-        if (theurl != null && theurl != undefined) {
-          document.getElementById("theinstagramlink").value = theurl;
-          document.getElementById("theinstagramnavigate").href = theurl;
-        }
-      }
-
       let bannerImage = jsonUser["profile banner"];
 
       if (
