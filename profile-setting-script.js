@@ -2321,6 +2321,9 @@ async function updateallthefields(email, member = {}) {
           let casediv = document.createElement("div");
           casediv.classList.add("img-wrap", "editpage");
           casediv.style.display = "flex";
+
+          console.log("the case study walkthroughs flex added");
+
           let casevideo = document.createElement("video");
           casevideo.controls = true;
           casevideo.classList.add("videoclass2");
