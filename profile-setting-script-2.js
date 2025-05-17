@@ -1,4 +1,4 @@
-console.warn("Hidden elements change 1");
+console.warn("Hidden elements change 2");
 
 let activefileuploaderId = "";
 let theLawyerPronouns = [];
@@ -1799,12 +1799,7 @@ async function updateallthefields(email, member = {}) {
       console.log("user exist in database");
       let userData = mongodbuser.data.body;
       let jsonUser = JSON.parse(JSON.parse(userData));
-      console.log(
-        "🧑🏿‍❤️‍💋‍🧑🏽🧑🏿‍❤️‍💋‍🧑🏽🧑🏿‍❤️‍💋‍🧑🏽🧑🏿‍❤️‍💋‍🧑🏽🧑🏿‍❤️‍💋‍🧑🏽👩🏽‍💻",
-        jsonUser.name,
-        typeof jsonUser,
-        typeof userData
-      );
+      console.log("🧑🏿‍❤️‍💋‍🧑🏽🧑🏿‍❤️‍💋‍🧑🏽🧑🏿‍❤️‍💋‍🧑🏽🧑🏿‍❤️‍💋‍🧑🏽🧑🏿‍❤️‍💋‍🧑🏽👩🏽‍💻", jsonUser.name, jsonUser, typeof userData);
       const pageinputs = document.querySelectorAll("input");
       theCategory2 = jsonUser["expertise category"];
       theLawyerPronouns = jsonUser["theLawyerPronouns"];
