@@ -1,3 +1,5 @@
+console.warn("Hidden elements change 1");
+
 let activefileuploaderId = "";
 let theLawyerPronouns = [];
 let theCategory2 = [];
