@@ -2125,7 +2125,7 @@ async function updateallthefields(email, member = {}) {
         //document.getElementById("profileimagecontainer").style.display="none"
       }
 
-      let theusersHobbies = jsonUser["interests and hobbies"];
+      let theusersHobbies = jsonUser["interests and hobbies"] ?? [];
 
       let thehobbyCarrier = document.getElementById("Hobbymaincontainer");
       thehobbyCarrier.innerHTML = "";
