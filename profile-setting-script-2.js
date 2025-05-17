@@ -1343,7 +1343,7 @@ $(document).ready(async function () {
         let mongodbuser = JSON.parse(dbuser);
         let userData = mongodbuser.data.body;
         let jsonUser = JSON.parse(JSON.parse(userData));
-        let notablecasewins = jsonUser["notable case wins"];
+        let notablecasewins = jsonUser["notable case wins"] ?? [];
         let caseTitle = document.getElementById("casewinstitle").value;
         let caseDescription = document.getElementById(
           "casewinsdescription"
@@ -1397,7 +1397,7 @@ $(document).ready(async function () {
         let mongodbuser = JSON.parse(dbuser);
         let userData = mongodbuser.data.body;
         let jsonUser = JSON.parse(JSON.parse(userData));
-        let qaquestions = jsonUser["personal qa"];
+        let qaquestions = jsonUser["personal qa"] ?? [];
         let qaquiz = document.getElementById("theqaquizinput").value;
         let qaanswer = document.getElementById("qaanswerinput").value;
         if (qaanswer && qaquiz) {
@@ -1838,6 +1838,7 @@ async function updateallthefields(email, member = {}) {
         }
       } else {
         theuserGeolocation = await getUserautoGeoLocation();
+        console.log("theuserGeolocation", theuserGeolocation);
         let lati = thegeolocationaddress.lat;
         let longi = thegeolocationaddress.long;
         if (lati & longi) {
