@@ -649,7 +649,7 @@ document.addEventListener("DOMContentLoaded", async () => {
       }
 
       if (uploaderId == "uploadtestimonials") {
-        let thetestimonials = jsonUser["client video testimonials"];
+        let thetestimonials = jsonUser["client video testimonials"] ?? [];
         let thisuniqueId = await generateUniqueId();
         let thisvideo = {
           url: url,
@@ -667,7 +667,7 @@ document.addEventListener("DOMContentLoaded", async () => {
       }
 
       if (uploaderId == "casestudywalkthroughuploader") {
-        let casestudywalkthroughs = jsonUser["case study walkthroughs"];
+        let casestudywalkthroughs = jsonUser["case study walkthroughs"] ?? [];
         let thisuniqueId = await generateUniqueId();
         let thiscasestudy = {
           url: url,
@@ -1372,7 +1372,7 @@ $(document).ready(async function () {
         let mongodbuser = JSON.parse(dbuser);
         let userData = mongodbuser.data.body;
         let jsonUser = JSON.parse(JSON.parse(userData));
-        let mediapressbriefings = jsonUser["media press mentions"];
+        let mediapressbriefings = jsonUser["media press mentions"] ?? [];
         let mediapresslink = document.getElementById(
           "thepreviewlinkinput"
         ).value;
