@@ -780,8 +780,8 @@ async function getUserautoGeoLocation() {
         userLongitude = position.coords.latitude;
         userLat = position.coords.longitude;
 
-        console.log("Latitude:", userLat);
-        console.log("Longitude:", userLongitude);
+        console.log("Latitude:", userLat || 0);
+        console.log("Longitude:", userLongitude || 0);
         thelocationdata = {
           lat: userLat,
           long: userLongitude,
@@ -796,10 +796,10 @@ async function getUserautoGeoLocation() {
         // You can now send this to your backend, use it on a map, etc.
       },
       (error) => {
-        console.error("Geolocation error:", error.message);
+        console.warn("Geolocation error:", error.message);
         thelocationdata = {
-          lat: "",
-          long: "",
+          lat: 0,
+          long: 0,
           city: "",
           province: "",
           postalcode: "",
