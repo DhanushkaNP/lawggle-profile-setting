@@ -2630,6 +2630,7 @@ async function createEducationBox(
   let thecaseslider5 = document.getElementById("educationCarrier");
   let thequizcarrier = document.createElement("div");
   thequizcarrier.classList.add("theqadiv");
+  thequizcarrier.style.display = "flex";
   thequizcarrier.setAttribute("itemindex", `static${indexnumber}`);
   let headcarrier = document.createElement("div");
   headcarrier.classList.add("qaheader", "foreducation");
