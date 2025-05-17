@@ -2221,7 +2221,7 @@ async function updateallthefields(email, member = {}) {
           "editclientvideotestimonials"
         );
         thecaseslider2.innerHTML = "";
-        thecaseslider2.style.setProperty("display", "block", "important");
+        thecaseslider2.setAttribute("style", "display: block !important");
         console.warn("reached editclientvideotestimonials");
 
         for (let testimonialvideos in clientTestimonials) {
@@ -2264,7 +2264,7 @@ async function updateallthefields(email, member = {}) {
           "editclientvideotestimonials"
         );
         thecaseslider2.innerHTML = "";
-        thecaseslider2.setAttribute("style", "display: block !important");
+        thecaseslider2.style.display = "none";
       }
 
       let mediaPressBriefs = jsonUser["media press mentions"] ?? [];
