@@ -1781,13 +1781,25 @@ async function updateallthefields(email, member = {}) {
 
       // To do
       if (jsonUser["min hourly rate"] != null) {
-        $("#minRate").val(jsonUser["min hourly rate"]);
-        console.log("Value set with jQuery:", $("#minRate").val());
+        const minRateElement = document.getElementById("minRate");
+        minRateElement.value = jsonUser["min hourly rate"];
+
+        // Force a value update event
+        const event = new Event("input", { bubbles: true });
+        minRateElement.dispatchEvent(event);
+
+        console.log("Value set with property:", minRateElement.value);
       }
 
       if (jsonUser["max hourly rate"] != null) {
-        $("#maxRate").val(jsonUser["max hourly rate"]);
-        console.log("Value set with jQuery:", $("#maxRate").val());
+        const maxRateElement = document.getElementById("maxRate");
+        maxRateElement.value = jsonUser["max hourly rate"];
+
+        // Force a value update event
+        const maxEvent = new Event("input", { bubbles: true });
+        maxRateElement.dispatchEvent(maxEvent);
+
+        console.log("Value set with property:", maxRateElement.value);
       }
 
       let thegeolocationaddress = jsonUser["address"];
