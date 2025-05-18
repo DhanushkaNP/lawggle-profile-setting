@@ -353,52 +353,161 @@ async function readselectnoImage(id) {
     });
   return selectedValuesWithoutImage;
 }
-const lawCategories = [
-  "Test 1",
+let thenewsubcategories = [
   "Business Law",
   "Corporate Law",
+  "Commercial Law",
+  "Mergers & Acquisitions (M&A)",
+  "Securities Law",
+  "Franchise Law",
+  "Startup Law",
+  "Antitrust & Competition Law",
+  "Private Equity & Venture Capital Law",
+  "Banking & Finance Law",
+  "Financial Regulation Law",
   "Civil Litigation",
-  "Dispute Resolution / Mediation / Arbitration",
-  "Criminal Law",
+  "Class Action Lawsuits",
+  "Alternative Dispute Resolution (ADR)",
+  "Mediation",
+  "Arbitration",
+  "Commercial Litigation",
+  "Civil Rights Litigation",
+  "Criminal Defense",
+  "White Collar Crime",
+  "Cybercrime Law",
+  "Juvenile Law",
+  "Traffic & DUI/DWI Law",
+  "Expungement Law",
+  "Organized Crime Law",
+  "Death Penalty Defense",
+  "Drug Crimes Defense",
   "Employment Law",
-  "Labour Law",
+  "Labor Law",
+  "Workers’ Compensation",
+  "Wrongful Dismissal",
+  "Workplace Discrimination & Harassment Law",
+  "Occupational Health & Safety Law",
+  "Employee Benefits Law",
+  "Union & Collective Bargaining Law",
+  "Executive Compensation Law",
   "Family Law",
-  "Matrimonial Law",
+  "Divorce Law",
+  "Child Custody & Support",
+  "Adoption Law",
+  "Fertility & Surrogacy Law",
+  "Domestic Violence & Protective Orders",
+  "Prenuptial & Postnuptial Agreements",
+  "Grandparents’ Rights Law",
   "Estate Planning",
+  "Wills & Trusts",
   "Probate Law",
   "Elder Law",
+  "Guardianship & Conservatorship",
+  "Special Needs Planning",
   "Personal Injury Law",
+  "Medical Malpractice Law",
+  "Product Liability Law",
+  "Professional Malpractice (Legal, Financial, etc.)",
   "Insurance Law",
+  "Car Accident & Motor Vehicle Law",
+  "Wrongful Death Law",
   "Real Estate Law",
-  "Property Law",
-  "Banking Law",
-  "Financial Law",
+  "Landlord-Tenant Law",
+  "Construction Law",
+  "Property Development Law",
+  "Condominium & HOA Law",
+  "Zoning & Land Use Law",
+  "Eminent Domain & Property Seizure Law",
+  "Foreclosure Defense",
   "Tax Law",
-  "Intellectual Property (IP) Law",
-  "Technology Law",
+  "Bankruptcy Law",
+  "Investment Law",
+  "Financial Services Regulation",
+  "Asset Protection Law",
+  "Corporate Restructuring & Insolvency",
+  "Intellectual Property Law",
+  "Patent Law",
+  "Copyright Law",
+  "Trademark Law",
+  "Trade Secrets Law",
+  "Licensing & Royalties Law",
+  "AI & Emerging Technologies Law",
+  "Cybersecurity & Data Privacy Law",
   "Immigration Law",
+  "Refugee & Asylum Law",
   "International Law",
+  "Extradition Law",
+  "Foreign Investment Law",
+  "Diplomatic & Consular Law",
+  "Cross-Border Business Law",
   "Constitutional Law",
   "Human Rights Law",
+  "Civil Rights Law",
+  "Indigenous & Aboriginal Law",
   "Public Interest Law",
+  "Disability Rights Law",
   "Environmental Law",
-  "Energy Law",
-  "Natural Resources Law",
-  "Regulatory Law",
+  "Climate Change Law",
+  "Renewable Energy Law",
+  "Oil & Gas Law",
+  "Mining Law",
+  "Water Rights Law",
+  "Wildlife & Conservation Law",
+  "Sustainable Development Law",
   "Administrative Law",
-  "Government Law",
+  "Municipal Law",
+  "Professional Licensing Law",
+  "Government Contracts & Procurement Law",
+  "Public Utilities Law",
+  "Public Policy & Legislative Advocacy",
+  "Cannabis Law",
+  "Consumer Protection Law",
   "Health Law",
-  "Medical Law",
-  "Science & Research Law",
+  "Pharmaceutical Law",
+  "Biotech Law",
+  "Medical Ethics & Bioethics Law",
+  "Hospital & Healthcare Compliance Law",
+  "Public Health Law",
   "Transportation Law",
-  "Maritime / Admiralty Law",
+  "Maritime & Admiralty Law",
+  "Aviation Law",
+  "Space Law (Emerging)",
+  "Railroad & Public Transit Law",
   "Military Law",
-  "Security / National Security Law",
-  "Media Law",
+  "National Security Law",
+  "International Humanitarian Law",
+  "War Crimes & Human Rights Violations Law",
+  "Intelligence & Surveillance Law",
+  "Technology Law",
+  "Media & Broadcasting Law",
   "Entertainment Law",
+  "Gaming & Esports Law",
+  "Music Law",
+  "Film & TV Law",
+  "Social Media & Influencer Law",
+  "Defamation & Libel Law",
   "Sports Law",
-  "Recreational Law",
-  "Niche & Emerging Legal Areas",
+  "Athlete Representation & Contract Law",
+  "Olympic & International Sports Law",
+  "Stadium & Venue Law",
+  "Space Law",
+  "Fashion Law",
+  "Art Law",
+  "Animal Law",
+  "Drone Law",
+  "Psychedelics & Drug Policy Law",
+  "Religious Institutions & Church Law",
+  "Foreclosure Defense Law",
+  "Cryptocurrency & Blockchain Law",
+  "Digital Assets & NFT Law",
+  "Reputation Management Law",
+  "AI Ethics & Regulation Law",
+  "Trial Law",
+  "Strata & Condominium",
+  "Process Server",
+  "Skip Tracing",
+  "Collaborative Law",
+  "Charity Law",
 ];
 
 async function addSubCategories(thetargetCategories) {
@@ -425,12 +534,12 @@ async function addSubCategories(thetargetCategories) {
     "Business & Corporate Law"
     ];
     */
-  const areaOfExpertiseFields = areaOfExpertiseFields;
+  const selectedSubfields = thenewsubcategories;
 
-  console.log("🔐🔐🔐🔐🔐🔐🔐💧💧💧", areaOfExpertiseFields);
+  console.log("🔐🔐🔐🔐🔐🔐🔐💧💧💧", selectedSubfields);
 
-  areaOfExpertiseFields.forEach((thissubcategory) => {
-    theselectedelement = document.getElementById("areaOfExpertise");
+  selectedSubfields.forEach((thissubcategory) => {
+    theselectedelement = document.getElementById("subSelect");
     const option = document.createElement("option");
     option.value = thissubcategory.toLowerCase();
     option.textContent = thissubcategory;
@@ -1239,7 +1348,7 @@ $(document).ready(async function () {
         let maxhourlyRate = document.getElementById("maxRate").value;
         let firmurl = document.getElementById("firmurl").value;
         let expertCategory = await readselectnoImage("mySelect");
-        let expertSubCategory = await readselectnoImage("areaOfExpertise");
+        let expertSubCategory = await readselectnoImage("subSelect");
         let thefirsteducationObject = alleducation[0];
         let educationsave = "";
         if (
@@ -1586,9 +1695,9 @@ $(document).ready(async function () {
         const image = $(this).data("image");
 
         if (elementId == "mySelect") {
-          document.getElementById("areaOfExpertise").innerHTML = "";
+          document.getElementById("subSelect").innerHTML = "";
           await addSubCategories(["Business & Corporate Law"]);
-          await configureSelect("areaOfExpertise", "#areaOfExpertiseContainer");
+          await configureSelect("subSelect", "#thesubselectcontain");
         }
 
         console.log("Selected: ", {
@@ -1608,8 +1717,8 @@ $(document).ready(async function () {
     },
     { id: "mySelect", container: "#expertiseselecthold", select: 2 },
     {
-      id: "areaOfExpertise",
-      container: "#areaOfExpertiseContainer",
+      id: "subSelect",
+      container: "#thesubselectcontain",
       select: theSubcategory2,
     },
     { id: "thelanguage", container: "#thelangy", select: "theLawyerPronouns" },
@@ -2073,11 +2182,9 @@ async function updateallthefields(email, member = {}) {
       $(`#thelanguage`).val(languagelist).trigger("change");
       $(`#selectpronouns`).val(jsonUser["pronouns"]).trigger("change");
       $(`#mySelect`).val(jsonUser["expertise category"]).trigger("change");
-      document.getElementById("areaOfExpertise").innerHTML = "";
+      document.getElementById("subSelect").innerHTML = "";
       let recreate = await addSubCategories("");
-      $(`#areaOfExpertise`)
-        .val(jsonUser["expertise category"])
-        .trigger("change");
+      $(`#subSelect`).val(jsonUser["expertise subcategory"]).trigger("change");
       pageinputs.forEach((input) => {
         console.log(input.name, input.value);
         inputfor = input.getAttribute("inputfor");
