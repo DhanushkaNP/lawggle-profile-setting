@@ -1,4 +1,4 @@
-console.warn("Hidden elements change 3");
+console.warn("Hidden elements change 4");
 
 let activefileuploaderId = "";
 let theLawyerPronouns = [];
@@ -2391,7 +2391,7 @@ async function updateallthefields(email, member = {}) {
           headcarrier.classList.add("qaheader");
           let headertext = document.createElement("p");
           headertext.classList.add("qaheadertext");
-          headertext.innerText = questionsAndAnswers[eachquiz].question;
+          headertext.innerText = eachquiz.title;
           let qadelete = document.createElement("img");
           qadelete.classList.add("qaicons");
           qadelete.src =
@@ -2426,7 +2426,7 @@ async function updateallthefields(email, member = {}) {
 
           let qaanswer = document.createElement("p");
           qaanswer.classList.add("qapragraph");
-          qaanswer.innerText = questionsAndAnswers[eachquiz].answer;
+          qaanswer.innerText = eachquiz.description;
           iconsHolder.append(qaedit, qadelete);
           headcarrier.append(headertext, iconsHolder);
           thequizcarrier.append(headcarrier, qaanswer);
