@@ -1371,6 +1371,32 @@ $(document).ready(async function () {
         } else {
         }
       }
+      if (buttonIdentifier == "sectionhobbysave") {
+        document.getElementById("theloadingwait").style.display = "flex";
+        let thisUserId = localStorage.getItem("userEmail");
+        let dbuser = await getItem(thisUserId);
+        let mongodbuser = JSON.parse(dbuser);
+        let userData = mongodbuser.data.body;
+        let jsonUser = JSON.parse(JSON.parse(userData));
+        let interestsHobbies = jsonUser["interests and hobbies"] ?? [];
+        let interestOrHobby = document.getElementById("interestedinput").value;
+        if (interestOrHobby) {
+          theuniqueId = await generateUniqueId();
+          let thiscase = {
+            uniqueId: theuniqueId,
+            title: interestOrHobby,
+          };
+          interestsHobbies.push(thiscase);
+          let toChangeData = { "interests and hobbies": interestsHobbies };
+          console.log(toChangeData);
+          let updateduser = await updateItem(thisUserId, toChangeData);
+          let updatenewestdom = await updateallthefields(thisUserId);
+          document.getElementById("thesavealertshow").style.display = "flex";
+          let todelay = await delaysomeminutes();
+        } else {
+        }
+      }
+
       if (buttonIdentifier == "section3save") {
         document.getElementById("theloadingwait").style.display = "flex";
         let thisUserId = localStorage.getItem("userEmail");
@@ -2385,7 +2411,6 @@ async function updateallthefields(email, member = {}) {
         for (let eachquiz of questionsAndAnswers) {
           //let thequizcontainer=document.createElement("div")
           //thequizcontainer.classList.add("qacarrierdiv")
-          console.warn("eachquiz :", eachquiz);
           let thequizcarrier = document.createElement("div");
           thequizcarrier.classList.add("theqadiv");
           let headcarrier = document.createElement("div");
