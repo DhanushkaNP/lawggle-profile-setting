@@ -1781,21 +1781,12 @@ async function updateallthefields(email, member = {}) {
 
       // To do
       if (jsonUser["min hourly rate"] != null) {
-        $("#minRate").val(jsonUser["min hourly rate"]);
-        console.log("Value set with jQuery:", $("#minRate").val());
+        const minRateElement = document.getElementById("minRate");
+        minRateElement.textContent = jsonUser["min hourly rate"];
+        // Trigger any custom events Webflow might be listening for
+        const event = new Event("input", { bubbles: true });
+        minRateElement.dispatchEvent(event);
       }
-
-      const wrapper = document.getElementById("minRate");
-      // Look for an input inside
-      const actualInput = wrapper.querySelector("input");
-      if (actualInput) {
-        actualInput.value = jsonUser["min hourly rate"];
-        console.log("Set value on nested input:", actualInput.value);
-      }
-
-      // Try setting value and check result
-      minRateElement.value = jsonUser["min hourly rate"];
-      console.log("After setting value:", minRateElement.value);
 
       if (jsonUser["max hourly rate"] != null) {
         const maxRateElement = document.getElementById("maxRate");
