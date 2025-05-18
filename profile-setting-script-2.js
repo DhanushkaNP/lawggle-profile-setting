@@ -1,4 +1,4 @@
-console.warn("Hidden elements change 4");
+console.warn("Hidden elements change 5");
 
 let activefileuploaderId = "";
 let theLawyerPronouns = [];
@@ -2058,6 +2058,8 @@ async function updateallthefields(email, member = {}) {
       document.getElementById("subSelect").innerHTML = "";
       let recreate = await addSubCategories("");
       $(`#subSelect`).val(jsonUser["area of expertise"]).trigger("change");
+
+      // page inputs set initial values
       pageinputs.forEach((input) => {
         console.log(input.name, input.value);
         inputfor = input.getAttribute("inputfor");
