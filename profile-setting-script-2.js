@@ -564,35 +564,35 @@ document.addEventListener("DOMContentLoaded", async () => {
   const minRateInput = document.getElementById("minRate");
   const maxRateInput = document.getElementById("maxRate");
 
-  minRateInput.addEventListener("change", () => {
-    const minValue = parseFloat(minRateInput.value);
+  // minRateInput.addEventListener("change", () => {
+  //   const minValue = parseFloat(minRateInput.value);
 
-    if (!isNaN(minValue)) {
-      // Set min attribute for maxRate input
-      maxRateInput.min = minValue + 1; // or just `minValue` if you allow equal
-    }
-  });
+  //   if (!isNaN(minValue)) {
+  //     // Set min attribute for maxRate input
+  //     maxRateInput.min = minValue + 1; // or just `minValue` if you allow equal
+  //   }
+  // });
 
-  minRateInput.addEventListener("change", () => {
-    const minValue = parseFloat(minRateInput.value);
+  // minRateInput.addEventListener("change", () => {
+  //   const minValue = parseFloat(minRateInput.value);
 
-    if (!isNaN(minValue)) {
-      const newMinForMax = minValue + 1;
-      maxRateInput.min = newMinForMax;
+  //   if (!isNaN(minValue)) {
+  //     const newMinForMax = minValue + 1;
+  //     maxRateInput.min = newMinForMax;
 
-      if (parseFloat(maxRateInput.value) < newMinForMax) {
-        maxRateInput.value = newMinForMax;
-      }
-    }
-  });
+  //     if (parseFloat(maxRateInput.value) < newMinForMax) {
+  //       maxRateInput.value = newMinForMax;
+  //     }
+  //   }
+  // });
 
-  maxRateInput.addEventListener("change", () => {
-    if (parseFloat(maxRateInput.value) <= parseFloat(minRateInput.value)) {
-      maxRateInput.setCustomValidity("Max rate must be greater than min rate");
-    } else {
-      maxRateInput.setCustomValidity("");
-    }
-  });
+  // maxRateInput.addEventListener("change", () => {
+  //   if (parseFloat(maxRateInput.value) <= parseFloat(minRateInput.value)) {
+  //     maxRateInput.setCustomValidity("Max rate must be greater than min rate");
+  //   } else {
+  //     maxRateInput.setCustomValidity("");
+  //   }
+  // });
 
   // Get all uploadcare inputs
   const inputs = document.querySelectorAll("[role=uploadcare-uploader]");
