@@ -354,7 +354,6 @@ async function readselectnoImage(id) {
   return selectedValuesWithoutImage;
 }
 let thenewsubcategories = [
-  "Test 1",
   "Business Law",
   "Corporate Law",
   "Civil Litigation",
