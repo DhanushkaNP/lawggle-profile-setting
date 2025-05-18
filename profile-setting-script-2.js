@@ -2385,6 +2385,7 @@ async function updateallthefields(email, member = {}) {
         for (let eachquiz in questionsAndAnswers) {
           //let thequizcontainer=document.createElement("div")
           //thequizcontainer.classList.add("qacarrierdiv")
+          console.log("eachquiz :", eachquiz);
           let thequizcarrier = document.createElement("div");
           thequizcarrier.classList.add("theqadiv");
           let headcarrier = document.createElement("div");
