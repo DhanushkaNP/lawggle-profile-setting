@@ -555,7 +555,7 @@ async function generateUniqueId() {
 
 document.addEventListener("DOMContentLoaded", async () => {
   // scroll to the saved position
-  const scrollY = sessionStorage.getItem("scrollY") ?? 0;
+  const scrollY = localStorage.getItem("scrollY-ps") ?? 0;
   if (scrollY !== null) {
     window.scrollTo(0, parseInt(scrollY));
     sessionStorage.removeItem("scrollY");
@@ -1889,10 +1889,17 @@ async function updateallthefields(email, member = {}) {
       document.getElementById("dynamicbio").value = dynamicBio;
       let offerconsultation = jsonUser["free consultation"];
 
-      document.getElementById("minRate").value = jsonUser["min hourly rate"];
-      console.log("minRate", jsonUser["min hourly rate"]);
-      document.getElementById("maxRate").value = jsonUser["max hourly rate"];
-      console.log("maxRate", jsonUser["max hourly rate"]);
+      if (jsonUser["min hourly rate"] != null) {
+        document.getElementById("minRate").value = parseInt(
+          jsonUser["min hourly rate"]
+        );
+      }
+
+      if (jsonUser["max hourly rate"] != null) {
+        document.getElementById("maxRate").value = parseInt(
+          jsonUser["max hourly rate"]
+        );
+      }
 
       let thegeolocationaddress = jsonUser["address"];
 
@@ -2803,7 +2810,7 @@ async function createEducationBox(
 
 function reloadWindowAndPreserveScroll() {
   // Save current scroll position
-  sessionStorage.setItem("scrollY", window.scrollY);
+  localStorage.setItem("scrollY-ps", window.scrollY);
 
   // Reload the page
   location.reload();
