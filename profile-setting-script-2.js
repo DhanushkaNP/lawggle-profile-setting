@@ -2382,7 +2382,7 @@ async function updateallthefields(email, member = {}) {
         let thecaseslider5 = document.getElementById("qaquzicontainer");
         thecaseslider5.innerHTML = "";
         //document.getElementById("casestudyeditswitch").style.display="flex"
-        for (let eachquiz in questionsAndAnswers) {
+        for (let eachquiz of questionsAndAnswers) {
           //let thequizcontainer=document.createElement("div")
           //thequizcontainer.classList.add("qacarrierdiv")
           console.warn("eachquiz :", eachquiz);
