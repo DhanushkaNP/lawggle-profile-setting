@@ -2168,6 +2168,7 @@ async function updateallthefields(email, member = {}) {
 
       let thehobbyCarrier = document.getElementById("Hobbymaincontainer");
       thehobbyCarrier.innerHTML = "";
+      thehobbyCarrier.classList.remove("hide-container");
 
       if (theusersHobbies.length > 0) {
         for (let thehobby of theusersHobbies) {
