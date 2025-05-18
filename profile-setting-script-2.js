@@ -689,11 +689,25 @@ document.addEventListener("DOMContentLoaded", async () => {
       if (uploaderId == "certicateUpload") {
         let thelawyercerticates = jsonUser["certificates"] ?? [];
         let thisuniqueId = await generateUniqueId();
-        let thiscertificates = {
-          url: url,
-          "unique id": thisuniqueId,
-        };
-        thelawyercerticates.push(thiscertificates);
+
+        // Handle single file upload
+        if (!info.uuid.includes("~")) {
+          let thiscertificates = {
+            url: url,
+            "unique id": thisuniqueId,
+          };
+          thelawyercerticates.push(thiscertificates);
+        } else if (theUrls && Array.isArray(theUrls)) {
+          // Handle file group (multiple files)
+          for (let fileUrl of theUrls) {
+            let thiscertificates = {
+              url: fileUrl,
+              "unique id": await generateUniqueId(),
+            };
+            thelawyercerticates.push(thiscertificates);
+          }
+        }
+
         let thedata = {
           certificates: thelawyercerticates,
         };
@@ -702,9 +716,6 @@ document.addEventListener("DOMContentLoaded", async () => {
         updatedom = await updateallthefields(updateemail);
         document.getElementById("thesavealertshow").style.display = "flex";
         await delaysomeminutes();
-
-        thecertificates = theUrls;
-        thelawyercerticates = [...thelawyercerticates, ...thecertificates];
 
         // for (let eachurl in thelawyercerticates) {
         //   let theUserContainer = document.querySelectorAll(".slide-img");
