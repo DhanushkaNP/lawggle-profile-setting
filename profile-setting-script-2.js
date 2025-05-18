@@ -1784,12 +1784,26 @@ async function updateallthefields(email, member = {}) {
         const minRateElement = document.getElementById("minRate");
         minRateElement.valueAsNumber = parseInt(jsonUser["min hourly rate"]);
         minRateElement.value = jsonUser["min hourly rate"];
+        minRateElement.innerHTML = jsonUser["min hourly rate"];
+        minRateElement.innerText = jsonUser["min hourly rate"];
+        minRateElement.setAttribute("value", jsonUser["min hourly rate"]);
+        minRateElement.setAttribute(
+          "valueAsNumber",
+          jsonUser["min hourly rate"]
+        );
       }
 
       if (jsonUser["max hourly rate"] != null) {
         const maxRateElement = document.getElementById("maxRate");
         maxRateElement.valueAsNumber = parseInt(jsonUser["max hourly rate"]);
         maxRateElement.value = jsonUser["max hourly rate"];
+        maxRateElement.innerHTML = jsonUser["max hourly rate"];
+        maxRateElement.innerText = jsonUser["max hourly rate"];
+        maxRateElement.setAttribute("value", jsonUser["max hourly rate"]);
+        maxRateElement.setAttribute(
+          "valueAsNumber",
+          jsonUser["max hourly rate"]
+        );
       }
 
       let thegeolocationaddress = jsonUser["address"];
