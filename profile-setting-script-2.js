@@ -2170,7 +2170,8 @@ async function updateallthefields(email, member = {}) {
       thehobbyCarrier.innerHTML = "";
 
       if (theusersHobbies.length > 0) {
-        for (let thehobby in theusersHobbies) {
+        for (let thehobby of theusersHobbies) {
+          console.log(thehobby);
           theHobbycontainer = document.createElement("div");
           theHobbycontainer.classList.add("theqadiv");
           thehobbyheader = document.createElement("div");
@@ -2179,7 +2180,7 @@ async function updateallthefields(email, member = {}) {
           thehobbyiconholder.classList.add("qaiconsholder");
           thehobbyname = document.createElement("p");
           thehobbyname.classList.add("qaheadertext");
-          thehobbyname.innerText = theusersHobbies[thehobby];
+          thehobbyname.innerText = thehobby.title;
           hobbydeleteicon = document.createElement("img");
           hobbydeleteicon.src =
             "https://cdn.prod.website-files.com/67e360f08a15ef65d8814b41/67f6dfbc2b16d9977c85eeb2_Group%201597881168.png";
