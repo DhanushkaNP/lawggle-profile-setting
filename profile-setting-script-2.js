@@ -454,36 +454,35 @@ document.addEventListener("DOMContentLoaded", async () => {
   const minRateInput = document.getElementById("minRate");
   const maxRateInput = document.getElementById("maxRate");
 
-  // To do
-  // minRateInput.addEventListener("change", () => {
-  //   const minValue = parseFloat(minRateInput.value);
+  minRateInput.addEventListener("change", () => {
+    const minValue = parseFloat(minRateInput.value);
 
-  //   if (!isNaN(minValue)) {
-  //     // Set min attribute for maxRate input
-  //     maxRateInput.min = minValue + 1; // or just `minValue` if you allow equal
-  //   }
-  // });
+    if (!isNaN(minValue)) {
+      // Set min attribute for maxRate input
+      maxRateInput.min = minValue + 1; // or just `minValue` if you allow equal
+    }
+  });
 
-  // minRateInput.addEventListener("change", () => {
-  //   const minValue = parseFloat(minRateInput.value);
+  minRateInput.addEventListener("change", () => {
+    const minValue = parseFloat(minRateInput.value);
 
-  //   if (!isNaN(minValue)) {
-  //     const newMinForMax = minValue + 1;
-  //     maxRateInput.min = newMinForMax;
+    if (!isNaN(minValue)) {
+      const newMinForMax = minValue + 1;
+      maxRateInput.min = newMinForMax;
 
-  //     if (parseFloat(maxRateInput.value) < newMinForMax) {
-  //       maxRateInput.value = newMinForMax;
-  //     }
-  //   }
-  // });
+      if (parseFloat(maxRateInput.value) < newMinForMax) {
+        maxRateInput.value = newMinForMax;
+      }
+    }
+  });
 
-  // maxRateInput.addEventListener("change", () => {
-  //   if (parseFloat(maxRateInput.value) <= parseFloat(minRateInput.value)) {
-  //     maxRateInput.setCustomValidity("Max rate must be greater than min rate");
-  //   } else {
-  //     maxRateInput.setCustomValidity("");
-  //   }
-  // });
+  maxRateInput.addEventListener("change", () => {
+    if (parseFloat(maxRateInput.value) <= parseFloat(minRateInput.value)) {
+      maxRateInput.setCustomValidity("Max rate must be greater than min rate");
+    } else {
+      maxRateInput.setCustomValidity("");
+    }
+  });
 
   // Get all uploadcare inputs
   const inputs = document.querySelectorAll("[role=uploadcare-uploader]");
@@ -1778,33 +1777,6 @@ async function updateallthefields(email, member = {}) {
       let dynamicBio = jsonUser["dynamic bio"];
       document.getElementById("dynamicbio").value = dynamicBio;
       let offerconsultation = jsonUser["free consultation"];
-
-      // To do
-      if (jsonUser["min hourly rate"] != null) {
-        const minRateElement = document.getElementById("minRate");
-        minRateElement.valueAsNumber = parseInt(jsonUser["min hourly rate"]);
-        minRateElement.value = jsonUser["min hourly rate"];
-        minRateElement.innerHTML = jsonUser["min hourly rate"];
-        minRateElement.innerText = jsonUser["min hourly rate"];
-        minRateElement.setAttribute("value", jsonUser["min hourly rate"]);
-        minRateElement.setAttribute(
-          "valueAsNumber",
-          jsonUser["min hourly rate"]
-        );
-      }
-
-      if (jsonUser["max hourly rate"] != null) {
-        const maxRateElement = document.getElementById("maxRate");
-        maxRateElement.valueAsNumber = parseInt(jsonUser["max hourly rate"]);
-        maxRateElement.value = jsonUser["max hourly rate"];
-        maxRateElement.innerHTML = jsonUser["max hourly rate"];
-        maxRateElement.innerText = jsonUser["max hourly rate"];
-        maxRateElement.setAttribute("value", jsonUser["max hourly rate"]);
-        maxRateElement.setAttribute(
-          "valueAsNumber",
-          jsonUser["max hourly rate"]
-        );
-      }
 
       let thegeolocationaddress = jsonUser["address"];
 
