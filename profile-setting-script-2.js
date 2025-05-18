@@ -1782,20 +1782,14 @@ async function updateallthefields(email, member = {}) {
       // To do
       if (jsonUser["min hourly rate"] != null) {
         const minRateElement = document.getElementById("minRate");
+        minRateElement.valueAsNumber = parseInt(jsonUser["min hourly rate"]);
         minRateElement.value = jsonUser["min hourly rate"];
-
-        // Force a value update event
-        const minEvent = new Event("input", { bubbles: true });
-        minRateElement.dispatchEvent(minEvent);
       }
 
       if (jsonUser["max hourly rate"] != null) {
         const maxRateElement = document.getElementById("maxRate");
+        maxRateElement.valueAsNumber = parseInt(jsonUser["max hourly rate"]);
         maxRateElement.value = jsonUser["max hourly rate"];
-
-        // Force a value update event
-        const maxEvent = new Event("input", { bubbles: true });
-        maxRateElement.dispatchEvent(maxEvent);
       }
 
       let thegeolocationaddress = jsonUser["address"];
