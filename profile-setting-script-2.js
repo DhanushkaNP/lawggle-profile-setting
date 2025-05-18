@@ -455,6 +455,7 @@ document.addEventListener("DOMContentLoaded", async () => {
   const minRateInput = document.getElementById("minRate");
   const maxRateInput = document.getElementById("maxRate");
 
+  // To do
   // minRateInput.addEventListener("change", () => {
   //   const minValue = parseFloat(minRateInput.value);
 
@@ -1780,19 +1781,20 @@ async function updateallthefields(email, member = {}) {
       document.getElementById("dynamicbio").value = dynamicBio;
       let offerconsultation = jsonUser["free consultation"];
 
-      if (jsonUser["min hourly rate"] != null) {
-        document
-          .getElementById("minRate")
-          .setAttribute("value", parseInt(jsonUser["min hourly rate"]));
-        console.log("minRate element 2", document.getElementById("minRate"));
-      }
+      // To do
+      // if (jsonUser["min hourly rate"] != null) {
+      //   document
+      //     .getElementById("minRate")
+      //     .setAttribute("value", parseInt(jsonUser["min hourly rate"]));
+      //   console.log("minRate element 2", document.getElementById("minRate"));
+      // }
 
-      if (jsonUser["max hourly rate"] != null) {
-        document
-          .getElementById("maxRate")
-          .setAttribute("value", parseInt(jsonUser["max hourly rate"]));
-        console.log("maxRate element 2", document.getElementById("maxRate"));
-      }
+      // if (jsonUser["max hourly rate"] != null) {
+      //   document
+      //     .getElementById("maxRate")
+      //     .setAttribute("value", parseInt(jsonUser["max hourly rate"]));
+      //   console.log("maxRate element 2", document.getElementById("maxRate"));
+      // }
 
       let thegeolocationaddress = jsonUser["address"];
 
