@@ -1432,7 +1432,7 @@ $(document).ready(async function () {
         let mongodbuser = JSON.parse(dbuser);
         let userData = mongodbuser.data.body;
         let jsonUser = JSON.parse(JSON.parse(userData));
-        let thecurrentCerts = jsonUser["certificates"];
+        let thecurrentCerts = jsonUser["certificates"] ?? [];
 
         let toChangeData = {
           languages: lawyerlanguages,
