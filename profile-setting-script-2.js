@@ -1890,7 +1890,9 @@ async function updateallthefields(email, member = {}) {
       let offerconsultation = jsonUser["free consultation"];
 
       document.getElementById("minRate").value = jsonUser["min hourly rate"];
+      console.log("minRate", jsonUser["min hourly rate"]);
       document.getElementById("maxRate").value = jsonUser["max hourly rate"];
+      console.log("maxRate", jsonUser["max hourly rate"]);
 
       let thegeolocationaddress = jsonUser["address"];
 
