@@ -554,6 +554,13 @@ async function generateUniqueId() {
 }
 
 document.addEventListener("DOMContentLoaded", async () => {
+  // scroll to the saved position
+  const scrollY = sessionStorage.getItem("scrollY") ?? 0;
+  if (scrollY !== null) {
+    window.scrollTo(0, parseInt(scrollY));
+    sessionStorage.removeItem("scrollY");
+  }
+
   const minRateInput = document.getElementById("minRate");
   const maxRateInput = document.getElementById("maxRate");
 
@@ -596,9 +603,8 @@ document.addEventListener("DOMContentLoaded", async () => {
     const uploaderId = input.id; // Capture the uploader's ID here
 
     widget.onUploadComplete(async (info) => {
-      if (uploaderId != "certicateUpload") {
-        document.getElementById("theloadingwait").style.display = "flex";
-      }
+      document.getElementById("theloadingwait").style.display = "flex";
+
       if (info.uuid.includes("~")) {
         try {
           const group = await uploadcare.loadFileGroup(info.uuid);
@@ -713,6 +719,7 @@ document.addEventListener("DOMContentLoaded", async () => {
         };
         let theupdatedItem = await updateItem(updateemail, thedata);
         console.log(theupdatedItem);
+        reloadWindowAndPreserveScroll();
         updatedom = await updateallthefields(updateemail);
         document.getElementById("thesavealertshow").style.display = "flex";
         await delaysomeminutes();
@@ -2790,4 +2797,12 @@ async function createEducationBox(
     allDatesWrap
   );
   thecaseslider5.append(thequizcarrier);
+}
+
+function reloadWindowAndPreserveScroll() {
+  // Save current scroll position
+  sessionStorage.setItem("scrollY", window.scrollY);
+
+  // Reload the page
+  location.reload();
 }
