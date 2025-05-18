@@ -1785,6 +1785,18 @@ async function updateallthefields(email, member = {}) {
         console.log("Value set with jQuery:", $("#minRate").val());
       }
 
+      const wrapper = document.getElementById("minRate");
+      // Look for an input inside
+      const actualInput = wrapper.querySelector("input");
+      if (actualInput) {
+        actualInput.value = jsonUser["min hourly rate"];
+        console.log("Set value on nested input:", actualInput.value);
+      }
+
+      // Try setting value and check result
+      minRateElement.value = jsonUser["min hourly rate"];
+      console.log("After setting value:", minRateElement.value);
+
       if (jsonUser["max hourly rate"] != null) {
         const maxRateElement = document.getElementById("maxRate");
         maxRateElement.value = jsonUser["max hourly rate"];
