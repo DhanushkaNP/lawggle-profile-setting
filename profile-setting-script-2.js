@@ -1782,10 +1782,11 @@ async function updateallthefields(email, member = {}) {
       // To do
       if (jsonUser["min hourly rate"] != null) {
         const minRateElement = document.getElementById("minRate");
-        minRateElement.textContent = jsonUser["min hourly rate"];
-        // Trigger any custom events Webflow might be listening for
-        const event = new Event("input", { bubbles: true });
-        minRateElement.dispatchEvent(event);
+        minRateElement.value = jsonUser["min hourly rate"];
+
+        // Force a value update event
+        const minEvent = new Event("input", { bubbles: true });
+        minRateElement.dispatchEvent(minEvent);
       }
 
       if (jsonUser["max hourly rate"] != null) {
@@ -1795,8 +1796,6 @@ async function updateallthefields(email, member = {}) {
         // Force a value update event
         const maxEvent = new Event("input", { bubbles: true });
         maxRateElement.dispatchEvent(maxEvent);
-
-        console.log("Value set with property:", maxRateElement.value);
       }
 
       let thegeolocationaddress = jsonUser["address"];
