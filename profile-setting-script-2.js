@@ -1781,14 +1781,8 @@ async function updateallthefields(email, member = {}) {
 
       // To do
       if (jsonUser["min hourly rate"] != null) {
-        const minRateElement = document.getElementById("minRate");
-        minRateElement.value = jsonUser["min hourly rate"];
-
-        // Force a value update event
-        const event = new Event("input", { bubbles: true });
-        minRateElement.dispatchEvent(event);
-
-        console.log("Value set with property:", minRateElement.value);
+        $("#minRate").val(jsonUser["min hourly rate"]);
+        console.log("Value set with jQuery:", $("#minRate").val());
       }
 
       if (jsonUser["max hourly rate"] != null) {
