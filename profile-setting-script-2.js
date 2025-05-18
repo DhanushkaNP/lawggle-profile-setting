@@ -1781,15 +1781,13 @@ async function updateallthefields(email, member = {}) {
 
       // To do
       if (jsonUser["min hourly rate"] != null) {
-        document.getElementById("minRate").innerText =
-          jsonUser["min hourly rate"];
-        console.log("minRate element 3", document.getElementById("minRate"));
+        $("#minRate").val(jsonUser["min hourly rate"]);
+        console.log("Value set with jQuery:", $("#minRate").val());
       }
 
       if (jsonUser["max hourly rate"] != null) {
-        document.getElementById("maxRate").innerText =
-          jsonUser["max hourly rate"];
-        console.log("maxRate element 3", document.getElementById("maxRate"));
+        $("#maxRate").val(jsonUser["max hourly rate"]);
+        console.log("Value set with jQuery:", $("#maxRate").val());
       }
 
       let thegeolocationaddress = jsonUser["address"];
