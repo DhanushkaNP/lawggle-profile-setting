@@ -1256,7 +1256,7 @@ $(document).ready(async function () {
           "min hourly rate": minhourlyRate,
           "max hourly rate": maxhourlyRate,
           "firm url": firmurl,
-          "expertise category": expertSubCategory,
+          "area of expertise": expertSubCategory,
           education: educationsave,
           AllEducation: [...alleducation, ...savededucation],
         };
@@ -1763,7 +1763,7 @@ async function updateallthefields(email, member = {}) {
       const pageinputs = document.querySelectorAll("input");
       theCategory2 = jsonUser["expertise category"];
       theLawyerPronouns = jsonUser["theLawyerPronouns"];
-      theSubcategory2 = jsonUser["expertise category"];
+      theSubcategory2 = jsonUser["area of expertise"];
       let alltheIDS = ["selectpronouns"];
       let languagelist = [];
       let lawyerlanguages = jsonUser["languages"];
@@ -2071,7 +2071,7 @@ async function updateallthefields(email, member = {}) {
       $(`#mySelect`).val(jsonUser["expertise category"]).trigger("change");
       document.getElementById("subSelect").innerHTML = "";
       let recreate = await addSubCategories("");
-      $(`#subSelect`).val(jsonUser["expertise category"]).trigger("change");
+      $(`#subSelect`).val(jsonUser["area of expertise"]).trigger("change");
       pageinputs.forEach((input) => {
         console.log(input.name, input.value);
         inputfor = input.getAttribute("inputfor");
