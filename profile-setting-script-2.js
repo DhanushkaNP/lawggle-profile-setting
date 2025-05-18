@@ -1829,6 +1829,9 @@ async function updateallthefields(email, member = {}) {
       document.getElementById("dynamicbio").value = dynamicBio;
       let offerconsultation = jsonUser["free consultation"];
 
+      document.getElementById("minRate").value = jsonUser["min hourly rate"];
+      document.getElementById("maxRate").value = jsonUser["max hourly rate"];
+
       let thegeolocationaddress = jsonUser["address"];
 
       if (
@@ -1924,6 +1927,8 @@ async function updateallthefields(email, member = {}) {
       let allEducation = jsonUser["AllEducation"]
         ? jsonUser["AllEducation"]
         : jsonUser["education"];
+
+      console.log("allEducation", allEducation);
 
       let thecaseslider5 = document.getElementById("educationCarrier");
       thecaseslider5.innerHTML = "";
