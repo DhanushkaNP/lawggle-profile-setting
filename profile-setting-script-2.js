@@ -661,6 +661,7 @@ document.addEventListener("DOMContentLoaded", async () => {
         };
         let theupdatedItem = await updateItem(updateemail, thedata);
         console.log(theupdatedItem);
+        location.reload();
         updatedom = await updateallthefields(updateemail);
         document.getElementById("thesavealertshow").style.display = "flex";
         let hidepopup = await delaysomeminutes();
@@ -679,6 +680,7 @@ document.addEventListener("DOMContentLoaded", async () => {
         };
         let theupdatedItem = await updateItem(updateemail, thedata);
         console.log(theupdatedItem);
+        location.reload();
         updatedom = await updateallthefields(updateemail);
         document.getElementById("thesavealertshow").style.display = "flex";
         let hidepopup = await delaysomeminutes();
@@ -1086,6 +1088,7 @@ $(document).ready(async function () {
         let toChangeData = { "notable case wins": notablecasewins };
         console.log(toChangeData);
         let updateduser = await updateItem(thisUserId, toChangeData);
+        location.reload();
         let updatenewestdom = await updateallthefields(thisUserId);
         document.getElementById("thesavealertshow").style.display = "flex";
         let todelay = await delaysomeminutes();
@@ -1111,6 +1114,7 @@ $(document).ready(async function () {
 
         let theupdatedItem = await updateItem(updateemail, thedata);
         console.log(theupdatedItem);
+        location.reload();
         updatedom = await updateallthefields(updateemail);
         document.getElementById("thesavealertshow").style.display = "flex";
         let hidepopup = await delaysomeminutes();
@@ -1132,6 +1136,7 @@ $(document).ready(async function () {
         let toChangeData = { "media press mentions": mediapressbriefings };
         console.log(toChangeData);
         let updateduser = await updateItem(thisUserId, toChangeData);
+        location.reload();
         let updatenewestdom = await updateallthefields(thisUserId);
         document.getElementById("thesavealertshow").style.display = "flex";
         let todelay = await delaysomeminutes();
@@ -1154,6 +1159,7 @@ $(document).ready(async function () {
         };
         let theupdatedItem = await updateItem(updateemail, thedata);
         console.log(theupdatedItem);
+        location.reload();
         updatedom = await updateallthefields(updateemail);
         document.getElementById("thesavealertshow").style.display = "flex";
         let hidepopup = await delaysomeminutes();
@@ -1174,6 +1180,7 @@ $(document).ready(async function () {
         let toChangeData = { "personal qa": qaquestions };
         console.log(toChangeData);
         let updateduser = await updateItem(thisUserId, toChangeData);
+        location.reload();
         let updatenewestdom = await updateallthefields(thisUserId);
         document.getElementById("thesavealertshow").style.display = "flex";
         let todelay = await delaysomeminutes();
@@ -1194,6 +1201,7 @@ $(document).ready(async function () {
         let toChangeData = { certificates: thecurrentCerts };
         console.log(toChangeData);
         let updateduser = await updateItem(thisUserId, toChangeData);
+        location.reload();
         let updatenewestdom = await updateallthefields(thisUserId);
         document.getElementById("thesavealertshow").style.display = "flex";
         let todelay = await delaysomeminutes();
@@ -1704,7 +1712,6 @@ async function updateItem(email, data) {
     );
     const result = await response.text();
     console.log(result);
-    location.reload();
   } catch (error) {
     console.error("Error updating item:", error);
   }
