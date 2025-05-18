@@ -687,59 +687,75 @@ document.addEventListener("DOMContentLoaded", async () => {
       }
 
       if (uploaderId == "certicateUpload") {
+        let thelawyercerticates = jsonUser["certificates"] ?? [];
+        let thisuniqueId = await generateUniqueId();
+        let thiscertificates = {
+          url: url,
+          "unique id": thisuniqueId,
+        };
+        thelawyercerticates.push(thiscertificates);
+        let thedata = {
+          certificates: thelawyercerticates,
+        };
+        let theupdatedItem = await updateItem(updateemail, thedata);
+        console.log(theupdatedItem);
+        updatedom = await updateallthefields(updateemail);
+        document.getElementById("thesavealertshow").style.display = "flex";
+        await delaysomeminutes();
+
         thecertificates = theUrls;
         thelawyercerticates = [...thelawyercerticates, ...thecertificates];
 
-        for (let eachurl in thelawyercerticates) {
-          let theUserContainer = document.querySelectorAll(".slide-img");
+        // for (let eachurl in thelawyercerticates) {
+        //   let theUserContainer = document.querySelectorAll(".slide-img");
 
-          theUserContainer.forEach((e) => {
-            let containusermain = e.getAttribute("itemindex");
-            if (containusermain != `cert${eachurl}`) {
-              let certcontain = document.createElement("div");
-              certcontain.classList.add("slide-img", "2ne", "w-slide");
-              certcontain.setAttribute("itemindex", `cert${eachurl}`);
-              certcontain.style.maxWidth = "300px";
-              let theimageWrap = document.createElement("div");
-              /*
-                theimageWrap.style.backgroundImage = `url('${mongodbcertificates[eachcert]}')`;
-                theimageWrap.style.backgroundSize = "cover"; // Makes the image cover the div
-                theimageWrap.style.backgroundPosition = "center"; // Centers the image
-                */
-              theimageWrap.classList.add("img-wrap", "certificatewrap");
-              let thecertimage = document.createElement("img");
-              thecertimage.classList.add("imagyclass");
-              thecertimage.src = thelawyercerticates[eachurl];
-              let certdelete = document.createElement("img");
-              certdelete.classList.add("deletebriefs");
-              certdelete.src =
-                "https://cdn.prod.website-files.com/67e360f08a15ef65d8814b41/67f6dfbc2b16d9977c85eeb2_Group%201597881168.png";
-              certdelete.setAttribute("itemindex", `cert${eachurl}`);
+        //   theUserContainer.forEach((e) => {
+        //     let containusermain = e.getAttribute("itemindex");
+        //     if (containusermain != `cert${eachurl}`) {
+        //       let certcontain = document.createElement("div");
+        //       certcontain.classList.add("slide-img", "2ne", "w-slide");
+        //       certcontain.setAttribute("itemindex", `cert${eachurl}`);
+        //       certcontain.style.maxWidth = "300px";
+        //       let theimageWrap = document.createElement("div");
+        //       /*
+        //         theimageWrap.style.backgroundImage = `url('${mongodbcertificates[eachcert]}')`;
+        //         theimageWrap.style.backgroundSize = "cover"; // Makes the image cover the div
+        //         theimageWrap.style.backgroundPosition = "center"; // Centers the image
+        //         */
+        //       theimageWrap.classList.add("img-wrap", "certificatewrap");
+        //       let thecertimage = document.createElement("img");
+        //       thecertimage.classList.add("imagyclass");
+        //       thecertimage.src = thelawyercerticates[eachurl];
+        //       let certdelete = document.createElement("img");
+        //       certdelete.classList.add("deletebriefs");
+        //       certdelete.src =
+        //         "https://cdn.prod.website-files.com/67e360f08a15ef65d8814b41/67f6dfbc2b16d9977c85eeb2_Group%201597881168.png";
+        //       certdelete.setAttribute("itemindex", `cert${eachurl}`);
 
-              certdelete.addEventListener("click", async () => {
-                let thedeleteButton = event.target;
-                let todeleteindex = thedeleteButton.getAttribute("itemindex");
-                let elements = document.querySelectorAll(".slide-img.\\32 ne");
-                thelawyercerticates.splice(eachurl, 1);
+        //       certdelete.addEventListener("click", async () => {
+        //         let thedeleteButton = event.target;
+        //         let todeleteindex = thedeleteButton.getAttribute("itemindex");
+        //         let elements = document.querySelectorAll(".slide-img.\\32 ne");
+        //         thelawyercerticates.splice(eachurl, 1);
 
-                elements.forEach((e) => {
-                  let theelemattr = e.getAttribute("itemindex");
-                  if (theelemattr == todeleteindex) {
-                    document
-                      .getElementById("thecertimaincontainer")
-                      .removeChild(e);
-                  }
-                });
-              });
+        //         elements.forEach((e) => {
+        //           let theelemattr = e.getAttribute("itemindex");
+        //           if (theelemattr == todeleteindex) {
+        //             document
+        //               .getElementById("thecertimaincontainer")
+        //               .removeChild(e);
+        //           }
+        //         });
+        //       });
 
-              theimageWrap.append(certdelete, thecertimage);
-              certcontain.append(theimageWrap);
-              document
-                .getElementById("thecertimaincontainer")
-                .append(certcontain);
-            }
-          });
-        }
+        //       theimageWrap.append(certdelete, thecertimage);
+        //       certcontain.append(theimageWrap);
+        //       document
+        //         .getElementById("thecertimaincontainer")
+        //         .append(certcontain);
+        //     }
+        //   });
+        // }
         //console.log(`Uploader ${index + 1} uploaded:`, fileName);
         //console.log(`File name with extension:`, fileName);
 
