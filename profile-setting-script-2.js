@@ -1893,12 +1893,14 @@ async function updateallthefields(email, member = {}) {
         document.getElementById("minRate").value = parseInt(
           jsonUser["min hourly rate"]
         );
+        console.log("minRate element", document.getElementById("minRate"));
       }
 
       if (jsonUser["max hourly rate"] != null) {
         document.getElementById("maxRate").value = parseInt(
           jsonUser["max hourly rate"]
         );
+        console.log("maxRate element", document.getElementById("maxRate"));
       }
 
       let thegeolocationaddress = jsonUser["address"];
