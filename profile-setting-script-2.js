@@ -1780,19 +1780,17 @@ async function updateallthefields(email, member = {}) {
       let offerconsultation = jsonUser["free consultation"];
 
       // To do
-      // if (jsonUser["min hourly rate"] != null) {
-      //   document
-      //     .getElementById("minRate")
-      //     .setAttribute("value", parseInt(jsonUser["min hourly rate"]));
-      //   console.log("minRate element 2", document.getElementById("minRate"));
-      // }
+      if (jsonUser["min hourly rate"] != null) {
+        document.getElementById("minRate").innerText =
+          jsonUser["min hourly rate"];
+        console.log("minRate element 3", document.getElementById("minRate"));
+      }
 
-      // if (jsonUser["max hourly rate"] != null) {
-      //   document
-      //     .getElementById("maxRate")
-      //     .setAttribute("value", parseInt(jsonUser["max hourly rate"]));
-      //   console.log("maxRate element 2", document.getElementById("maxRate"));
-      // }
+      if (jsonUser["max hourly rate"] != null) {
+        document.getElementById("maxRate").innerText =
+          jsonUser["max hourly rate"];
+        console.log("maxRate element 3", document.getElementById("maxRate"));
+      }
 
       let thegeolocationaddress = jsonUser["address"];
 
