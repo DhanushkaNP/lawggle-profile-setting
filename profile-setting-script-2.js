@@ -1375,7 +1375,8 @@ $(document).ready(async function () {
         document.getElementById("theloadingwait").style.display = "flex";
         let thisUserId = localStorage.getItem("userEmail");
         let lawyerlanguages = await readselect("thelanguage");
-        let theinterestsandhobbies = await readselectnoImage("HobbySelect");
+        // No need to handle the interests and hobbies here it's handled in sectionhobbysave
+        // let theinterestsandhobbies = await readselectnoImage("HobbySelect");
         let thelawyercerticates = thecertificates;
         let awardText = document.getElementById("awardsrecognition").value;
         let awardList = awardText.split(/\r?\n/);
@@ -1393,7 +1394,7 @@ $(document).ready(async function () {
 
         let toChangeData = {
           languages: lawyerlanguages,
-          "interests and hobbies": theinterestsandhobbies,
+          // "interests and hobbies": theinterestsandhobbies,
           certificates: [...thelawyercerticates, ...thecurrentCerts],
           "awards recognition": awardList,
           "blog contributor": blogContributer,
