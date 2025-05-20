@@ -445,10 +445,32 @@ async function generateUniqueId() {
 
 document.addEventListener("DOMContentLoaded", async () => {
   // scroll to the saved position
-  const scrollY = localStorage.getItem("scrollY-ps") ?? 0;
-  if (scrollY !== null) {
-    window.scrollTo(0, parseInt(scrollY));
-    sessionStorage.removeItem("scrollY");
+  const savedScrollY = localStorage.getItem("scrollY-ps");
+
+  console.log("Retrieved saved scroll position:", savedScrollY);
+
+  if (savedScrollY !== null) {
+    // Make sure we convert the string to a number
+    const scrollPosition = parseInt(savedScrollY, 10);
+
+    console.log("Restoring to position:", scrollPosition);
+
+    // Use setTimeout to ensure the page has time to render
+    // before attempting to scroll
+    setTimeout(function () {
+      window.scrollTo({
+        top: scrollPosition,
+        behavior: "auto", // Use "auto" for immediate scrolling
+      });
+
+      console.log(
+        "Scroll restoration complete. Current position:",
+        window.scrollY
+      );
+    }, 100);
+
+    // Optional: Clear the saved position after restoring
+    // localStorage.removeItem("scrollY-ps");
   }
 
   const minRateInput = document.getElementById("minRate");
@@ -2693,5 +2715,7 @@ function reloadWindowAndPreserveScroll() {
   localStorage.setItem("scrollY-ps", window.scrollY);
 
   // Reload the page
-  location.reload();
+  setTimeout(function () {
+    location.reload();
+  }, 50);
 }
