@@ -1228,7 +1228,7 @@ $(document).ready(async function () {
         let jsonUser = JSON.parse(JSON.parse(userData));
         let savededucation = jsonUser["AllEducation"]
           ? jsonUser["AllEducation"]
-          : ["education"];
+          : [];
 
         document.getElementById("theloadingwait").style.display = "flex";
         let pronouns = await readselectnoImage("selectpronouns");
