@@ -2521,7 +2521,7 @@ async function mapBoxMap(latitude, longitude) {
 async function getAddressFromCoords(lat, lng) {
   const accessToken =
     "pk.eyJ1IjoibGF3Z2dsZSIsImEiOiJja2RraDU0ZnYwb2lqMnhwbWw2eXVrMjNrIn0.ShD8eyKTv7exWDKR44bSoA"; // Replace with your pk.*
-  const url = `https://api.mapbox.com/geocoding/v5/mapbox.places/${lng},${lat}.json?access_token=${accessToken}`;
+  const url = `https://api.mapbox.com/geocoding/v5/mapbox.places/${long},${lat}.json?access_token=${accessToken}`;
 
   fetch(url)
     .then((res) => res.json())
