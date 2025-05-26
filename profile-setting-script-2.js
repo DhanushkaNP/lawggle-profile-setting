@@ -2042,7 +2042,7 @@ async function updateallthefields(email, member = {}) {
           "https://cdn.prod.website-files.com/67e360f08a15ef65d8814b41/67f688109c8eaf330c0f0e34_icons8-unchecked-checkbox-50.png";
         document.getElementById("offerconsultancyimageyes").src =
           "https://cdn.prod.website-files.com/67e360f08a15ef65d8814b41/67f689ee9a1a8514a23f8919_icons8-checked-box-24.png";
-      } else {
+      } else if (offerconsultation == "no") {
         document.getElementById("offerconsultancyimageno").src =
           "https://cdn.prod.website-files.com/67e360f08a15ef65d8814b41/67f689ee9a1a8514a23f8919_icons8-checked-box-24.png";
         document.getElementById("offerconsultancyimageyes").src =
@@ -2054,7 +2054,7 @@ async function updateallthefields(email, member = {}) {
           "https://cdn.prod.website-files.com/67e360f08a15ef65d8814b41/67f688109c8eaf330c0f0e34_icons8-unchecked-checkbox-50.png";
         document.getElementById("offercontingencyimageyes").src =
           "https://cdn.prod.website-files.com/67e360f08a15ef65d8814b41/67f689ee9a1a8514a23f8919_icons8-checked-box-24.png";
-      } else {
+      } else if (offercontingency == "no") {
         document.getElementById("offercontingencyimageno").src =
           "https://cdn.prod.website-files.com/67e360f08a15ef65d8814b41/67f689ee9a1a8514a23f8919_icons8-checked-box-24.png";
         document.getElementById("offercontingencyimageyes").src =
@@ -2066,7 +2066,7 @@ async function updateallthefields(email, member = {}) {
           "https://cdn.prod.website-files.com/67e360f08a15ef65d8814b41/67f688109c8eaf330c0f0e34_icons8-unchecked-checkbox-50.png";
         document.getElementById("probonoimageyes").src =
           "https://cdn.prod.website-files.com/67e360f08a15ef65d8814b41/67f689ee9a1a8514a23f8919_icons8-checked-box-24.png";
-      } else {
+      } else if (probonowork == "no") {
         document.getElementById("probonoimageno").src =
           "https://cdn.prod.website-files.com/67e360f08a15ef65d8814b41/67f689ee9a1a8514a23f8919_icons8-checked-box-24.png";
         document.getElementById("probonoimageyes").src =
