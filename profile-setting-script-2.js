@@ -1422,7 +1422,7 @@ $(document).ready(async function () {
           "awards recognition": awardList,
           "blog contributor": blogContributer,
           "client centric mission": clientcentricMisssionStatement,
-          "dynamic bio": dynamicbio,
+          "dynamic bio": dynamicbio ? dynamicbio.trim() : "",
         };
 
         let updateduser = await updateItem(thisUserId, toChangeData);
