@@ -2305,7 +2305,7 @@ async function updateallthefields(email, member = {}) {
           swiperWrapper.append(slide);
         }
 
-        testimonialSlider.append(prevBtn, nextBtn, swiperWrapper, pagination);
+        testimonialSlider.append(swiperWrapper, prevBtn, nextBtn, pagination);
 
         loadSwiperJS().then(() => {
           new Swiper(testimonialSlider, {
