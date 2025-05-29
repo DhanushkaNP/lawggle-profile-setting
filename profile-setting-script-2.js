@@ -2561,6 +2561,7 @@ async function getAddressFromCoords(lat, lng) {
   try {
     const res = await fetch(url);
     const data = await res.json();
+    console.warn("Data from Mapbox:", data);
     const features = data.features;
     const fullAddress = features[0]?.place_name || "";
     return fullAddress;
