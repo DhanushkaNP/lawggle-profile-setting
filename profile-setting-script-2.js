@@ -1815,18 +1815,18 @@ async function updateallthefields(email, member = {}) {
         if (lati & longi) {
           let themapstart = mapBoxMap(lati, longi);
 
-          getAddressFromCoords(lati, longi).then((addressText) => {
-            console.warn("Address from coordinates:", addressText);
-            console.warn("latitude:", lati, "longitude:", longi);
-            const geocoderInput = document.querySelector(
-              '.mapboxgl-ctrl-geocoder input[type="text"]'
-            );
+          // getAddressFromCoords(lati, longi).then((addressText) => {
+          //   console.warn("Address from coordinates:", addressText);
+          //   console.warn("latitude:", lati, "longitude:", longi);
+          //   const geocoderInput = document.querySelector(
+          //     '.mapboxgl-ctrl-geocoder input[type="text"]'
+          //   );
 
-            console.warn("Geocoder input element:", geocoderInput);
-            if (geocoderInput) {
-              geocoderInput.value = addressText;
-            }
-          });
+          //   console.warn("Geocoder input element:", geocoderInput);
+          //   if (geocoderInput) {
+          //     geocoderInput.value = addressText;
+          //   }
+          // });
         }
       } else {
         theuserGeolocation = await getUserautoGeoLocation();
