@@ -2252,35 +2252,47 @@ async function updateallthefields(email, member = {}) {
 
       let clientTestimonials = jsonUser["client video testimonials"] ?? [];
       if (clientTestimonials.length > 0) {
-        let thecaseslider2 = document.getElementById(
-          "editclientvideotestimonials"
-        );
-        thecaseslider2.innerHTML = "";
-        thecaseslider2.setAttribute("style", "display: block !important");
+        let testimonialSlider = document.getElementById("testimonialholder");
+        testimonialSlider.innerHTML = "";
+        testimonialSlider.classList.add("swiper", "testmonial-container");
         console.warn("reached editclientvideotestimonials");
 
+        // Create navigation buttons
+        const prevBtn = document.createElement("div");
+        prevBtn.className = "swiper-button-prev cert-nav-btn";
+        prevBtn.style.display = "none"; // Hide by default
+
+        const nextBtn = document.createElement("div");
+        nextBtn.className = "swiper-button-next cert-nav-btn";
+        nextBtn.style.display = "none"; // Hide by default
+
+        // Create pagination
+        const pagination = document.createElement("div");
+        pagination.className = "swiper-pagination";
+
+        let swiperWrapper = document.createElement("div");
+        swiperWrapper.classList.add("swiper-wrapper");
+
         for (let testimonialvideos in clientTestimonials) {
-          let sliderelement2 = document.createElement("div");
-          sliderelement2.classList.add(
-            "slide-5c",
-            "videotestimonials",
-            "w-slide"
-          );
-          let testimonialdiv = document.createElement("div");
-          testimonialdiv.classList.add("vid-wrap", "edit-page");
+          let slide = document.createElement("div");
+          slide.classList.add("swiper-slide", "testimonial-video-wrap");
+
           let testimonialvideo = document.createElement("video");
           testimonialvideo.controls = true;
-          testimonialvideo.classList.add("videoclass");
+          testimonialvideo.playsInline = true;
+          testimonialvideo.preload = "auto";
+          testimonialvideo.classList.add("testimonial-video");
           let videosource = document.createElement("source");
           videosource.src = clientTestimonials[testimonialvideos].url;
           testimonialvideo.append(videosource);
+
           let theimagecheck = document.createElement("img");
           theimagecheck.classList.add("deleteicongroup");
           theimagecheck.src =
             "https://cdn.prod.website-files.com/67e360f08a15ef65d8814b41/67f6dfbc2b16d9977c85eeb2_Group%201597881168.png";
           theimagecheck.setAttribute("itemindex", testimonialvideos);
 
-          theimagecheck.addEventListener("click", async () => {
+          theimagecheck.addEventListener("click", async (event) => {
             let thedeleteButton = event.target;
             let todeleteindex = thedeleteButton.getAttribute("itemindex");
             let thedeletecontainer = document.getElementById(
@@ -2290,9 +2302,47 @@ async function updateallthefields(email, member = {}) {
             thedeletecontainer.setAttribute("itemindex", todeleteindex);
           });
 
-          testimonialdiv.append(testimonialvideo, theimagecheck);
-          sliderelement2.append(testimonialdiv);
-          thecaseslider2.append(sliderelement2);
+          slide.append(testimonialvideo, theimagecheck);
+          swiperWrapper.append(slide);
+          testimonialSlider.append(prevBtn, nextBtn, swiperWrapper, pagination);
+
+          new Swiper(certicateContainer, {
+            spaceBetween: 16,
+            slidesOffsetAfter: 30,
+            centeredSlides: false,
+            pagination: {
+              el: pagination,
+              clickable: true,
+            },
+            navigation: {
+              nextEl: nextBtn,
+              prevEl: prevBtn,
+            },
+            // Disable swiping on desktop, enable on mobile
+            allowTouchMove: window.innerWidth < 1024,
+            breakpoints: {
+              0: {
+                slidesPerView: 1.1,
+                allowTouchMove: true,
+                centeredSlides: false,
+                slidesOffsetAfter: 30,
+              },
+              1024: {
+                slidesPerView: 1,
+                allowTouchMove: false,
+                centeredSlides: true, // Center the single slide
+                slidesOffsetAfter: 0, // Remove offset for true centering
+              },
+            },
+            on: {
+              touchStart: function () {
+                this.el.style.transition = "none";
+              },
+              touchEnd: function () {
+                this.el.style.transition = "";
+              },
+            },
+          });
         }
       } else {
         let thecaseslider2 = document.getElementById(
