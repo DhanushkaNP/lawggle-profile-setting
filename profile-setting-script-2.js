@@ -2556,32 +2556,20 @@ async function mapBoxMap(latitude, longitude) {
 
 async function getAddressFromCoords(lat, lng) {
   const accessToken =
-    "pk.eyJ1IjoibGF3Z2dsZSIsImEiOiJja2RraDU0ZnYwb2lqMnhwbWw2eXVrMjNrIn0.ShD8eyKTv7exWDKR44bSoA"; // Replace with your pk.*
+    "pk.eyJ1IjoibGF3Z2dsZSIsImEiOiJja2RraDU0ZnYwb2lqMnhwbWw2eXVrMjNrIn0.ShD8eyKTv7exWDKR44bSoA";
   const url = `https://api.mapbox.com/geocoding/v5/mapbox.places/${lng},${lat}.json?access_token=${accessToken}`;
 
-  fetch(url)
-    .then((res) => res.json())
-    .then((data) => {
-      const features = data.features;
-
-      // Full formatted address (first result)
-      const fullAddress = features[0]?.place_name || "Unknown";
-      console.log("Full Address:", fullAddress);
-      // Individual components
-      const addressInfo = {
-        fullAddress: fullAddress,
-        city: getComponent(features, "place"),
-        province: getComponent(features, "region"),
-        postalCode: getComponent(features, "postcode"),
-        country: getComponent(features, "country"),
-      };
-
-      console.log("Address Info:", addressInfo);
-      return addressInfo;
-    })
-    .catch((err) => console.error("Error fetching address:", err));
+  try {
+    const res = await fetch(url);
+    const data = await res.json();
+    const features = data.features;
+    // Return the full formatted address (first result)
+    return features[0]?.place_name || "Unknown";
+  } catch (err) {
+    console.error("Error fetching address:", err);
+    return "Unknown";
+  }
 }
-
 function getComponent(features, type) {
   const match = features.find((f) => f.place_type.includes(type));
   return match ? match.text : null;
