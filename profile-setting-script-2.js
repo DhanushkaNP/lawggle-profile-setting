@@ -2274,7 +2274,7 @@ async function updateallthefields(email, member = {}) {
 
         for (let testimonialvideos in clientTestimonials) {
           let slide = document.createElement("div");
-          slide.classList.add("swiper-slide", "testimonial-video-wrap");
+          slide.classList.add("swiper-slide");
 
           let testimonialvideo = document.createElement("video");
           testimonialvideo.controls = true;
