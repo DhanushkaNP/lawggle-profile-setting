@@ -1816,16 +1816,51 @@ async function updateallthefields(email, member = {}) {
           let themapstart = mapBoxMap(lati, longi);
 
           getAddressFromCoords(lati, longi).then((addressText) => {
-            console.warn("Address from coordinates:", addressText);
-            console.warn("latitude:", lati, "longitude:", longi);
-            const geocoderInput = document.querySelector(
-              '.mapboxgl-ctrl-geocoder input[type="text"]'
-            );
+            // Instead of using addressText (full address), fetch city, province, country
+            fetch(
+              `https://api.mapbox.com/geocoding/v5/mapbox.places/${longi},${lati}.json?access_token=pk.eyJ1IjoibGF3Z2dsZSIsImEiOiJja2RraDU0ZnYwb2lqMnhwbWw2eXVrMjNrIn0.ShD8eyKTv7exWDKR44bSoA`
+            )
+              .then((res) => res.json())
+              .then((data) => {
+                const features = data.features[0]?.context || [];
+                let city = "";
+                let province = "";
+                let country = "";
 
-            console.warn("Geocoder input element:", geocoderInput);
-            if (geocoderInput) {
-              geocoderInput.value = addressText;
-            }
+                features.forEach((item) => {
+                  if (item.id.startsWith("place")) city = item.text;
+                  if (item.id.startsWith("region")) province = item.text;
+                  if (item.id.startsWith("country")) country = item.text;
+                });
+
+                // Fallback to main feature if context is missing
+                if (!city && data.features[0]?.place_type.includes("place")) {
+                  city = data.features[0].text;
+                }
+                if (
+                  !province &&
+                  data.features[0]?.place_type.includes("region")
+                ) {
+                  province = data.features[0].text;
+                }
+                if (
+                  !country &&
+                  data.features[0]?.place_type.includes("country")
+                ) {
+                  country = data.features[0].text;
+                }
+
+                const shortAddress = [city, province, country]
+                  .filter(Boolean)
+                  .join(", ");
+
+                const geocoderInput = document.querySelector(
+                  '.mapboxgl-ctrl-geocoder input[type="text"]'
+                );
+                if (geocoderInput) {
+                  geocoderInput.value = shortAddress;
+                }
+              });
           });
         }
       } else {
@@ -2554,45 +2589,22 @@ async function mapBoxMap(latitude, longitude) {
     .addTo(map);
 }
 
-getAddressFromCoords(lati, longi).then((addressText) => {
-  // Instead of using addressText (full address), fetch city, province, country
-  fetch(
-    `https://api.mapbox.com/geocoding/v5/mapbox.places/${longi},${lati}.json?access_token=pk.eyJ1IjoibGF3Z2dsZSIsImEiOiJja2RraDU0ZnYwb2lqMnhwbWw2eXVrMjNrIn0.ShD8eyKTv7exWDKR44bSoA`
-  )
-    .then((res) => res.json())
-    .then((data) => {
-      const features = data.features[0]?.context || [];
-      let city = "";
-      let province = "";
-      let country = "";
+async function getAddressFromCoords(lat, lng) {
+  const accessToken =
+    "pk.eyJ1IjoibGF3Z2dsZSIsImEiOiJja2RraDU0ZnYwb2lqMnhwbWw2eXVrMjNrIn0.ShD8eyKTv7exWDKR44bSoA";
+  const url = `https://api.mapbox.com/geocoding/v5/mapbox.places/${lng},${lat}.json?access_token=${accessToken}`;
 
-      features.forEach((item) => {
-        if (item.id.startsWith("place")) city = item.text;
-        if (item.id.startsWith("region")) province = item.text;
-        if (item.id.startsWith("country")) country = item.text;
-      });
-
-      // Fallback to main feature if context is missing
-      if (!city && data.features[0]?.place_type.includes("place")) {
-        city = data.features[0].text;
-      }
-      if (!province && data.features[0]?.place_type.includes("region")) {
-        province = data.features[0].text;
-      }
-      if (!country && data.features[0]?.place_type.includes("country")) {
-        country = data.features[0].text;
-      }
-
-      const shortAddress = [city, province, country].filter(Boolean).join(", ");
-
-      const geocoderInput = document.querySelector(
-        '.mapboxgl-ctrl-geocoder input[type="text"]'
-      );
-      if (geocoderInput) {
-        geocoderInput.value = shortAddress;
-      }
-    });
-});
+  try {
+    const res = await fetch(url);
+    const data = await res.json();
+    const features = data.features;
+    // Return the full formatted address (first result)
+    return features[0]?.place_name || "Unknown";
+  } catch (err) {
+    console.error("Error fetching address:", err);
+    return "Unknown";
+  }
+}
 
 function getComponent(features, type) {
   const match = features.find((f) => f.place_type.includes(type));
