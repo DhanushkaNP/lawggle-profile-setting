@@ -2308,7 +2308,7 @@ async function updateallthefields(email, member = {}) {
         testimonialSlider.append(prevBtn, nextBtn, swiperWrapper, pagination);
 
         loadSwiperJS().then(() => {
-          new Swiper(certicateContainer, {
+          new Swiper(testimonialSlider, {
             spaceBetween: 16,
             slidesOffsetAfter: 30,
             centeredSlides: false,
