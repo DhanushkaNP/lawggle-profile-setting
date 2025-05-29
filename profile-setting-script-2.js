@@ -2307,42 +2307,44 @@ async function updateallthefields(email, member = {}) {
 
         testimonialSlider.append(prevBtn, nextBtn, swiperWrapper, pagination);
 
-        new Swiper(certicateContainer, {
-          spaceBetween: 16,
-          slidesOffsetAfter: 30,
-          centeredSlides: false,
-          pagination: {
-            el: pagination,
-            clickable: true,
-          },
-          navigation: {
-            nextEl: nextBtn,
-            prevEl: prevBtn,
-          },
-          // Disable swiping on desktop, enable on mobile
-          allowTouchMove: window.innerWidth < 1024,
-          breakpoints: {
-            0: {
-              slidesPerView: 1.1,
-              allowTouchMove: true,
-              centeredSlides: false,
-              slidesOffsetAfter: 30,
+        loadSwiperJS().then(() => {
+          new Swiper(certicateContainer, {
+            spaceBetween: 16,
+            slidesOffsetAfter: 30,
+            centeredSlides: false,
+            pagination: {
+              el: pagination,
+              clickable: true,
             },
-            1024: {
-              slidesPerView: 1,
-              allowTouchMove: false,
-              centeredSlides: true, // Center the single slide
-              slidesOffsetAfter: 0, // Remove offset for true centering
+            navigation: {
+              nextEl: nextBtn,
+              prevEl: prevBtn,
             },
-          },
-          on: {
-            touchStart: function () {
-              this.el.style.transition = "none";
+            // Disable swiping on desktop, enable on mobile
+            allowTouchMove: window.innerWidth < 1024,
+            breakpoints: {
+              0: {
+                slidesPerView: 1.1,
+                allowTouchMove: true,
+                centeredSlides: false,
+                slidesOffsetAfter: 30,
+              },
+              1024: {
+                slidesPerView: 1,
+                allowTouchMove: false,
+                centeredSlides: true, // Center the single slide
+                slidesOffsetAfter: 0, // Remove offset for true centering
+              },
             },
-            touchEnd: function () {
-              this.el.style.transition = "";
+            on: {
+              touchStart: function () {
+                this.el.style.transition = "none";
+              },
+              touchEnd: function () {
+                this.el.style.transition = "";
+              },
             },
-          },
+          });
         });
       } else {
         let thecaseslider2 = document.getElementById(
@@ -2806,4 +2808,29 @@ function reloadWindowAndPreserveScroll() {
   setTimeout(function () {
     location.reload();
   }, 50);
+}
+
+function loadSwiperJS() {
+  return new Promise((resolve) => {
+    if (window.Swiper) {
+      resolve();
+      return;
+    }
+
+    // Load Swiper CSS if not already loaded
+    if (!document.getElementById("swiper-css")) {
+      const swiperCSS = document.createElement("link");
+      swiperCSS.id = "swiper-css";
+      swiperCSS.rel = "stylesheet";
+      swiperCSS.href =
+        "https://cdn.jsdelivr.net/npm/swiper@10/swiper-bundle.min.css";
+      document.head.appendChild(swiperCSS);
+    }
+
+    const swiperScript = document.createElement("script");
+    swiperScript.src =
+      "https://cdn.jsdelivr.net/npm/swiper@10/swiper-bundle.min.js";
+    swiperScript.onload = resolve;
+    document.body.appendChild(swiperScript);
+  });
 }
