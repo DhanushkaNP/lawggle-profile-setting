@@ -2254,7 +2254,6 @@ async function updateallthefields(email, member = {}) {
       if (clientTestimonials.length > 0) {
         let testimonialSlider = document.getElementById("testimonialholder");
         testimonialSlider.innerHTML = "";
-        testimonialSlider.classList.add("swiper", "testmonial-container");
         console.warn("reached editclientvideotestimonials");
 
         // Create navigation buttons
@@ -2304,46 +2303,47 @@ async function updateallthefields(email, member = {}) {
 
           slide.append(testimonialvideo, theimagecheck);
           swiperWrapper.append(slide);
-          testimonialSlider.append(prevBtn, nextBtn, swiperWrapper, pagination);
-
-          new Swiper(certicateContainer, {
-            spaceBetween: 16,
-            slidesOffsetAfter: 30,
-            centeredSlides: false,
-            pagination: {
-              el: pagination,
-              clickable: true,
-            },
-            navigation: {
-              nextEl: nextBtn,
-              prevEl: prevBtn,
-            },
-            // Disable swiping on desktop, enable on mobile
-            allowTouchMove: window.innerWidth < 1024,
-            breakpoints: {
-              0: {
-                slidesPerView: 1.1,
-                allowTouchMove: true,
-                centeredSlides: false,
-                slidesOffsetAfter: 30,
-              },
-              1024: {
-                slidesPerView: 1,
-                allowTouchMove: false,
-                centeredSlides: true, // Center the single slide
-                slidesOffsetAfter: 0, // Remove offset for true centering
-              },
-            },
-            on: {
-              touchStart: function () {
-                this.el.style.transition = "none";
-              },
-              touchEnd: function () {
-                this.el.style.transition = "";
-              },
-            },
-          });
         }
+
+        testimonialSlider.append(prevBtn, nextBtn, swiperWrapper, pagination);
+
+        new Swiper(certicateContainer, {
+          spaceBetween: 16,
+          slidesOffsetAfter: 30,
+          centeredSlides: false,
+          pagination: {
+            el: pagination,
+            clickable: true,
+          },
+          navigation: {
+            nextEl: nextBtn,
+            prevEl: prevBtn,
+          },
+          // Disable swiping on desktop, enable on mobile
+          allowTouchMove: window.innerWidth < 1024,
+          breakpoints: {
+            0: {
+              slidesPerView: 1.1,
+              allowTouchMove: true,
+              centeredSlides: false,
+              slidesOffsetAfter: 30,
+            },
+            1024: {
+              slidesPerView: 1,
+              allowTouchMove: false,
+              centeredSlides: true, // Center the single slide
+              slidesOffsetAfter: 0, // Remove offset for true centering
+            },
+          },
+          on: {
+            touchStart: function () {
+              this.el.style.transition = "none";
+            },
+            touchEnd: function () {
+              this.el.style.transition = "";
+            },
+          },
+        });
       } else {
         let thecaseslider2 = document.getElementById(
           "editclientvideotestimonials"
