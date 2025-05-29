@@ -2556,25 +2556,8 @@ async function mapBoxMap(latitude, longitude) {
 
 async function getAddressFromCoords(lat, lng) {
   const accessToken =
-    "pk.eyJ1IjoibGF3Z2dsZSIsImEiOiJja2RraDU0ZnYwb2lqMnhwbWw2eXVrMjNrIn0.ShD8eyKTv7exWDKR44bSoA";
-  const url = `https://api.mapbox.com/geocoding/v5/mapbox.places/${lng},${lat}.json?access_token=${accessToken}`;
-  try {
-    const res = await fetch(url);
-    const data = await res.json();
-    console.warn("Data from Mapbox:", data);
-    const features = data.features;
-    const fullAddress = features[0]?.place_name || "";
-    return fullAddress;
-  } catch (err) {
-    console.error("Error fetching address:", err);
-    return "";
-  }
-}
-
-async function getAddressFromCoords(lat, lng) {
-  const accessToken =
     "pk.eyJ1IjoibGF3Z2dsZSIsImEiOiJja2RraDU0ZnYwb2lqMnhwbWw2eXVrMjNrIn0.ShD8eyKTv7exWDKR44bSoA"; // Replace with your pk.*
-  const url = `https://api.mapbox.com/geocoding/v5/mapbox.places/${long},${lat}.json?access_token=${accessToken}`;
+  const url = `https://api.mapbox.com/geocoding/v5/mapbox.places/${lng},${lat}.json?access_token=${accessToken}`;
 
   fetch(url)
     .then((res) => res.json())
@@ -2583,7 +2566,7 @@ async function getAddressFromCoords(lat, lng) {
 
       // Full formatted address (first result)
       const fullAddress = features[0]?.place_name || "Unknown";
-
+      console.log("Full Address:", fullAddress);
       // Individual components
       const addressInfo = {
         fullAddress: fullAddress,
