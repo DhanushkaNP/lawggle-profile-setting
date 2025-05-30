@@ -2316,7 +2316,7 @@ async function updateallthefields(email, member = {}) {
                 el: pagination,
                 clickable: true,
               },
-              slidesPerView: 1.2,
+              slidesPerView: 1.3,
               allowTouchMove: true,
               on: {
                 touchStart: function () {
