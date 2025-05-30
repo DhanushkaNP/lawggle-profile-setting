@@ -2330,7 +2330,7 @@ async function updateallthefields(email, member = {}) {
                 slidesOffsetAfter: 30,
               },
               1024: {
-                slidesPerView: 1,
+                slidesPerView: 3,
                 allowTouchMove: false,
                 centeredSlides: true, // Center the single slide
                 slidesOffsetAfter: 0, // Remove offset for true centering
