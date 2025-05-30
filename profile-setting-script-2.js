@@ -2307,45 +2307,29 @@ async function updateallthefields(email, member = {}) {
 
         testimonialSlider.append(swiperWrapper, prevBtn, nextBtn, pagination);
 
-        loadSwiperJS().then(() => {
-          new Swiper(testimonialSlider, {
-            spaceBetween: 16,
-            slidesOffsetAfter: 30,
-            centeredSlides: false,
-            pagination: {
-              el: pagination,
-              clickable: true,
-            },
-            navigation: {
-              nextEl: nextBtn,
-              prevEl: prevBtn,
-            },
-            // Disable swiping on desktop, enable on mobile
-            allowTouchMove: window.innerWidth < 1024,
-            breakpoints: {
-              0: {
-                slidesPerView: 1.1,
-                allowTouchMove: true,
-                centeredSlides: false,
-                slidesOffsetAfter: 30,
+        if (window.innerWidth < 1024) {
+          loadSwiperJS().then(() => {
+            new Swiper(testimonialSlider, {
+              spaceBetween: 16,
+              slidesOffsetAfter: 30,
+              centeredSlides: false,
+              pagination: {
+                el: pagination,
+                clickable: true,
               },
-              1024: {
-                slidesPerView: 3,
-                allowTouchMove: false,
-                centeredSlides: true, // Center the single slide
-                slidesOffsetAfter: 0, // Remove offset for true centering
+              slidesPerView: 1.1,
+              allowTouchMove: true,
+              on: {
+                touchStart: function () {
+                  this.el.style.transition = "none";
+                },
+                touchEnd: function () {
+                  this.el.style.transition = "";
+                },
               },
-            },
-            on: {
-              touchStart: function () {
-                this.el.style.transition = "none";
-              },
-              touchEnd: function () {
-                this.el.style.transition = "";
-              },
-            },
+            });
           });
-        });
+        }
       } else {
         let thecaseslider2 = document.getElementById(
           "editclientvideotestimonials"
