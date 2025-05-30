@@ -2309,7 +2309,7 @@ async function updateallthefields(email, member = {}) {
 
         if (window.innerWidth < 1024) {
           loadSwiperJS().then(() => {
-            new Swiper(clientTestimonialContainer, {
+            new Swiper(testimonialSlider, {
               slidesPerView: 1.3,
               spaceBetween: 16,
               slidesOffsetAfter: 60,
