@@ -3012,8 +3012,8 @@ function setupMediaAndPress(jsonUser) {
     if (window.innerWidth < 1024) {
       loadSwiperJS().then(() => {
         new Swiper(swiperContainer, {
-          slidesPerView: 1.1,
-          spaceBetween: 25,
+          slidesPerView: 1.2,
+          spaceBetween: 20,
           centeredSlides: false,
           allowTouchMove: true,
           navigation: false,
