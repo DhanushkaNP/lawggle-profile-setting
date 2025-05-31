@@ -2252,19 +2252,10 @@ async function updateallthefields(email, member = {}) {
 
       let clientTestimonials = jsonUser["client video testimonials"] ?? [];
       if (clientTestimonials.length > 0) {
-        let testimonialSlider = document.getElementById("testimonialholder");
+        let testimonialSlider = document.getElementById("testimonial-swiper");
         testimonialSlider.innerHTML = "";
+        testimonialSlider.classList.add("swiper", "testimonial-container");
         console.warn("reached editclientvideotestimonials");
-
-        // Create navigation buttons
-        const prevBtn = document.createElement("div");
-        prevBtn.className = "swiper-button-prev cert-nav-btn";
-        prevBtn.style.display = "none"; // Hide by default
-
-        const nextBtn = document.createElement("div");
-        nextBtn.className = "swiper-button-next cert-nav-btn";
-        nextBtn.style.display = "none"; // Hide by default
-
         // Create pagination
         const pagination = document.createElement("div");
         pagination.className = "swiper-pagination";
@@ -2274,19 +2265,16 @@ async function updateallthefields(email, member = {}) {
 
         for (let testimonialvideos in clientTestimonials) {
           let slide = document.createElement("div");
-          slide.classList.add("swiper-slide");
+          slide.classList.add("swiper-slide", "testimonial-video-wrap");
 
-          let testimonialvideo = document.createElement("video");
-          testimonialvideo.controls = true;
-          testimonialvideo.playsInline = true;
-          testimonialvideo.preload = "auto";
-          testimonialvideo.classList.add("testimonial-video");
-          let videosource = document.createElement("source");
-          videosource.src = clientTestimonials[testimonialvideos].url;
-          testimonialvideo.append(videosource);
+          let testimonial = document.createElement("video");
+          testimonial.classList.add("case-study-video-ps");
+          testimonial.src = clientTestimonials[testimonialvideos].url;
+          testimonial.controls = true;
+          testimonial.playsInline = true;
 
           let theimagecheck = document.createElement("img");
-          theimagecheck.classList.add("deleteicongroup");
+          theimagecheck.classList.add("deletebriefs-3");
           theimagecheck.src =
             "https://cdn.prod.website-files.com/67e360f08a15ef65d8814b41/67f6dfbc2b16d9977c85eeb2_Group%201597881168.png";
           theimagecheck.setAttribute("itemindex", testimonialvideos);
@@ -2301,87 +2289,34 @@ async function updateallthefields(email, member = {}) {
             thedeletecontainer.setAttribute("itemindex", todeleteindex);
           });
 
-          slide.append(testimonialvideo, theimagecheck);
+          slide.append(testimonial, theimagecheck);
           swiperWrapper.append(slide);
         }
 
-        testimonialSlider.append(swiperWrapper, prevBtn, nextBtn, pagination);
+        testimonialSlider.append(swiperWrapper, pagination);
 
         if (window.innerWidth < 1024) {
           loadSwiperJS().then(() => {
-            new Swiper(testimonialSlider, {
-              slidesPerView: 1.3,
-              spaceBetween: 16,
-              slidesOffsetAfter: 60,
+            new Swiper(videocaseslider, {
+              slidesPerView: 1.1,
+              spaceBetween: 25,
               centeredSlides: false,
-
-              shortSwipes: true,
-              threshold: 6,
-              longSwipesRatio: 0.3,
-              longSwipesMs: 200,
-
-              touchRatio: 1.2,
-              touchAngle: 45,
-              grabCursor: true,
-              followFinger: true,
-
-              freeMode: false,
-
-              speed: 400,
-              longSwipes: true,
-              longSwipesRatio: 0.2,
-              longSwipesMs: 200,
-
-              touchStartPreventDefault: false,
-              touchStartForcePreventDefault: false,
-              touchMoveStopPropagation: true,
-
-              preventClicks: false,
-              preventClicksPropagation: false,
               allowTouchMove: true,
-              simulateTouch: true,
-
-              resistance: true,
-              resistanceRatio: 0.5,
-
-              updateOnWindowResize: true,
-              observer: true,
-              observeParents: true,
-              watchOverflow: true,
-
-              pagination: false,
               navigation: false,
-
-              cssMode: false,
-
+              pagination: false,
               breakpoints: {
                 768: {
-                  slidesPerView: 2.2,
-                  spaceBetween: 15,
-                },
-                1024: {
-                  slidesPerView: 3.1,
-                  spaceBetween: 20,
-                },
-                1200: {
-                  slidesPerView: 4.1,
-                  spaceBetween: 20,
+                  slidesPerView: 2,
+                  spaceBetween: 25,
+                  allowTouchMove: true,
                 },
               },
-
               on: {
                 touchStart: function () {
                   this.el.style.transition = "none";
                 },
                 touchEnd: function () {
                   this.el.style.transition = "";
-                },
-                slideChange: function () {
-                  // Stop all videos when sliding
-                  const videos = this.el.querySelectorAll("video");
-                  videos.forEach((video) => {
-                    video.pause();
-                  });
                 },
               },
             });
