@@ -2443,17 +2443,15 @@ async function updateallthefields(email, member = {}) {
       if (caseStudyWalkthroughs.length > 0) {
         let videocaseslider = document.getElementById("case-study-swiper");
         videocaseslider.innerHTML = "";
-        videocaseslider.classList.add(
-          "swiper",
-          "case-study-container",
-          "media-swiper"
-        );
+        videocaseslider.classList.add("swiper", "case-study-container");
         videocaseslider.style.cssText = `width: 100%;`;
 
         let swiperWrapper = document.createElement("div");
         swiperWrapper.classList.add("swiper-wrapper");
 
         for (let eachcase in caseStudyWalkthroughs) {
+          console.warn("earch case", eachcase);
+
           let caseSlide = document.createElement("div");
           caseSlide.classList.add("swiper-slide", "case-study-video-wrap");
 
@@ -2461,7 +2459,6 @@ async function updateallthefields(email, member = {}) {
           caseVideo.classList.add("case-study-video-ps");
           caseVideo.src = caseStudyWalkthroughs[eachcase].url;
           caseVideo.controls = true;
-          caseVideo.preload = "metadata";
           caseVideo.playsInline = true;
           caseVideo.poster =
             "https://cdn.prod.website-files.com/67e360f08a15ef65d8814b41/683031d15554289474aca28d_case%20study%20banner.png";
