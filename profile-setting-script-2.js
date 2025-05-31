@@ -2441,30 +2441,36 @@ async function updateallthefields(email, member = {}) {
       let caseStudyWalkthroughs = jsonUser["case study walkthroughs"] ?? [];
 
       if (caseStudyWalkthroughs.length > 0) {
-        let thecaseslider4 = document.getElementById(
-          "thecasestudywalkthriughedit"
+        let videocaseslider = document.getElementById("case-study-swiper");
+        videocaseslider.innerHTML = "";
+        videocaseslider.classList.add(
+          "swiper",
+          "case-study-container",
+          "media-swiper"
         );
-        thecaseslider4.innerHTML = "";
-        thecaseslider4.setAttribute("style", "display: block !important");
-        console.warn("reached thecasestudywalkthriughedit");
+        videocaseslider.style.cssText = `width: 100%;`;
 
-        for (let eachcasestudy in caseStudyWalkthroughs) {
-          let sliderelement4 = document.createElement("div");
-          sliderelement4.classList.add("slide-img", "2ni", "w-slide");
-          let casediv = document.createElement("div");
-          casediv.classList.add("img-wrap", "editpage");
+        let swiperWrapper = document.createElement("div");
+        swiperWrapper.classList.add("swiper-wrapper");
 
-          let casevideo = document.createElement("video");
-          casevideo.controls = true;
-          casevideo.classList.add("videoclass2");
-          let casevideosource = document.createElement("source");
-          casevideosource.src = caseStudyWalkthroughs[eachcasestudy].url;
-          casevideo.append(casevideosource);
+        for (let eachcase in caseStudyWalkthroughs) {
+          let caseSlide = document.createElement("div");
+          caseSlide.classList.add("swiper-slide", "case-study-video-wrap");
+
+          let caseVideo = document.createElement("video");
+          caseVideo.classList.add("case-study-video");
+          caseVideo.src = caseStudyWalkthroughs[eachcase].url;
+          caseVideo.controls = true;
+          caseVideo.preload = "metadata";
+          caseVideo.playsInline = true;
+          caseVideo.poster =
+            "https://cdn.prod.website-files.com/67e360f08a15ef65d8814b41/683031d15554289474aca28d_case%20study%20banner.png";
+
           let casetheimagecheck = document.createElement("img");
           casetheimagecheck.classList.add("deleteicongroup");
           casetheimagecheck.src =
             "https://cdn.prod.website-files.com/67e360f08a15ef65d8814b41/67f6dfbc2b16d9977c85eeb2_Group%201597881168.png";
-          casetheimagecheck.setAttribute("itemindex", eachcasestudy);
+          casetheimagecheck.setAttribute("itemindex", eachcase);
 
           casetheimagecheck.addEventListener("click", async () => {
             let thedeleteButton = event.target;
@@ -2476,19 +2482,93 @@ async function updateallthefields(email, member = {}) {
             thedeletecontainer.setAttribute("itemindex", todeleteindex);
           });
 
-          casediv.append(casevideo, casetheimagecheck);
-          sliderelement4.append(casediv);
-          thecaseslider4.append(sliderelement4);
+          caseSlide.append(caseVideo, casetheimagecheck);
+
+          swiperWrapper.append(caseSlide);
         }
-        if (window.Webflow && Webflow.require) {
-          Webflow.require("slider").ready();
-        }
+        videocaseslider.append(swiperWrapper);
+
+        loadSwiperJS().then(() => {
+          new Swiper(videocaseslider, {
+            slidesPerView: 1.3,
+            spaceBetween: 16,
+            slidesOffsetAfter: 60,
+            centeredSlides: false,
+
+            shortSwipes: true,
+            threshold: 6,
+            longSwipesRatio: 0.3,
+            longSwipesMs: 200,
+
+            touchRatio: 1.2,
+            touchAngle: 45,
+            grabCursor: true,
+            followFinger: true,
+
+            freeMode: false,
+
+            speed: 400,
+            longSwipes: true,
+            longSwipesRatio: 0.2,
+            longSwipesMs: 200,
+
+            touchStartPreventDefault: false,
+            touchStartForcePreventDefault: false,
+            touchMoveStopPropagation: true,
+
+            preventClicks: false,
+            preventClicksPropagation: false,
+            allowTouchMove: true,
+            simulateTouch: true,
+
+            resistance: true,
+            resistanceRatio: 0.5,
+
+            updateOnWindowResize: true,
+            observer: true,
+            observeParents: true,
+            watchOverflow: true,
+
+            pagination: false,
+            navigation: false,
+
+            cssMode: false,
+
+            breakpoints: {
+              768: {
+                slidesPerView: 2.2,
+                spaceBetween: 15,
+              },
+              1024: {
+                slidesPerView: 3.1,
+                spaceBetween: 20,
+              },
+              1200: {
+                slidesPerView: 4.1,
+                spaceBetween: 20,
+              },
+            },
+
+            on: {
+              touchStart: function () {
+                this.el.style.transition = "none";
+              },
+              touchEnd: function () {
+                this.el.style.transition = "";
+              },
+              slideChange: function () {
+                // Stop all videos when sliding
+                const videos = this.el.querySelectorAll("video");
+                videos.forEach((video) => {
+                  video.pause();
+                });
+              },
+            },
+          });
+        });
       } else {
-        let thecaseslider4 = document.getElementById(
-          "thecasestudywalkthriughedit"
-        );
+        let thecaseslider4 = document.getElementById("casestudyeditshowcase");
         thecaseslider4.innerHTML = "";
-        document.getElementById("casestudyeditshowcase").style.display = "none";
       }
 
       let questionsAndAnswers = jsonUser["personal qa"] ?? [];
