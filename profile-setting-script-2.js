@@ -2955,8 +2955,7 @@ function setupMediaAndPress(jsonUser) {
 
     // Create Swiper container
     const swiperContainer = document.createElement("div");
-    swiperContainer.classList.add("swiper", "media-swiper");
-    swiperContainer.style.cssText = `width: 100%; overflow: hidden; padding-top: 1.5rem;`;
+    swiperContainer.classList.add("swiper", "media-swiper-ps");
 
     const swiperWrapper = document.createElement("div");
     swiperWrapper.classList.add("swiper-wrapper");
@@ -2968,48 +2967,33 @@ function setupMediaAndPress(jsonUser) {
       const meta = getMetadataByDomain(url, domain);
 
       const swiperSlide = document.createElement("div");
-      swiperSlide.classList.add("swiper-slide");
-      swiperSlide.style.cssText = `width: auto; flex-shrink: 0; padding: 0 10px;`;
+      swiperSlide.classList.add("swiper-slide", "swiper-slide-ps");
 
       const card = document.createElement("a");
+      card.classList.add("media-card-ps");
       card.href = url;
-      card.target = "_blank";
-      card.style.cssText = `
-        display: block;
-        width: 300px;
-        height: 220px;
-        border-radius: 8px;
-        overflow: hidden;
-        background: white;
-        box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-        transition: transform 0.2s, box-shadow 0.2s;
-        text-decoration: none;
-        color: inherit;
-        display: flex;
-        flex-direction: column;
-      `;
 
       // Image
       const img = document.createElement("img");
       img.src = meta.imageUrl;
       img.alt = meta.title;
-      img.style.cssText = `height: 120px; object-fit: cover; width: 100%;`;
+      img.classList.add("media-image-ps");
 
       // Content
       const content = document.createElement("div");
-      content.style.cssText = `padding: 12px; display: flex; flex-direction: column;`;
+      content.classList.add("media-content-ps");
 
       const title = document.createElement("h3");
+      title.classList.add("media-heading-ps");
       title.textContent = meta.title;
-      title.style.cssText = `margin: 0 0 6px 0; font-size: 16px; line-height: 1.3; font-weight: 600;`;
 
       const desc = document.createElement("p");
+      desc.classList.add("media-descrip-ps");
       desc.textContent = meta.description;
-      desc.style.cssText = `margin: 0 0 6px 0; font-size: 13px; color: #686868; flex-grow: 1;`;
 
-      const host = document.createElement("span");
+      const host = document.createElement("p");
+      host.classList.add("media-host-ps");
       host.textContent = meta.host;
-      host.style.cssText = `font-size: 12px; color: #aaa;`;
 
       content.appendChild(title);
       content.appendChild(desc);
