@@ -2488,84 +2488,33 @@ async function updateallthefields(email, member = {}) {
         }
         videocaseslider.append(swiperWrapper);
 
-        loadSwiperJS().then(() => {
-          new Swiper(videocaseslider, {
-            slidesPerView: 1.3,
-            spaceBetween: 16,
-            slidesOffsetAfter: 60,
-            centeredSlides: false,
-
-            shortSwipes: true,
-            threshold: 6,
-            longSwipesRatio: 0.3,
-            longSwipesMs: 200,
-
-            touchRatio: 1.2,
-            touchAngle: 45,
-            grabCursor: true,
-            followFinger: true,
-
-            freeMode: false,
-
-            speed: 400,
-            longSwipes: true,
-            longSwipesRatio: 0.2,
-            longSwipesMs: 200,
-
-            touchStartPreventDefault: false,
-            touchStartForcePreventDefault: false,
-            touchMoveStopPropagation: true,
-
-            preventClicks: false,
-            preventClicksPropagation: false,
-            allowTouchMove: true,
-            simulateTouch: true,
-
-            resistance: true,
-            resistanceRatio: 0.5,
-
-            updateOnWindowResize: true,
-            observer: true,
-            observeParents: true,
-            watchOverflow: true,
-
-            pagination: false,
-            navigation: false,
-
-            cssMode: false,
-
-            breakpoints: {
-              768: {
-                slidesPerView: 2.2,
-                spaceBetween: 15,
+        if (window.innerWidth < 1024) {
+          loadSwiperJS().then(() => {
+            new Swiper(swiperContainer, {
+              slidesPerView: 1.1,
+              spaceBetween: 25,
+              centeredSlides: false,
+              allowTouchMove: true,
+              navigation: false,
+              pagination: false,
+              breakpoints: {
+                768: {
+                  slidesPerView: 2,
+                  spaceBetween: 25,
+                  allowTouchMove: true,
+                },
               },
-              1024: {
-                slidesPerView: 3.1,
-                spaceBetween: 20,
+              on: {
+                touchStart: function () {
+                  this.el.style.transition = "none";
+                },
+                touchEnd: function () {
+                  this.el.style.transition = "";
+                },
               },
-              1200: {
-                slidesPerView: 4.1,
-                spaceBetween: 20,
-              },
-            },
-
-            on: {
-              touchStart: function () {
-                this.el.style.transition = "none";
-              },
-              touchEnd: function () {
-                this.el.style.transition = "";
-              },
-              slideChange: function () {
-                // Stop all videos when sliding
-                const videos = this.el.querySelectorAll("video");
-                videos.forEach((video) => {
-                  video.pause();
-                });
-              },
-            },
+            });
           });
-        });
+        }
       } else {
         let thecaseslider4 = document.getElementById("casestudyeditshowcase");
         thecaseslider4.innerHTML = "";
