@@ -2957,6 +2957,10 @@ function setupMediaAndPress(jsonUser) {
     const swiperContainer = document.createElement("div");
     swiperContainer.classList.add("swiper", "media-swiper-ps");
 
+    // Create pagination
+    const pagination = document.createElement("div");
+    pagination.className = "swiper-pagination";
+
     const swiperWrapper = document.createElement("div");
     swiperWrapper.classList.add("swiper-wrapper", "swipper-wrapper-media-ps");
 
@@ -3006,7 +3010,7 @@ function setupMediaAndPress(jsonUser) {
     });
 
     swiperContainer.appendChild(swiperWrapper);
-    themediacontainer.appendChild(swiperContainer);
+    themediacontainer.appendChild(swiperContainer, pagination);
 
     // Load and initialize Swiper
     if (window.innerWidth < 1024) {
@@ -3017,7 +3021,10 @@ function setupMediaAndPress(jsonUser) {
           centeredSlides: false,
           allowTouchMove: true,
           navigation: false,
-          pagination: false,
+          pagination: {
+            el: pagination,
+            clickable: true,
+          },
           breakpoints: {
             768: {
               slidesPerView: 2,
