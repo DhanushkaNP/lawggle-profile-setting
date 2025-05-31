@@ -3072,12 +3072,12 @@ function setupMediaAndPress(jsonUser) {
   }
 }
 
-function reloadWindowAndPreserveScroll() {
-  // Save current scroll position
-  localStorage.setItem("scrollY-ps", window.scrollY);
-  console.log("scrollY-ps before reload", window.scrollY);
-  // Reload the page
-  setTimeout(function () {
-    location.reload();
-  }, 50);
-}
+// function reloadWindowAndPreserveScroll() {
+//   // Save current scroll position
+//   localStorage.setItem("scrollY-ps", window.scrollY);
+//   console.log("scrollY-ps before reload", window.scrollY);
+//   // Reload the page
+//   setTimeout(function () {
+//     location.reload();
+//   }, 50);
+// }
