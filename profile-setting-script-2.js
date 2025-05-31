@@ -579,7 +579,6 @@ document.addEventListener("DOMContentLoaded", async () => {
         };
         let theupdatedItem = await updateItem(updateemail, thedata);
         console.log(theupdatedItem);
-        location.reload();
         updatedom = await updateallthefields(updateemail);
         document.getElementById("thesavealertshow").style.display = "flex";
         let hidepopup = await delaysomeminutes();
