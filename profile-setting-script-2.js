@@ -2958,7 +2958,7 @@ function setupMediaAndPress(jsonUser) {
     swiperContainer.classList.add("swiper", "media-swiper-ps");
 
     const swiperWrapper = document.createElement("div");
-    swiperWrapper.classList.add("swiper-wrapper");
+    swiperWrapper.classList.add("swiper-wrapper", "swipper-wrapper-media-ps");
 
     // Add cards
     themediaandPress.forEach((mediaItem) => {
