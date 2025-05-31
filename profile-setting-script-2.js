@@ -2580,32 +2580,51 @@ async function updateallthefields(email, member = {}) {
 
       let mongodbcertificates = jsonUser["certificates"] ?? [];
       if (mongodbcertificates.length > 0) {
-        let thecaseslider6 = document.getElementById("thecertimaincontainer");
-        thecaseslider6.innerHTML = "";
-        thecaseslider6.setAttribute("style", "display: block !important");
-        console.warn("reached thecertimaincontainer");
+        let certificateSlider = document.getElementById("certificate-swiper");
+        certificateSlider.innerHTML = "";
+        certificateSlider.classList.add("swiper", "certificate-swiper");
+        certificateSlider.style.cssText = `width: 100%; overflow: hidden;`;
+
+        // Create navigation buttons
+        const prevBtn = document.createElement("div");
+        prevBtn.className = "swiper-button-prev cert-nav-btn";
+        prevBtn.style.display = "none"; // Hide by default
+
+        const nextBtn = document.createElement("div");
+        nextBtn.className = "swiper-button-next cert-nav-btn";
+        nextBtn.style.display = "none"; // Hide by default
+
+        // Create pagination
+        const pagination = document.createElement("div");
+        pagination.className = "swiper-pagination";
+
+        const swiperWrapper = document.createElement("div");
+        swiperWrapper.classList.add("swiper-wrapper");
 
         for (let eachcert in mongodbcertificates) {
-          let certcontain = document.createElement("div");
-          certcontain.classList.add("slide-img", "2ne", "w-slide");
-          certcontain.style.maxWidth = "300px";
-          let theimageWrap = document.createElement("div");
+          const swiperSlide = document.createElement("div");
+          swiperSlide.classList.add("swiper-slide");
+          swiperSlide.style.cssText = `width: auto; flex-shrink: 0; padding: 0 10px;`;
+
+          let imageContainer = document.createElement("div");
+          imageContainer.classList.add("img-wrap-2");
+
+          let certimage = document.createElement("img");
+          certimage.classList.add("cert-image");
+          certimage.src = mongodbcertificates[eachcert].url;
+          certimage.style.width = "auto";
           /*
                 theimageWrap.style.backgroundImage = `url('${mongodbcertificates[eachcert]}')`;
                 theimageWrap.style.backgroundSize = "cover"; // Makes the image cover the div
                 theimageWrap.style.backgroundPosition = "center"; // Centers the image
                 */
-          theimageWrap.classList.add("img-wrap", "certificatewrap");
-          let thecertimage = document.createElement("img");
-          thecertimage.classList.add("imagyclass");
-          thecertimage.src = mongodbcertificates[eachcert].url;
           let certdelete = document.createElement("img");
           certdelete.classList.add("deletebriefs");
           certdelete.src =
             "https://cdn.prod.website-files.com/67e360f08a15ef65d8814b41/67f6dfbc2b16d9977c85eeb2_Group%201597881168.png";
           certdelete.setAttribute("itemindex", eachcert);
 
-          certdelete.addEventListener("click", async () => {
+          certdelete.addEventListener("click", async (event) => {
             let thedeleteButton = event.target;
             let todeleteindex = thedeleteButton.getAttribute("itemindex");
             let thedeletecontainer = document.getElementById(
@@ -2615,14 +2634,54 @@ async function updateallthefields(email, member = {}) {
             thedeletecontainer.setAttribute("itemindex", todeleteindex);
           });
 
-          theimageWrap.append(certdelete, thecertimage);
-          certcontain.append(theimageWrap);
-          thecaseslider6.append(certcontain);
+          imageContainer.append(certdelete, certimage);
+          swiperSlide.append(imageContainer);
+          swiperWrapper.append(swiperSlide);
         }
+
+        certificateSlider.append(prevBtn, nextBtn, swiperWrapper, pagination);
+
+        loadSwiperJS().then(() => {
+          new Swiper(certificateSlider, {
+            spaceBetween: 16,
+            slidesOffsetAfter: 30,
+            centeredSlides: false,
+            pagination: {
+              el: pagination,
+              clickable: true,
+            },
+            navigation: {
+              nextEl: nextBtn,
+              prevEl: prevBtn,
+            },
+            // Disable swiping on desktop, enable on mobile
+            allowTouchMove: window.innerWidth < 1024,
+            breakpoints: {
+              0: {
+                slidesPerView: 1.1,
+                allowTouchMove: true,
+                centeredSlides: false,
+                slidesOffsetAfter: 30,
+              },
+              1024: {
+                slidesPerView: 1,
+                allowTouchMove: false,
+                centeredSlides: true, // Center the single slide
+                slidesOffsetAfter: 0, // Remove offset for true centering
+              },
+            },
+            on: {
+              touchStart: function () {
+                this.el.style.transition = "none";
+              },
+              touchEnd: function () {
+                this.el.style.transition = "";
+              },
+            },
+          });
+        });
       } else {
-        let thecaseslider6 = document.getElementById("thecertimaincontainer");
-        thecaseslider6.innerHTML = "";
-        document.getElementById("thercerties").style.display = "none";
+        document.getElementById("certificate-swiper").style.display = "none";
       }
 
       document.getElementById("thepageloader").style.display = "none";
