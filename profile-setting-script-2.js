@@ -2582,7 +2582,7 @@ async function updateallthefields(email, member = {}) {
       if (mongodbcertificates.length > 0) {
         let certificateSlider = document.getElementById("certificate-swiper");
         certificateSlider.innerHTML = "";
-        certificateSlider.classList.add("swiper", "certificate-swiper");
+        certificateSlider.classList.add("swiper", "certificate-swiper-ps");
         certificateSlider.style.cssText = `width: 100%; overflow: hidden;`;
 
         // Create navigation buttons
@@ -2607,10 +2607,10 @@ async function updateallthefields(email, member = {}) {
           swiperSlide.style.cssText = `width: auto; flex-shrink: 0; padding: 0 10px;`;
 
           let imageContainer = document.createElement("div");
-          imageContainer.classList.add("img-wrap-2");
+          imageContainer.classList.add("certificate-img-wrap");
 
           let certimage = document.createElement("img");
-          certimage.classList.add("cert-image");
+          certimage.classList.add("cert-image-ps");
           certimage.src = mongodbcertificates[eachcert].url;
           certimage.style.width = "auto";
           /*
