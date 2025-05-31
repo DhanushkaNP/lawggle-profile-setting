@@ -3053,6 +3053,6 @@ function setupMediaAndPress(jsonUser) {
       });
     }
   } else {
-    document.getElementById("sectionmedia").style.display = "none";
+    document.getElementById("casestudyeditshowcase").style.display = "none";
   }
 }
