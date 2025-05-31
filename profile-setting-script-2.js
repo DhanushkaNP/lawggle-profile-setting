@@ -631,7 +631,7 @@ document.addEventListener("DOMContentLoaded", async () => {
         };
         let theupdatedItem = await updateItem(updateemail, thedata);
         console.log(theupdatedItem);
-        reloadWindowAndPreserveScroll();
+        // reloadWindowAndPreserveScroll();
         updatedom = await updateallthefields(updateemail);
         document.getElementById("thesavealertshow").style.display = "flex";
         await delaysomeminutes();
@@ -2869,16 +2869,6 @@ async function createEducationBox(
   thecaseslider5.append(thequizcarrier);
 }
 
-function reloadWindowAndPreserveScroll() {
-  // Save current scroll position
-  localStorage.setItem("scrollY-ps", window.scrollY);
-  console.log("scrollY-ps before reload", window.scrollY);
-  // Reload the page
-  setTimeout(function () {
-    location.reload();
-  }, 50);
-}
-
 function loadSwiperJS() {
   return new Promise((resolve) => {
     if (window.Swiper) {
@@ -3080,4 +3070,14 @@ function setupMediaAndPress(jsonUser) {
   } else {
     document.getElementById("mediawrapper").style.display = "none";
   }
+}
+
+function reloadWindowAndPreserveScroll() {
+  // Save current scroll position
+  localStorage.setItem("scrollY-ps", window.scrollY);
+  console.log("scrollY-ps before reload", window.scrollY);
+  // Reload the page
+  setTimeout(function () {
+    location.reload();
+  }, 50);
 }
