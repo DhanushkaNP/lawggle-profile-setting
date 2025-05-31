@@ -2439,7 +2439,10 @@ async function updateallthefields(email, member = {}) {
       // }
 
       let caseStudyWalkthroughs = jsonUser["case study walkthroughs"] ?? [];
-
+      console.warn(
+        "caseStudyWalkthroughs length",
+        caseStudyWalkthroughs.length
+      );
       if (caseStudyWalkthroughs.length > 0) {
         let videocaseslider = document.getElementById("case-study-swiper");
         videocaseslider.innerHTML = "";
