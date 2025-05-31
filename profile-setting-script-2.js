@@ -2482,7 +2482,7 @@ async function updateallthefields(email, member = {}) {
             thedeletecontainer.setAttribute("itemindex", todeleteindex);
           });
 
-          caseSlide.append(caseVideo, casetheimagecheck);
+          caseSlide.append(caseVideo);
 
           swiperWrapper.append(caseSlide);
         }
