@@ -2388,9 +2388,7 @@ async function updateallthefields(email, member = {}) {
           });
         }
       } else {
-        let thecaseslider2 = document.getElementById(
-          "editclientvideotestimonials"
-        );
+        let thecaseslider2 = document.getElementById("testimonialholder");
         thecaseslider2.innerHTML = "";
         thecaseslider2.style.display = "none";
       }
@@ -3044,6 +3042,6 @@ function setupMediaAndPress(jsonUser) {
       });
     }
   } else {
-    document.getElementById("casestudyeditshowcase").style.display = "none";
+    document.getElementById("mediawrapper").style.display = "none";
   }
 }
