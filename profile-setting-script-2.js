@@ -2458,7 +2458,7 @@ async function updateallthefields(email, member = {}) {
           caseSlide.classList.add("swiper-slide", "case-study-video-wrap");
 
           let caseVideo = document.createElement("video");
-          caseVideo.classList.add("case-study-video");
+          caseVideo.classList.add("case-study-video-ps");
           caseVideo.src = caseStudyWalkthroughs[eachcase].url;
           caseVideo.controls = true;
           caseVideo.preload = "metadata";
