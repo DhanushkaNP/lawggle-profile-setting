@@ -2609,6 +2609,8 @@ async function updateallthefields(email, member = {}) {
           let imageContainer = document.createElement("div");
           imageContainer.classList.add("certificate-img-wrap");
 
+          const imageConatiner2 = document.createElement("div");
+
           let certimage = document.createElement("img");
           certimage.classList.add("cert-image-ps");
           certimage.src = mongodbcertificates[eachcert].url;
@@ -2634,7 +2636,8 @@ async function updateallthefields(email, member = {}) {
             thedeletecontainer.setAttribute("itemindex", todeleteindex);
           });
 
-          imageContainer.append(certdelete, certimage);
+          imageConatiner2.append(certdelete, certimage);
+          imageContainer.append(imageConatiner2);
           swiperSlide.append(imageContainer);
           swiperWrapper.append(swiperSlide);
         }
