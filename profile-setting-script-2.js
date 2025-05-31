@@ -2394,50 +2394,51 @@ async function updateallthefields(email, member = {}) {
         thecaseslider2.innerHTML = "";
         thecaseslider2.style.display = "none";
       }
+      setupMediaAndPress(jsonUser);
 
-      let mediaPressBriefs = jsonUser["media press mentions"] ?? [];
-      if (mediaPressBriefs.length > 0) {
-        let thecaseslider3 = document.getElementById(
-          "themediaslidingcontainer"
-        );
-        thecaseslider3.innerHTML = "";
-        thecaseslider3.setAttribute("style", "display: block !important");
-        console.warn("reached themediaslidingcontainer");
+      // let mediaPressBriefs = jsonUser["media press mentions"] ?? [];
+      // if (mediaPressBriefs.length > 0) {
+      //   let thecaseslider3 = document.getElementById(
+      //     "themediaslidingcontainer"
+      //   );
+      //   thecaseslider3.innerHTML = "";
+      //   thecaseslider3.setAttribute("style", "display: block !important");
+      //   console.warn("reached themediaslidingcontainer");
 
-        for (let pressbrief in mediaPressBriefs) {
-          let thepressSlider = document.createElement("div");
-          thepressSlider.classList.add("slide-5c", "media", "w-slide");
-          let presscontainer = document.createElement("div");
-          presscontainer.classList.add("presscontainer");
-          let previewBox = document.createElement("previewbox-link");
-          previewBox.setAttribute("href", mediaPressBriefs[pressbrief].url);
-          let pressdeleteicon = document.createElement("img");
-          pressdeleteicon.src =
-            "https://cdn.prod.website-files.com/67e360f08a15ef65d8814b41/67f6dfbc2b16d9977c85eeb2_Group%201597881168.png";
-          pressdeleteicon.classList.add("deletebriefs");
-          pressdeleteicon.setAttribute("itemindex", pressbrief);
+      //   for (let pressbrief in mediaPressBriefs) {
+      //     let thepressSlider = document.createElement("div");
+      //     thepressSlider.classList.add("slide-5c", "media", "w-slide");
+      //     let presscontainer = document.createElement("div");
+      //     presscontainer.classList.add("presscontainer");
+      //     let previewBox = document.createElement("previewbox-link");
+      //     previewBox.setAttribute("href", mediaPressBriefs[pressbrief].url);
+      //     let pressdeleteicon = document.createElement("img");
+      //     pressdeleteicon.src =
+      //       "https://cdn.prod.website-files.com/67e360f08a15ef65d8814b41/67f6dfbc2b16d9977c85eeb2_Group%201597881168.png";
+      //     pressdeleteicon.classList.add("deletebriefs");
+      //     pressdeleteicon.setAttribute("itemindex", pressbrief);
 
-          pressdeleteicon.addEventListener("click", async () => {
-            let thedeleteButton = event.target;
-            let todeleteindex = thedeleteButton.getAttribute("itemindex");
-            let thedeletecontainer = document.getElementById(
-              "pressdeletecontainer"
-            );
-            thedeletecontainer.style.display = "flex";
-            thedeletecontainer.setAttribute("itemindex", todeleteindex);
-          });
+      //     pressdeleteicon.addEventListener("click", async () => {
+      //       let thedeleteButton = event.target;
+      //       let todeleteindex = thedeleteButton.getAttribute("itemindex");
+      //       let thedeletecontainer = document.getElementById(
+      //         "pressdeletecontainer"
+      //       );
+      //       thedeletecontainer.style.display = "flex";
+      //       thedeletecontainer.setAttribute("itemindex", todeleteindex);
+      //     });
 
-          presscontainer.append(previewBox, pressdeleteicon);
-          thepressSlider.append(presscontainer);
-          thecaseslider3.append(thepressSlider);
-        }
-      } else {
-        let thecaseslider3 = document.getElementById(
-          "themediaslidingcontainer"
-        );
-        thecaseslider3.innerHTML = "";
-        document.getElementById("themediapressy").style.display = "none";
-      }
+      //     presscontainer.append(previewBox, pressdeleteicon);
+      //     thepressSlider.append(presscontainer);
+      //     thecaseslider3.append(thepressSlider);
+      //   }
+      // } else {
+      //   let thecaseslider3 = document.getElementById(
+      //     "themediaslidingcontainer"
+      //   );
+      //   thecaseslider3.innerHTML = "";
+      //   document.getElementById("themediapressy").style.display = "none";
+      // }
 
       let caseStudyWalkthroughs = jsonUser["case study walkthroughs"] ?? [];
 
@@ -2874,4 +2875,184 @@ function loadSwiperJS() {
     swiperScript.onload = resolve;
     document.body.appendChild(swiperScript);
   });
+}
+
+// Function to handle media and press mentions section
+function setupMediaAndPress(jsonUser) {
+  let themediaandPress = jsonUser["media press mentions"];
+  let themediacontainer = document.getElementById("mediawrapper");
+  themediacontainer.innerHTML = "";
+
+  if (themediaandPress && themediaandPress.length > 0) {
+    function extractDomain(url) {
+      try {
+        const urlObj = new URL(url);
+        return urlObj.hostname.replace("www.", "");
+      } catch (e) {
+        return url;
+      }
+    }
+
+    function getMetadataByDomain(url, domain) {
+      if (url.includes("youtube.com") || url.includes("youtu.be")) {
+        return {
+          title: "YouTube Video",
+          description: "Click to watch this video on YouTube",
+          imageUrl: "https://placehold.co/300x200/FF0000/FFFFFF?text=YouTube",
+          favicon: "https://www.youtube.com/favicon.ico",
+          host: "youtube.com",
+        };
+      } else if (url.includes("linkedin.com")) {
+        return {
+          title: "LinkedIn Article",
+          description: "Professional content shared on LinkedIn",
+          imageUrl: "https://placehold.co/300x200/0077B5/FFFFFF?text=LinkedIn",
+          favicon: "https://www.linkedin.com/favicon.ico",
+          host: "linkedin.com",
+        };
+      } else if (url.includes("medium.com")) {
+        return {
+          title: "Medium Article",
+          description: "Read this story on Medium",
+          imageUrl: "https://placehold.co/300x200/000000/FFFFFF?text=Medium",
+          favicon: "https://medium.com/favicon.ico",
+          host: "medium.com",
+        };
+      } else if (url.includes("twitter.com") || url.includes("x.com")) {
+        return {
+          title: "Tweet",
+          description: "View this post on Twitter/X",
+          imageUrl: "https://placehold.co/300x200/1DA1F2/FFFFFF?text=Twitter",
+          favicon: "https://twitter.com/favicon.ico",
+          host: "twitter.com",
+        };
+      } else if (url.includes("instagram.com")) {
+        return {
+          title: "Instagram Post",
+          description: "View this post on Instagram",
+          imageUrl: "https://placehold.co/300x200/E1306C/FFFFFF?text=Instagram",
+          favicon: "https://www.instagram.com/favicon.ico",
+          host: "instagram.com",
+        };
+      } else if (url.includes("facebook.com")) {
+        return {
+          title: "Facebook Post",
+          description: "View this content on Facebook",
+          imageUrl: "https://placehold.co/300x200/4267B2/FFFFFF?text=Facebook",
+          favicon: "https://www.facebook.com/favicon.ico",
+          host: "facebook.com",
+        };
+      } else {
+        return {
+          title: `Article on ${domain}`,
+          description: `View this content on ${domain}`,
+          imageUrl: `https://placehold.co/300x200/333333/cccccc?text=${domain}`,
+          favicon: null,
+          host: domain,
+        };
+      }
+    }
+
+    // Create Swiper container
+    const swiperContainer = document.createElement("div");
+    swiperContainer.classList.add("swiper", "media-swiper");
+    swiperContainer.style.cssText = `width: 100%; overflow: hidden; padding-top: 1.5rem;`;
+
+    const swiperWrapper = document.createElement("div");
+    swiperWrapper.classList.add("swiper-wrapper");
+
+    // Add cards
+    themediaandPress.forEach((mediaItem) => {
+      const url = mediaItem.url || "#";
+      const domain = extractDomain(url);
+      const meta = getMetadataByDomain(url, domain);
+
+      const swiperSlide = document.createElement("div");
+      swiperSlide.classList.add("swiper-slide");
+      swiperSlide.style.cssText = `width: auto; flex-shrink: 0; padding: 0 10px;`;
+
+      const card = document.createElement("a");
+      card.href = url;
+      card.target = "_blank";
+      card.style.cssText = `
+        display: block;
+        width: 300px;
+        height: 220px;
+        border-radius: 8px;
+        overflow: hidden;
+        background: white;
+        box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        transition: transform 0.2s, box-shadow 0.2s;
+        text-decoration: none;
+        color: inherit;
+        display: flex;
+        flex-direction: column;
+      `;
+
+      // Image
+      const img = document.createElement("img");
+      img.src = meta.imageUrl;
+      img.alt = meta.title;
+      img.style.cssText = `height: 120px; object-fit: cover; width: 100%;`;
+
+      // Content
+      const content = document.createElement("div");
+      content.style.cssText = `padding: 12px; display: flex; flex-direction: column;`;
+
+      const title = document.createElement("h3");
+      title.textContent = meta.title;
+      title.style.cssText = `margin: 0 0 6px 0; font-size: 16px; line-height: 1.3; font-weight: 600;`;
+
+      const desc = document.createElement("p");
+      desc.textContent = meta.description;
+      desc.style.cssText = `margin: 0 0 6px 0; font-size: 13px; color: #686868; flex-grow: 1;`;
+
+      const host = document.createElement("span");
+      host.textContent = meta.host;
+      host.style.cssText = `font-size: 12px; color: #aaa;`;
+
+      content.appendChild(title);
+      content.appendChild(desc);
+      content.appendChild(host);
+
+      card.appendChild(img);
+      card.appendChild(content);
+      swiperSlide.appendChild(card);
+      swiperWrapper.appendChild(swiperSlide);
+    });
+
+    swiperContainer.appendChild(swiperWrapper);
+    themediacontainer.appendChild(swiperContainer);
+
+    // Load and initialize Swiper
+    if (window.innerWidth < 1024) {
+      loadSwiperJS().then(() => {
+        new Swiper(swiperContainer, {
+          slidesPerView: 1.1,
+          spaceBetween: 25,
+          centeredSlides: false,
+          allowTouchMove: true,
+          navigation: false,
+          pagination: false,
+          breakpoints: {
+            768: {
+              slidesPerView: 2,
+              spaceBetween: 25,
+              allowTouchMove: true,
+            },
+          },
+          on: {
+            touchStart: function () {
+              this.el.style.transition = "none";
+            },
+            touchEnd: function () {
+              this.el.style.transition = "";
+            },
+          },
+        });
+      });
+    }
+  } else {
+    document.getElementById("sectionmedia").style.display = "none";
+  }
 }
