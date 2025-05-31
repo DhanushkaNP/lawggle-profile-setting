@@ -1362,7 +1362,7 @@ $(document).ready(async function () {
         let toChangeData = { "media press mentions": mediapressbriefings };
         console.log(toChangeData);
         let updateduser = await updateItem(thisUserId, toChangeData);
-        reloadWindowAndPreserveScroll();
+        // reloadWindowAndPreserveScroll();
         let updatenewestdom = await updateallthefields(thisUserId);
         document.getElementById("thesavealertshow").style.display = "flex";
         let todelay = await delaysomeminutes();
