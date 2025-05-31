@@ -3062,15 +3062,15 @@ function setupMediaAndPress(jsonUser) {
       const swiperSlide = document.createElement("div");
       swiperSlide.classList.add("swiper-slide", "swiper-slide-ps");
 
+      const card = document.createElement("a");
+      card.classList.add("media-card-ps");
+      card.href = url;
+
       // delete icon
       const deleteIcon = document.createElement("img");
       deleteIcon.src =
         "https://cdn.prod.website-files.com/67e360f08a15ef65d8814b41/67f6dfbc2b16d9977c85eeb2_Group%201597881168.png";
       deleteIcon.classList.add("deletebriefs-4");
-
-      const card = document.createElement("a");
-      card.classList.add("media-card-ps");
-      card.href = url;
 
       // Image
       const img = document.createElement("img");
@@ -3098,6 +3098,7 @@ function setupMediaAndPress(jsonUser) {
       content.appendChild(desc);
       content.appendChild(host);
 
+      card.appendChild(deleteIcon);
       card.appendChild(img);
       card.appendChild(content);
       swiperSlide.appendChild(card);
