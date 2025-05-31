@@ -2467,7 +2467,7 @@ async function updateallthefields(email, member = {}) {
             "https://cdn.prod.website-files.com/67e360f08a15ef65d8814b41/683031d15554289474aca28d_case%20study%20banner.png";
 
           let casetheimagecheck = document.createElement("img");
-          casetheimagecheck.classList.add("deleteicongroup");
+          casetheimagecheck.classList.add("deletebriefs-3");
           casetheimagecheck.src =
             "https://cdn.prod.website-files.com/67e360f08a15ef65d8814b41/67f6dfbc2b16d9977c85eeb2_Group%201597881168.png";
           casetheimagecheck.setAttribute("itemindex", eachcase);
@@ -2482,7 +2482,7 @@ async function updateallthefields(email, member = {}) {
             thedeletecontainer.setAttribute("itemindex", todeleteindex);
           });
 
-          caseSlide.append(caseVideo);
+          caseSlide.append(caseVideo, casetheimagecheck);
 
           swiperWrapper.append(caseSlide);
         }
@@ -2621,7 +2621,7 @@ async function updateallthefields(email, member = {}) {
                 theimageWrap.style.backgroundPosition = "center"; // Centers the image
                 */
           let certdelete = document.createElement("img");
-          certdelete.classList.add("deletebriefs");
+          certdelete.classList.add("deletebriefs-2");
           certdelete.src =
             "https://cdn.prod.website-files.com/67e360f08a15ef65d8814b41/67f6dfbc2b16d9977c85eeb2_Group%201597881168.png";
           certdelete.setAttribute("itemindex", eachcert);
@@ -3061,6 +3061,12 @@ function setupMediaAndPress(jsonUser) {
 
       const swiperSlide = document.createElement("div");
       swiperSlide.classList.add("swiper-slide", "swiper-slide-ps");
+
+      // delete icon
+      const deleteIcon = document.createElement("img");
+      deleteIcon.src =
+        "https://cdn.prod.website-files.com/67e360f08a15ef65d8814b41/67f6dfbc2b16d9977c85eeb2_Group%201597881168.png";
+      deleteIcon.classList.add("deletebriefs-4");
 
       const card = document.createElement("a");
       card.classList.add("media-card-ps");
