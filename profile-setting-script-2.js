@@ -2261,14 +2261,17 @@ async function updateallthefields(email, member = {}) {
         pagination.className = "swiper-pagination";
 
         let swiperWrapper = document.createElement("div");
-        swiperWrapper.classList.add("swiper-wrapper");
+        swiperWrapper.classList.add(
+          "swiper-wrapper",
+          "swiper-wrapper-testimonial"
+        );
 
         for (let testimonialvideos in clientTestimonials) {
           let slide = document.createElement("div");
           slide.classList.add("swiper-slide", "testimonial-video-wrap");
 
           let testimonial = document.createElement("video");
-          testimonial.classList.add("case-study-video-ps");
+          testimonial.classList.add("testimonial-video-ps");
           testimonial.src = clientTestimonials[testimonialvideos].url;
           testimonial.controls = true;
           testimonial.playsInline = true;
