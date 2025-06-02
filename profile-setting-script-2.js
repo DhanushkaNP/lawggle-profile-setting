@@ -2892,7 +2892,7 @@ function updateOfferConsultationCheckboxImages() {
     document.getElementById("offerconsultancyimageno").src =
       "https://cdn.prod.website-files.com/67e360f08a15ef65d8814b41/67f688109c8eaf330c0f0e34_icons8-unchecked-checkbox-50.png";
     document.getElementById("offerconsultancyimageyes").src =
-      "https://cdn.prod.website-files.com/67e360f08a15ef65d8814a23f8919_icons8-checked-box-24.png";
+      "https://cdn.prod.website-files.com/67e360f08a15ef65d8814b41/67f689ee9a1a8514a23f8919_icons8-checked-box-24.png";
   } else if (offerconsultation == "no") {
     document.getElementById("offerconsultancyimageno").src =
       "https://cdn.prod.website-files.com/67e360f08a15ef65d8814b41/67f689ee9a1a8514a23f8919_icons8-checked-box-24.png";
