@@ -1496,14 +1496,17 @@ $(document).ready(async function () {
   });
 
   //Memberstack read
-  MemberStack.onReady.then(async function (member) {
-    if (member.loggedIn) {
-      const memberships = member.membership; // Array of memberships
-      //const membershipNames = memberships.map(m => m.name).join(', ');
-      console.log(member, memberships);
-      memberemail = member.email;
+  window.$memberstackDom.getCurrentMember().then(async function (member) {
+    if (member) {
+      const allSubscriptions = member.subscriptions;
+
+      console.log("Logged in Memberstack Member:", member);
+      console.log("All Active Memberstack Subscriptions:", allSubscriptions);
+
+      const memberemail = member.email;
       localStorage.setItem("userEmail", member.email);
-      let thegetuser = await updateallthefields(memberemail, member);
+
+      const thegetuser = await updateallthefields(memberemail, member);
     } else {
       console.log("Not logged in");
     }
