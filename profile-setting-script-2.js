@@ -1504,7 +1504,7 @@ $(document).ready(async function () {
       console.log("All Active Memberstack Subscriptions:", allMemberPlans);
 
       const memberemail = member.auth.email;
-      localStorage.setItem("userEmail", member.email);
+      localStorage.setItem("userEmail", member.auth.email);
 
       const thegetuser = await updateallthefields(memberemail, member);
     } else {
