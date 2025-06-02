@@ -1496,14 +1496,14 @@ $(document).ready(async function () {
   });
 
   //Memberstack read
-  window.$memberstackDom.getCurrentMember().then(async function (member) {
+  window.$memberstackDom.getCurrentMember().then(async ({ data: member }) => {
     if (member) {
-      const allSubscriptions = member.subscriptions;
+      const allMemberPlans = member.planConnections;
 
       console.log("Logged in Memberstack Member:", member);
-      console.log("All Active Memberstack Subscriptions:", allSubscriptions);
+      console.log("All Active Memberstack Subscriptions:", allMemberPlans);
 
-      const memberemail = member.email;
+      const memberemail = member.auth.email;
       localStorage.setItem("userEmail", member.email);
 
       const thegetuser = await updateallthefields(memberemail, member);
@@ -2595,15 +2595,15 @@ async function updateallthefields(email, member = {}) {
     }
     if (mongodbuser.status == "false") {
       data = {
-        "canada-or-usa": member["canada-or-usa"],
-        email: member.email,
-        "firm-name": member["firm-name"],
-        name: `${member["first-name"]} ${member["last-name"]}`,
+        "canada-or-usa": member.customFields["canada-or-usa"],
+        email: member.auth.email,
+        "firm-name": member.customFields["firm-name"],
+        name: `${member.customFields["first-name"]} ${member.customFields["last-name"]}`,
         "profile image": "",
         id: member.id,
         memberstackid: member.id,
-        membership: member.membership,
-        Phone: member.phone,
+        membership: member.planConnections[0].planId,
+        Phone: member.customFields.phone,
         created_at: "",
         pronouns: [],
         "hourly rate": "",
