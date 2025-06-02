@@ -1118,86 +1118,86 @@ $(document).ready(async function () {
     });
   });
 
-  let switchButtons = document.querySelectorAll(".selectyesno");
-  switchButtons.forEach((thisbutton) => {
-    thisbutton.addEventListener("click", async (event) => {
-      let button = event.target;
-      let buttonId = button.id;
+  // let switchButtons = document.querySelectorAll(".selectyesno");
+  // switchButtons.forEach((thisbutton) => {
+  //   thisbutton.addEventListener("click", async (event) => {
+  //     let button = event.target;
+  //     let buttonId = button.id;
 
-      if (buttonId == "freeconsulationyes") {
-        document.getElementById("theloadingwait").style.display = "flex";
-        let updateemail = localStorage.getItem("userEmail");
-        let savedata = {
-          "free consultation": "yes",
-        };
-        console.log(updateemail, savedata);
-        updateduser = await updateItem(updateemail, savedata);
-        updatedom = await updateallthefields(updateemail);
-        document.getElementById("thesavealertshow").style.display = "flex";
-        let todelay = await delaysomeminutes();
-      }
-      if (buttonId == "freeconsultationno") {
-        document.getElementById("theloadingwait").style.display = "flex";
-        let updateemail = localStorage.getItem("userEmail");
-        let savedata = {
-          "free consultation": "no",
-        };
-        console.log(updateemail, savedata);
-        updateduser = await updateItem(updateemail, savedata);
-        updatedom = await updateallthefields(updateemail);
-        document.getElementById("thesavealertshow").style.display = "flex";
-        let todelay = await delaysomeminutes();
-      }
-      if (buttonId == "offercontingencyyes") {
-        document.getElementById("theloadingwait").style.display = "flex";
-        let updateemail = localStorage.getItem("userEmail");
-        let savedata = {
-          "offer contingency": "yes",
-        };
-        console.log(updateemail, savedata);
-        updateduser = await updateItem(updateemail, savedata);
-        updatedom = await updateallthefields(updateemail);
-        document.getElementById("thesavealertshow").style.display = "flex";
-        let todelay = await delaysomeminutes();
-      }
-      if (buttonId == "offercontingencyno") {
-        document.getElementById("theloadingwait").style.display = "flex";
-        let updateemail = localStorage.getItem("userEmail");
-        let savedata = {
-          "offer contingency": "no",
-        };
-        console.log(updateemail, savedata);
-        updateduser = await updateItem(updateemail, savedata);
-        updatedom = await updateallthefields(updateemail);
-        document.getElementById("thesavealertshow").style.display = "flex";
-        let todelay = await delaysomeminutes();
-      }
-      if (buttonId == "probonoyes") {
-        document.getElementById("theloadingwait").style.display = "flex";
-        let updateemail = localStorage.getItem("userEmail");
-        let savedata = {
-          "community pro bono work": "yes",
-        };
-        console.log(updateemail, savedata);
-        updateduser = await updateItem(updateemail, savedata);
-        updatedom = await updateallthefields(updateemail);
-        document.getElementById("thesavealertshow").style.display = "flex";
-        let todelay = await delaysomeminutes();
-      }
-      if (buttonId == "probonono") {
-        document.getElementById("theloadingwait").style.display = "flex";
-        let updateemail = localStorage.getItem("userEmail");
-        let savedata = {
-          "community pro bono work": "no",
-        };
-        console.log(updateemail, savedata);
-        updateduser = await updateItem(updateemail, savedata);
-        updatedom = await updateallthefields(updateemail);
-        document.getElementById("thesavealertshow").style.display = "flex";
-        let todelay = await delaysomeminutes();
-      }
-    });
-  });
+  //     if (buttonId == "freeconsulationyes") {
+  //       document.getElementById("theloadingwait").style.display = "flex";
+  //       let updateemail = localStorage.getItem("userEmail");
+  //       let savedata = {
+  //         "free consultation": "yes",
+  //       };
+  //       console.log(updateemail, savedata);
+  //       updateduser = await updateItem(updateemail, savedata);
+  //       updatedom = await updateallthefields(updateemail);
+  //       document.getElementById("thesavealertshow").style.display = "flex";
+  //       let todelay = await delaysomeminutes();
+  //     }
+  //     if (buttonId == "freeconsultationno") {
+  //       document.getElementById("theloadingwait").style.display = "flex";
+  //       let updateemail = localStorage.getItem("userEmail");
+  //       let savedata = {
+  //         "free consultation": "no",
+  //       };
+  //       console.log(updateemail, savedata);
+  //       updateduser = await updateItem(updateemail, savedata);
+  //       updatedom = await updateallthefields(updateemail);
+  //       document.getElementById("thesavealertshow").style.display = "flex";
+  //       let todelay = await delaysomeminutes();
+  //     }
+  //     if (buttonId == "offercontingencyyes") {
+  //       document.getElementById("theloadingwait").style.display = "flex";
+  //       let updateemail = localStorage.getItem("userEmail");
+  //       let savedata = {
+  //         "offer contingency": "yes",
+  //       };
+  //       console.log(updateemail, savedata);
+  //       updateduser = await updateItem(updateemail, savedata);
+  //       updatedom = await updateallthefields(updateemail);
+  //       document.getElementById("thesavealertshow").style.display = "flex";
+  //       let todelay = await delaysomeminutes();
+  //     }
+  //     if (buttonId == "offercontingencyno") {
+  //       document.getElementById("theloadingwait").style.display = "flex";
+  //       let updateemail = localStorage.getItem("userEmail");
+  //       let savedata = {
+  //         "offer contingency": "no",
+  //       };
+  //       console.log(updateemail, savedata);
+  //       updateduser = await updateItem(updateemail, savedata);
+  //       updatedom = await updateallthefields(updateemail);
+  //       document.getElementById("thesavealertshow").style.display = "flex";
+  //       let todelay = await delaysomeminutes();
+  //     }
+  //     if (buttonId == "probonoyes") {
+  //       document.getElementById("theloadingwait").style.display = "flex";
+  //       let updateemail = localStorage.getItem("userEmail");
+  //       let savedata = {
+  //         "community pro bono work": "yes",
+  //       };
+  //       console.log(updateemail, savedata);
+  //       updateduser = await updateItem(updateemail, savedata);
+  //       updatedom = await updateallthefields(updateemail);
+  //       document.getElementById("thesavealertshow").style.display = "flex";
+  //       let todelay = await delaysomeminutes();
+  //     }
+  //     if (buttonId == "probonono") {
+  //       document.getElementById("theloadingwait").style.display = "flex";
+  //       let updateemail = localStorage.getItem("userEmail");
+  //       let savedata = {
+  //         "community pro bono work": "no",
+  //       };
+  //       console.log(updateemail, savedata);
+  //       updateduser = await updateItem(updateemail, savedata);
+  //       updatedom = await updateallthefields(updateemail);
+  //       document.getElementById("thesavealertshow").style.display = "flex";
+  //       let todelay = await delaysomeminutes();
+  //     }
+  //   });
+  // });
 
   let saveButtons = document.querySelectorAll(".savethedtails");
   saveButtons.forEach((thisbutton) => {
