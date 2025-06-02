@@ -4,6 +4,16 @@ let offerconsultation;
 let offercontingency;
 let probonowork;
 
+const pendingUploads = {
+  profileImage: null,
+  profileBanner: null,
+  profileVideo: null,
+  testimonials: [],
+  caseStudies: [],
+  certificates: [],
+  uploadcareUuids: [],
+};
+
 let activefileuploaderId = "";
 let theLawyerPronouns = [];
 let theCategory2 = [];
@@ -487,207 +497,82 @@ document.addEventListener("DOMContentLoaded", async () => {
 
   inputs.forEach((input, index) => {
     const widget = uploadcare.Widget(input);
-    const uploaderId = input.id; // Capture the uploader's ID here
+    const uploaderId = input.id;
 
     widget.onUploadComplete(async (info) => {
       document.getElementById("theloadingwait").style.display = "flex";
+      let url, urls;
 
       if (info.uuid.includes("~")) {
         try {
           const group = await uploadcare.loadFileGroup(info.uuid);
-
-          const fileInfos = await group.files(); // ← correct way
-
-          const urls = await Promise.all(
+          const fileInfos = await group.files();
+          urls = await Promise.all(
             fileInfos.map((file) =>
               typeof file.then === "function"
                 ? file.then((f) => f.cdnUrl)
                 : file.cdnUrl
             )
           );
-
-          console.log("✅ Final URLs:", urls);
-          theUrls = urls;
+          pendingUploads.uploadcareUuids.push(info.uuid);
         } catch (error) {
           console.error("❌ Failed to load file group:", error);
         }
       } else {
-        console.log("Upload info:", info); // Log the entire info object to see its structure
-        console.log("💧🌮🔐🧑🏿‍❤️‍💋‍🧑🏾👩🏽‍💻🧑🏿‍❤️‍💋‍🧑🏽", uploaderId);
-
-        const fileUrl = info.cdnUrl; // The base URL without file extension
-        const fileName = info.name; // Check if 'original' exists
-        const fullFileUrl = fileName ? fileUrl + fileName : fileUrl;
-
-        let theuploadFile = await uploadFile(fileUrl, fileName);
-        console.log("🐇🐇🐇🐇", theuploadFile);
-        let thejsonfile = JSON.parse(theuploadFile);
-        url = thejsonfile.url;
+        url = info.cdnUrl;
+        pendingUploads.uploadcareUuids.push(info.uuid);
       }
-      let updateemail = localStorage.getItem("userEmail");
-      let dbuser = await getItem(updateemail);
-      let mongodbuser = JSON.parse(dbuser);
-      let userData = mongodbuser.data.body;
-      let jsonUser = JSON.parse(JSON.parse(userData));
-      // Construct the full URL if 'original' is present
+
       if (uploaderId == "uploadfile") {
-        let thedata = {
-          "profile video": url,
-        };
-        let theupdatedItem = await updateItem(updateemail, thedata);
-        console.log(theupdatedItem);
-        updatedom = await updateallthefields(updateemail);
-        document.getElementById("thesavealertshow").style.display = "flex";
-        let hidepopup = await delaysomeminutes();
+        pendingUploads.profileVideo = url;
       }
 
       if (uploaderId == "uploadtestimonials") {
-        let thetestimonials = jsonUser["client video testimonials"] ?? [];
         let thisuniqueId = await generateUniqueId();
-        let thisvideo = {
-          url: url,
+        pendingUploads.testimonials.push({
+          url,
           "unique id": thisuniqueId,
-        };
-        thetestimonials.push(thisvideo);
-        let thedata = {
-          "client video testimonials": thetestimonials,
-        };
-        let theupdatedItem = await updateItem(updateemail, thedata);
-        console.log(theupdatedItem);
-        updatedom = await updateallthefields(updateemail);
-        document.getElementById("thesavealertshow").style.display = "flex";
-        let hidepopup = await delaysomeminutes();
+        });
+        // Update DOM to show testimonial preview (implement as needed)
       }
 
       if (uploaderId == "casestudywalkthroughuploader") {
-        let casestudywalkthroughs = jsonUser["case study walkthroughs"] ?? [];
         let thisuniqueId = await generateUniqueId();
-        let thiscasestudy = {
-          url: url,
+        pendingUploads.caseStudies.push({
+          url,
           "unique id": thisuniqueId,
-        };
-        casestudywalkthroughs.push(thiscasestudy);
-        let thedata = {
-          "case study walkthroughs": casestudywalkthroughs,
-        };
-        let theupdatedItem = await updateItem(updateemail, thedata);
-        console.log(theupdatedItem);
-        updatedom = await updateallthefields(updateemail);
-        document.getElementById("thesavealertshow").style.display = "flex";
-        let hidepopup = await delaysomeminutes();
+        });
+        // Update DOM to show case study preview (implement as needed)
       }
 
       if (uploaderId == "certicateUpload") {
-        let thelawyercerticates = jsonUser["certificates"] ?? [];
-        let thisuniqueId = await generateUniqueId();
-
-        // Handle single file upload
         if (!info.uuid.includes("~")) {
-          let thiscertificates = {
-            url: url,
+          let thisuniqueId = await generateUniqueId();
+          pendingUploads.certificates.push({
+            url,
             "unique id": thisuniqueId,
-          };
-          thelawyercerticates.push(thiscertificates);
-        } else if (theUrls && Array.isArray(theUrls)) {
-          // Handle file group (multiple files)
-          for (let fileUrl of theUrls) {
-            let thiscertificates = {
+          });
+        } else if (urls && Array.isArray(urls)) {
+          for (let fileUrl of urls) {
+            let thisuniqueId = await generateUniqueId();
+            pendingUploads.certificates.push({
               url: fileUrl,
-              "unique id": await generateUniqueId(),
-            };
-            thelawyercerticates.push(thiscertificates);
+              "unique id": thisuniqueId,
+            });
           }
         }
-
-        let thedata = {
-          certificates: thelawyercerticates,
-        };
-        let theupdatedItem = await updateItem(updateemail, thedata);
-        console.log(theupdatedItem);
-        // reloadWindowAndPreserveScroll();
-        updatedom = await updateallthefields(updateemail);
-        document.getElementById("thesavealertshow").style.display = "flex";
-        await delaysomeminutes();
-
-        // for (let eachurl in thelawyercerticates) {
-        //   let theUserContainer = document.querySelectorAll(".slide-img");
-
-        //   theUserContainer.forEach((e) => {
-        //     let containusermain = e.getAttribute("itemindex");
-        //     if (containusermain != `cert${eachurl}`) {
-        //       let certcontain = document.createElement("div");
-        //       certcontain.classList.add("slide-img", "2ne", "w-slide");
-        //       certcontain.setAttribute("itemindex", `cert${eachurl}`);
-        //       certcontain.style.maxWidth = "300px";
-        //       let theimageWrap = document.createElement("div");
-        //       /*
-        //         theimageWrap.style.backgroundImage = `url('${mongodbcertificates[eachcert]}')`;
-        //         theimageWrap.style.backgroundSize = "cover"; // Makes the image cover the div
-        //         theimageWrap.style.backgroundPosition = "center"; // Centers the image
-        //         */
-        //       theimageWrap.classList.add("img-wrap", "certificatewrap");
-        //       let thecertimage = document.createElement("img");
-        //       thecertimage.classList.add("imagyclass");
-        //       thecertimage.src = thelawyercerticates[eachurl];
-        //       let certdelete = document.createElement("img");
-        //       certdelete.classList.add("deletebriefs");
-        //       certdelete.src =
-        //         "https://cdn.prod.website-files.com/67e360f08a15ef65d8814b41/67f6dfbc2b16d9977c85eeb2_Group%201597881168.png";
-        //       certdelete.setAttribute("itemindex", `cert${eachurl}`);
-
-        //       certdelete.addEventListener("click", async () => {
-        //         let thedeleteButton = event.target;
-        //         let todeleteindex = thedeleteButton.getAttribute("itemindex");
-        //         let elements = document.querySelectorAll(".slide-img.\\32 ne");
-        //         thelawyercerticates.splice(eachurl, 1);
-
-        //         elements.forEach((e) => {
-        //           let theelemattr = e.getAttribute("itemindex");
-        //           if (theelemattr == todeleteindex) {
-        //             document
-        //               .getElementById("thecertimaincontainer")
-        //               .removeChild(e);
-        //           }
-        //         });
-        //       });
-
-        //       theimageWrap.append(certdelete, thecertimage);
-        //       certcontain.append(theimageWrap);
-        //       document
-        //         .getElementById("thecertimaincontainer")
-        //         .append(certcontain);
-        //     }
-        //   });
-        // }
-        //console.log(`Uploader ${index + 1} uploaded:`, fileName);
-        //console.log(`File name with extension:`, fileName);
-
-        // Optional: send to backend or store in hidden input
-        // Example: document.querySelector(`#file-url-${index}`).value = fullFileUrl;
-        // Example: document.querySelector(`#file-name-${index}`).value = fileName;
+        // Update DOM to show certificate preview (implement as needed)
       }
 
       if (uploaderId == "uploadprofileimage") {
-        let thedata = {
-          "profile image": url,
-        };
-        let theupdatedItem = await updateItem(updateemail, thedata);
-        console.log(theupdatedItem);
-        updatedom = await updateallthefields(updateemail);
-        document.getElementById("thesavealertshow").style.display = "flex";
-        let hidepopup = await delaysomeminutes();
+        pendingUploads.profileImage = url;
       }
 
       if (uploaderId == "uploadbannerimage") {
-        let thedata = {
-          "profile banner": url,
-        };
-        let theupdatedItem = await updateItem(updateemail, thedata);
-        console.log(theupdatedItem);
-        updatedom = await updateallthefields(updateemail);
-        document.getElementById("thesavealertshow").style.display = "flex";
-        let hidepopup = await delaysomeminutes();
+        pendingUploads.profileBanner = url;
       }
+
+      document.getElementById("theloadingwait").style.display = "none";
     });
   });
 });
@@ -1074,6 +959,60 @@ $(document).ready(async function () {
       }
     });
   });
+
+  // Universal save button for all sections
+  // ...existing code...
+  document
+    .getElementById("universalSaveBtn")
+    .addEventListener("click", async () => {
+      document.getElementById("theloadingwait").style.display = "flex";
+      let updateemail = localStorage.getItem("userEmail");
+
+      // Fetch current user data
+      let dbuser = await getItem(updateemail);
+      let mongodbuser = JSON.parse(dbuser);
+      let userData = mongodbuser.data.body;
+      let jsonUser = JSON.parse(JSON.parse(userData));
+
+      // Merge pending uploads with existing data
+      let thedata = {
+        "profile image":
+          pendingUploads.profileImage || jsonUser["profile image"],
+        "profile banner":
+          pendingUploads.profileBanner || jsonUser["profile banner"],
+        "profile video":
+          pendingUploads.profileVideo || jsonUser["profile video"],
+        "client video testimonials": [
+          ...(jsonUser["client video testimonials"] ?? []),
+          ...pendingUploads.testimonials,
+        ],
+        "case study walkthroughs": [
+          ...(jsonUser["case study walkthroughs"] ?? []),
+          ...pendingUploads.caseStudies,
+        ],
+        certificates: [
+          ...(jsonUser["certificates"] ?? []),
+          ...pendingUploads.certificates,
+        ],
+        // Add other fields as needed
+      };
+
+      let theupdatedItem = await updateItem(updateemail, thedata);
+
+      // Clear pending uploads after successful save
+      pendingUploads.profileImage = null;
+      pendingUploads.profileBanner = null;
+      pendingUploads.profileVideo = null;
+      pendingUploads.testimonials = [];
+      pendingUploads.caseStudies = [];
+      pendingUploads.certificates = [];
+      pendingUploads.uploadcareUuids = [];
+
+      await updateallthefields(updateemail);
+      document.getElementById("thesavealertshow").style.display = "flex";
+      await delaysomeminutes();
+      document.getElementById("theloadingwait").style.display = "none";
+    });
 
   let saveButtons = document.querySelectorAll(".savethedtails");
   saveButtons.forEach((thisbutton) => {
@@ -1755,29 +1694,32 @@ async function updateallthefields(email, member = {}) {
           }
         }
       }
-      let bannerImage = jsonUser["profile banner"];
+
+      let bannerImageUrl =
+        pendingUploads.profileBanner || jsonUser["profile banner"];
 
       if (
-        bannerImage != null &&
-        bannerImage != "" &&
-        bannerImage != undefined
+        bannerImageUrl != null &&
+        bannerImageUrl != "" &&
+        bannerImageUrl != undefined
       ) {
         let bannerMainImage = document.getElementById("thebannerimage");
-        bannerMainImage.style.backgroundImage = `url(${bannerImage})`;
+        bannerMainImage.style.backgroundImage = `url(${bannerImageUrl})`;
         bannerMainImage.style.backgroundSize = "cover";
         bannerMainImage.style.backgroundPosition = "center";
         bannerMainImage.style.backgroundRepeat = "no-repeat";
       }
 
-      let theProfileImage = jsonUser["profile image"];
+      let profileImageUrl =
+        pendingUploads.profileImage || jsonUser["profile image"];
 
       if (
-        theProfileImage != null &&
-        theProfileImage != "" &&
-        theProfileImage != undefined
+        profileImageUrl != null &&
+        profileImageUrl != "" &&
+        profileImageUrl != undefined
       ) {
         let theprofyImage = document.getElementById("theprofileimage");
-        theprofyImage.style.backgroundImage = `url(${theProfileImage})`;
+        theprofyImage.style.backgroundImage = `url(${profileImageUrl})`;
         theprofyImage.style.backgroundSize = "cover";
         theprofyImage.style.backgroundPosition = "center";
         theprofyImage.style.backgroundRepeat = "no-repeat";
@@ -1959,18 +1901,19 @@ async function updateallthefields(email, member = {}) {
         }
       });
 
+      // Profile Video
+      let profileVideoUrl =
+        pendingUploads.profileVideo || jsonUser["profile video"];
       if (
-        jsonUser["profile video"] != null &&
-        jsonUser["profile video"] != undefined &&
-        jsonUser["profile video"] != ""
+        profileVideoUrl != null &&
+        profileVideoUrl != undefined &&
+        profileVideoUrl != ""
       ) {
-        document.getElementById("showcaseprofile").src =
-          jsonUser["profile video"];
+        document.getElementById("showcaseprofile").src = profileVideoUrl;
         document.getElementById("uploadfilesprompt").style.display = "none";
         document.getElementById("profileimagecontainer").style.display = "flex";
       } else {
         document.getElementById("uploadfilesprompt").style.display = "flex";
-        //document.getElementById("profileimagecontainer").style.display="none"
       }
 
       let theusersHobbies = jsonUser["interests and hobbies"] ?? [];
@@ -2065,7 +2008,11 @@ async function updateallthefields(email, member = {}) {
         thecaseslider.innerHTML = "";
       }
 
-      let clientTestimonials = jsonUser["client video testimonials"] ?? [];
+      // Testimonials (example for video testimonials)
+      let clientTestimonials = [
+        ...pendingUploads.testimonials,
+        ...(jsonUser["client video testimonials"] ?? []),
+      ];
       if (clientTestimonials.length > 0) {
         let testimonialSlider = document.getElementById("testimonial-swiper");
         testimonialSlider.innerHTML = "";
@@ -2147,51 +2094,12 @@ async function updateallthefields(email, member = {}) {
       }
       setupMediaAndPress(jsonUser);
 
-      // let mediaPressBriefs = jsonUser["media press mentions"] ?? [];
-      // if (mediaPressBriefs.length > 0) {
-      //   let thecaseslider3 = document.getElementById(
-      //     "themediaslidingcontainer"
-      //   );
-      //   thecaseslider3.innerHTML = "";
-      //   thecaseslider3.setAttribute("style", "display: block !important");
-      //   console.warn("reached themediaslidingcontainer");
+      // Case Studies
+      let caseStudyWalkthroughs = [
+        ...pendingUploads.caseStudies,
+        ...(jsonUser["case study walkthroughs"] ?? []),
+      ];
 
-      //   for (let pressbrief in mediaPressBriefs) {
-      //     let thepressSlider = document.createElement("div");
-      //     thepressSlider.classList.add("slide-5c", "media", "w-slide");
-      //     let presscontainer = document.createElement("div");
-      //     presscontainer.classList.add("presscontainer");
-      //     let previewBox = document.createElement("previewbox-link");
-      //     previewBox.setAttribute("href", mediaPressBriefs[pressbrief].url);
-      //     let pressdeleteicon = document.createElement("img");
-      //     pressdeleteicon.src =
-      //       "https://cdn.prod.website-files.com/67e360f08a15ef65d8814b41/67f6dfbc2b16d9977c85eeb2_Group%201597881168.png";
-      //     pressdeleteicon.classList.add("deletebriefs");
-      //     pressdeleteicon.setAttribute("itemindex", pressbrief);
-
-      //     pressdeleteicon.addEventListener("click", async () => {
-      //       let thedeleteButton = event.target;
-      //       let todeleteindex = thedeleteButton.getAttribute("itemindex");
-      //       let thedeletecontainer = document.getElementById(
-      //         "pressdeletecontainer"
-      //       );
-      //       thedeletecontainer.style.display = "flex";
-      //       thedeletecontainer.setAttribute("itemindex", todeleteindex);
-      //     });
-
-      //     presscontainer.append(previewBox, pressdeleteicon);
-      //     thepressSlider.append(presscontainer);
-      //     thecaseslider3.append(thepressSlider);
-      //   }
-      // } else {
-      //   let thecaseslider3 = document.getElementById(
-      //     "themediaslidingcontainer"
-      //   );
-      //   thecaseslider3.innerHTML = "";
-      //   document.getElementById("themediapressy").style.display = "none";
-      // }
-
-      let caseStudyWalkthroughs = jsonUser["case study walkthroughs"] ?? [];
       console.warn(
         "caseStudyWalkthroughs length",
         caseStudyWalkthroughs.length
@@ -2331,8 +2239,13 @@ async function updateallthefields(email, member = {}) {
       } else {
       }
 
-      let mongodbcertificates = jsonUser["certificates"] ?? [];
-      if (mongodbcertificates.length > 0) {
+      let certificates = [
+        ...pendingUploads.certificates,
+        ...(jsonUser["certificates"] ?? []),
+        ,
+      ];
+
+      if (certificates.length > 0) {
         let certificateSlider = document.getElementById("certificate-swiper");
         certificateSlider.innerHTML = "";
         certificateSlider.classList.add("swiper", "certificate-swiper-ps");
@@ -2354,7 +2267,7 @@ async function updateallthefields(email, member = {}) {
         const swiperWrapper = document.createElement("div");
         swiperWrapper.classList.add("swiper-wrapper");
 
-        for (let eachcert in mongodbcertificates) {
+        for (let eachcert in certificates) {
           const swiperSlide = document.createElement("div");
           swiperSlide.classList.add("swiper-slide");
           swiperSlide.style.cssText = `width: auto; flex-shrink: 0; padding: 0 10px;`;
@@ -2366,7 +2279,7 @@ async function updateallthefields(email, member = {}) {
 
           let certimage = document.createElement("img");
           certimage.classList.add("cert-image-ps");
-          certimage.src = mongodbcertificates[eachcert].url;
+          certimage.src = certificates[eachcert].url;
           certimage.style.width = "auto";
           /*
                 theimageWrap.style.backgroundImage = `url('${mongodbcertificates[eachcert]}')`;
