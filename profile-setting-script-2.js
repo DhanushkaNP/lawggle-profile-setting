@@ -1,5 +1,9 @@
 console.warn("Hidden elements change 5");
 
+let offerconsultation;
+let offercontingency;
+let probonowork;
+
 let activefileuploaderId = "";
 let theLawyerPronouns = [];
 let theCategory2 = [];
@@ -783,76 +787,29 @@ $(document).ready(async function () {
       let buttonId = parent.id;
 
       if (buttonId == "freeconsulationyes") {
-        document.getElementById("theloadingwait").style.display = "flex";
-        let updateemail = localStorage.getItem("userEmail");
-        let savedata = {
-          "free consultation": "yes",
-        };
-        console.log(updateemail, savedata);
-        updateduser = await updateItem(updateemail, savedata);
-        updatedom = await updateallthefields(updateemail);
-        document.getElementById("thesavealertshow").style.display = "flex";
-        let todelay = await delaysomeminutes();
+        offerconsultation = "yes";
+        updateOfferConsultationCheckboxImages();
       }
+
       if (buttonId == "freeconsultationno") {
-        document.getElementById("theloadingwait").style.display = "flex";
-        let updateemail = localStorage.getItem("userEmail");
-        let savedata = {
-          "free consultation": "no",
-        };
-        console.log(updateemail, savedata);
-        updateduser = await updateItem(updateemail, savedata);
-        updatedom = await updateallthefields(updateemail);
-        document.getElementById("thesavealertshow").style.display = "flex";
-        let todelay = await delaysomeminutes();
+        offerconsultation = "no";
+        updateOfferConsultationCheckboxImages();
       }
       if (buttonId == "offercontingencyyes") {
-        document.getElementById("theloadingwait").style.display = "flex";
-        let updateemail = localStorage.getItem("userEmail");
-        let savedata = {
-          "offer contingency": "yes",
-        };
-        console.log(updateemail, savedata);
-        updateduser = await updateItem(updateemail, savedata);
-        updatedom = await updateallthefields(updateemail);
-        document.getElementById("thesavealertshow").style.display = "flex";
-        let todelay = await delaysomeminutes();
+        offercontingency = "yes";
+        updateOfferContingencyCheckboxImages();
       }
       if (buttonId == "offercontingencyno") {
-        document.getElementById("theloadingwait").style.display = "flex";
-        let updateemail = localStorage.getItem("userEmail");
-        let savedata = {
-          "offer contingency": "no",
-        };
-        console.log(updateemail, savedata);
-        updateduser = await updateItem(updateemail, savedata);
-        updatedom = await updateallthefields(updateemail);
-        document.getElementById("thesavealertshow").style.display = "flex";
-        let todelay = await delaysomeminutes();
+        offercontingency = "no";
+        updateOfferContingencyCheckboxImages();
       }
       if (buttonId == "probonoyes") {
-        document.getElementById("theloadingwait").style.display = "flex";
-        let updateemail = localStorage.getItem("userEmail");
-        let savedata = {
-          "community pro bono work": "yes",
-        };
-        console.log(updateemail, savedata);
-        updateduser = await updateItem(updateemail, savedata);
-        updatedom = await updateallthefields(updateemail);
-        document.getElementById("thesavealertshow").style.display = "flex";
-        let todelay = await delaysomeminutes();
+        probonowork = "yes";
+        updateProBonoCheckboxImages();
       }
       if (buttonId == "probonono") {
-        document.getElementById("theloadingwait").style.display = "flex";
-        let updateemail = localStorage.getItem("userEmail");
-        let savedata = {
-          "community pro bono work": "no",
-        };
-        console.log(updateemail, savedata);
-        updateduser = await updateItem(updateemail, savedata);
-        updatedom = await updateallthefields(updateemail);
-        document.getElementById("thesavealertshow").style.display = "flex";
-        let todelay = await delaysomeminutes();
+        probonowork = "no";
+        updateProBonoCheckboxImages();
       }
     });
   });
@@ -1117,87 +1074,6 @@ $(document).ready(async function () {
       }
     });
   });
-
-  // let switchButtons = document.querySelectorAll(".selectyesno");
-  // switchButtons.forEach((thisbutton) => {
-  //   thisbutton.addEventListener("click", async (event) => {
-  //     let button = event.target;
-  //     let buttonId = button.id;
-
-  //     if (buttonId == "freeconsulationyes") {
-  //       document.getElementById("theloadingwait").style.display = "flex";
-  //       let updateemail = localStorage.getItem("userEmail");
-  //       let savedata = {
-  //         "free consultation": "yes",
-  //       };
-  //       console.log(updateemail, savedata);
-  //       updateduser = await updateItem(updateemail, savedata);
-  //       updatedom = await updateallthefields(updateemail);
-  //       document.getElementById("thesavealertshow").style.display = "flex";
-  //       let todelay = await delaysomeminutes();
-  //     }
-  //     if (buttonId == "freeconsultationno") {
-  //       document.getElementById("theloadingwait").style.display = "flex";
-  //       let updateemail = localStorage.getItem("userEmail");
-  //       let savedata = {
-  //         "free consultation": "no",
-  //       };
-  //       console.log(updateemail, savedata);
-  //       updateduser = await updateItem(updateemail, savedata);
-  //       updatedom = await updateallthefields(updateemail);
-  //       document.getElementById("thesavealertshow").style.display = "flex";
-  //       let todelay = await delaysomeminutes();
-  //     }
-  //     if (buttonId == "offercontingencyyes") {
-  //       document.getElementById("theloadingwait").style.display = "flex";
-  //       let updateemail = localStorage.getItem("userEmail");
-  //       let savedata = {
-  //         "offer contingency": "yes",
-  //       };
-  //       console.log(updateemail, savedata);
-  //       updateduser = await updateItem(updateemail, savedata);
-  //       updatedom = await updateallthefields(updateemail);
-  //       document.getElementById("thesavealertshow").style.display = "flex";
-  //       let todelay = await delaysomeminutes();
-  //     }
-  //     if (buttonId == "offercontingencyno") {
-  //       document.getElementById("theloadingwait").style.display = "flex";
-  //       let updateemail = localStorage.getItem("userEmail");
-  //       let savedata = {
-  //         "offer contingency": "no",
-  //       };
-  //       console.log(updateemail, savedata);
-  //       updateduser = await updateItem(updateemail, savedata);
-  //       updatedom = await updateallthefields(updateemail);
-  //       document.getElementById("thesavealertshow").style.display = "flex";
-  //       let todelay = await delaysomeminutes();
-  //     }
-  //     if (buttonId == "probonoyes") {
-  //       document.getElementById("theloadingwait").style.display = "flex";
-  //       let updateemail = localStorage.getItem("userEmail");
-  //       let savedata = {
-  //         "community pro bono work": "yes",
-  //       };
-  //       console.log(updateemail, savedata);
-  //       updateduser = await updateItem(updateemail, savedata);
-  //       updatedom = await updateallthefields(updateemail);
-  //       document.getElementById("thesavealertshow").style.display = "flex";
-  //       let todelay = await delaysomeminutes();
-  //     }
-  //     if (buttonId == "probonono") {
-  //       document.getElementById("theloadingwait").style.display = "flex";
-  //       let updateemail = localStorage.getItem("userEmail");
-  //       let savedata = {
-  //         "community pro bono work": "no",
-  //       };
-  //       console.log(updateemail, savedata);
-  //       updateduser = await updateItem(updateemail, savedata);
-  //       updatedom = await updateallthefields(updateemail);
-  //       document.getElementById("thesavealertshow").style.display = "flex";
-  //       let todelay = await delaysomeminutes();
-  //     }
-  //   });
-  // });
 
   let saveButtons = document.querySelectorAll(".savethedtails");
   saveButtons.forEach((thisbutton) => {
@@ -1766,7 +1642,6 @@ async function updateallthefields(email, member = {}) {
         clientcentricMission;
       let dynamicBio = jsonUser["dynamic bio"];
       document.getElementById("dynamicbio").value = dynamicBio;
-      let offerconsultation = jsonUser["free consultation"];
 
       let thegeolocationaddress = jsonUser["address"];
 
@@ -2051,41 +1926,15 @@ async function updateallthefields(email, member = {}) {
           thecaseslider5.append(thequizcarrier);
         }
       }
-      if (offerconsultation == "yes") {
-        document.getElementById("offerconsultancyimageno").src =
-          "https://cdn.prod.website-files.com/67e360f08a15ef65d8814b41/67f688109c8eaf330c0f0e34_icons8-unchecked-checkbox-50.png";
-        document.getElementById("offerconsultancyimageyes").src =
-          "https://cdn.prod.website-files.com/67e360f08a15ef65d8814b41/67f689ee9a1a8514a23f8919_icons8-checked-box-24.png";
-      } else if (offerconsultation == "no") {
-        document.getElementById("offerconsultancyimageno").src =
-          "https://cdn.prod.website-files.com/67e360f08a15ef65d8814b41/67f689ee9a1a8514a23f8919_icons8-checked-box-24.png";
-        document.getElementById("offerconsultancyimageyes").src =
-          "https://cdn.prod.website-files.com/67e360f08a15ef65d8814b41/67f688109c8eaf330c0f0e34_icons8-unchecked-checkbox-50.png";
-      }
-      let offercontingency = jsonUser["offer contingency"];
-      if (offercontingency == "yes") {
-        document.getElementById("offercontingencyimageno").src =
-          "https://cdn.prod.website-files.com/67e360f08a15ef65d8814b41/67f688109c8eaf330c0f0e34_icons8-unchecked-checkbox-50.png";
-        document.getElementById("offercontingencyimageyes").src =
-          "https://cdn.prod.website-files.com/67e360f08a15ef65d8814b41/67f689ee9a1a8514a23f8919_icons8-checked-box-24.png";
-      } else if (offercontingency == "no") {
-        document.getElementById("offercontingencyimageno").src =
-          "https://cdn.prod.website-files.com/67e360f08a15ef65d8814b41/67f689ee9a1a8514a23f8919_icons8-checked-box-24.png";
-        document.getElementById("offercontingencyimageyes").src =
-          "https://cdn.prod.website-files.com/67e360f08a15ef65d8814b41/67f688109c8eaf330c0f0e34_icons8-unchecked-checkbox-50.png";
-      }
-      let probonowork = jsonUser["community pro bono work"];
-      if (probonowork == "yes") {
-        document.getElementById("probonoimageno").src =
-          "https://cdn.prod.website-files.com/67e360f08a15ef65d8814b41/67f688109c8eaf330c0f0e34_icons8-unchecked-checkbox-50.png";
-        document.getElementById("probonoimageyes").src =
-          "https://cdn.prod.website-files.com/67e360f08a15ef65d8814b41/67f689ee9a1a8514a23f8919_icons8-checked-box-24.png";
-      } else if (probonowork == "no") {
-        document.getElementById("probonoimageno").src =
-          "https://cdn.prod.website-files.com/67e360f08a15ef65d8814b41/67f689ee9a1a8514a23f8919_icons8-checked-box-24.png";
-        document.getElementById("probonoimageyes").src =
-          "https://cdn.prod.website-files.com/67e360f08a15ef65d8814b41/67f688109c8eaf330c0f0e34_icons8-unchecked-checkbox-50.png";
-      }
+
+      // Configure yes/no checkboxes
+      offerconsultation = jsonUser["free consultation"];
+      updateOfferConsultationCheckboxImages();
+      offercontingency = jsonUser["offer contingency"];
+      updateOfferContingencyCheckboxImages();
+      probonowork = jsonUser["community pro bono work"];
+      updateProBonoCheckboxImages();
+
       $(`#BlogSelect`).val(jsonUser["blog contributor"]).trigger("change");
       $(`#HobbySelect`)
         .val(jsonUser["interests and hobbies"])
@@ -3038,12 +2887,44 @@ function setupMediaAndPress(jsonUser) {
   }
 }
 
-// function reloadWindowAndPreserveScroll() {
-//   // Save current scroll position
-//   localStorage.setItem("scrollY-ps", window.scrollY);
-//   console.log("scrollY-ps before reload", window.scrollY);
-//   // Reload the page
-//   setTimeout(function () {
-//     location.reload();
-//   }, 50);
-// }
+function updateOfferConsultationCheckboxImages() {
+  if (offerconsultation == "yes") {
+    document.getElementById("offerconsultancyimageno").src =
+      "https://cdn.prod.website-files.com/67e360f08a15ef65d8814b41/67f688109c8eaf330c0f0e34_icons8-unchecked-checkbox-50.png";
+    document.getElementById("offerconsultancyimageyes").src =
+      "https://cdn.prod.website-files.com/67e360f08a15ef65d8814a23f8919_icons8-checked-box-24.png";
+  } else if (offerconsultation == "no") {
+    document.getElementById("offerconsultancyimageno").src =
+      "https://cdn.prod.website-files.com/67e360f08a15ef65d8814b41/67f689ee9a1a8514a23f8919_icons8-checked-box-24.png";
+    document.getElementById("offerconsultancyimageyes").src =
+      "https://cdn.prod.website-files.com/67e360f08a15ef65d8814b41/67f688109c8eaf330c0f0e34_icons8-unchecked-checkbox-50.png";
+  }
+}
+
+function updateOfferContingencyCheckboxImages() {
+  if (offercontingency == "yes") {
+    document.getElementById("offercontingencyimageno").src =
+      "https://cdn.prod.website-files.com/67e360f08a15ef65d8814b41/67f688109c8eaf330c0f0e34_icons8-unchecked-checkbox-50.png";
+    document.getElementById("offercontingencyimageyes").src =
+      "https://cdn.prod.website-files.com/67e360f08a15ef65d8814b41/67f689ee9a1a8514a23f8919_icons8-checked-box-24.png";
+  } else if (offercontingency == "no") {
+    document.getElementById("offercontingencyimageno").src =
+      "https://cdn.prod.website-files.com/67e360f08a15ef65d8814b41/67f689ee9a1a8514a23f8919_icons8-checked-box-24.png";
+    document.getElementById("offercontingencyimageyes").src =
+      "https://cdn.prod.website-files.com/67e360f08a15ef65d8814b41/67f688109c8eaf330c0f0e34_icons8-unchecked-checkbox-50.png";
+  }
+}
+
+function updateProBonoCheckboxImages() {
+  if (probonowork == "yes") {
+    document.getElementById("probonoimageno").src =
+      "https://cdn.prod.website-files.com/67e360f08a15ef65d8814b41/67f688109c8eaf330c0f0e34_icons8-unchecked-checkbox-50.png";
+    document.getElementById("probonoimageyes").src =
+      "https://cdn.prod.website-files.com/67e360f08a15ef65d8814b41/67f689ee9a1a8514a23f8919_icons8-checked-box-24.png";
+  } else if (probonowork == "no") {
+    document.getElementById("probonoimageno").src =
+      "https://cdn.prod.website-files.com/67e360f08a15ef65d8814b41/67f689ee9a1a8514a23f8919_icons8-checked-box-24.png";
+    document.getElementById("probonoimageyes").src =
+      "https://cdn.prod.website-files.com/67e360f08a15ef65d8814b41/67f688109c8eaf330c0f0e34_icons8-unchecked-checkbox-50.png";
+  }
+}
