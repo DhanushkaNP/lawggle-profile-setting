@@ -572,6 +572,7 @@ document.addEventListener("DOMContentLoaded", async () => {
         pendingUploads.profileBanner = url;
       }
 
+      updateallthefields(localStorage.getItem("userEmail"));
       document.getElementById("theloadingwait").style.display = "none";
     });
   });
