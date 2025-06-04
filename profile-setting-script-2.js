@@ -757,7 +757,7 @@ $(document).ready(async function () {
         "end date": theenddate,
       };
       lawyerState.allEducation.push(youreducation);
-
+      console.warn("Education added:", lawyerState.allEducation);
       if (
         theinstitution == null ||
         theinstitution == undefined ||
@@ -1082,7 +1082,7 @@ $(document).ready(async function () {
         "max hourly rate": document.getElementById("maxRate").value,
         "firm url": document.getElementById("firmurl").value,
         "area of expertise": await readselectnoImage("expertiseSelect"),
-        AllEducation: lawyerState.allEducation,
+        AllEducation: [...lawyerState.allEducation],
         "dynamic bio": document.getElementById("dynamicbio").value,
         address: lawyerState.userGeoLocationDetails,
         "offer consultation": lawyerState.offerConsultation,
