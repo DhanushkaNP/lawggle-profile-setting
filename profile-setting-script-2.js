@@ -1083,7 +1083,7 @@ $(document).ready(async function () {
         "firm url": document.getElementById("firmurl").value,
         "area of expertise": await readselectnoImage("expertiseSelect"),
         AllEducation: lawyerState.allEducation,
-        "dynamic bio": document.getElementById("dynamicBio").value,
+        "dynamic bio": document.getElementById("dynamicbio").value,
         address: lawyerState.userGeoLocationDetails,
         "offer consultation": lawyerState.offerConsultation,
         "offer contingency": lawyerState.offerContingency,
