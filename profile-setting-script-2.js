@@ -4,14 +4,51 @@ let offerconsultation;
 let offercontingency;
 let probonowork;
 
-const pendingUploads = {
+const lawyerState = {
+  // Basic Info
+  pronouns: [],
+  name: null,
+  minRate: null,
+  maxRate: null,
+  firmUrl: null,
+  areaOfExpertise: [],
+  allEducation: [],
+  dynamicBio: null,
+
+  // Profile Media
   profileImage: null,
   profileBanner: null,
   profileVideo: null,
   testimonials: [],
   caseStudies: [],
   certificates: [],
-  uploadcareUuids: [],
+
+  // Address & Location
+  userGeoLocationDetails: null,
+
+  // Consultation & Offer
+  offerConsultation: null,
+  offerContingency: null,
+  proBonoWork: null,
+
+  // Social Media
+  Linkedin: null,
+  Twitter: null,
+  Facebook: null,
+  Instagram: null,
+
+  // Languages & Hobbies
+  languages: [],
+  interestsAndHobbies: [],
+
+  // Notable Case Wins
+  notableCaseWins: [],
+
+  // Media Press
+  mediaPressMentions: [],
+
+  // Personal QA
+  personalQA: [],
 };
 
 let activefileuploaderId = "";
@@ -20,11 +57,11 @@ let theCategory2 = [];
 let theSubcategory2 = [];
 let thecasefiles = [];
 let thecertificates = [];
-let alleducation = [];
 let theuserGeolocation;
 let thelawyercerticates = [];
 let theLawyersHobbies = [];
 
+// ToDo remove
 let allCategories = {
   categories: [
     {
@@ -293,7 +330,6 @@ async function delaysomeminutes() {
     document.getElementById("personalqacontainer").style.display = "none";
     document.getElementById("certdeletecontainer").style.display = "none";
     document.getElementById("theloadingwait").style.display = "none";
-    alleducation = [];
   }, 2000); // 2000 milliseconds = 2 seconds
   return "continue";
 }
@@ -367,6 +403,7 @@ async function readselectnoImage(id) {
     });
   return selectedValuesWithoutImage;
 }
+
 let thenewsubcategories = [
   "Business Law",
   "Corporate Law",
@@ -493,7 +530,6 @@ document.addEventListener("DOMContentLoaded", async () => {
 
   // Get all uploadcare inputs
   const inputs = document.querySelectorAll("[role=uploadcare-uploader]");
-  let theUrls;
 
   inputs.forEach((input, index) => {
     const widget = uploadcare.Widget(input);
@@ -514,22 +550,20 @@ document.addEventListener("DOMContentLoaded", async () => {
                 : file.cdnUrl
             )
           );
-          pendingUploads.uploadcareUuids.push(info.uuid);
         } catch (error) {
           console.error("❌ Failed to load file group:", error);
         }
       } else {
         url = info.cdnUrl;
-        pendingUploads.uploadcareUuids.push(info.uuid);
       }
 
       if (uploaderId == "uploadfile") {
-        pendingUploads.profileVideo = url;
+        lawyerState.profileVideo = url;
       }
 
       if (uploaderId == "uploadtestimonials") {
         let thisuniqueId = await generateUniqueId();
-        pendingUploads.testimonials.push({
+        lawyerState.testimonials.push({
           url,
           "unique id": thisuniqueId,
         });
@@ -538,7 +572,7 @@ document.addEventListener("DOMContentLoaded", async () => {
 
       if (uploaderId == "casestudywalkthroughuploader") {
         let thisuniqueId = await generateUniqueId();
-        pendingUploads.caseStudies.push({
+        lawyerState.caseStudies.push({
           url,
           "unique id": thisuniqueId,
         });
@@ -548,14 +582,14 @@ document.addEventListener("DOMContentLoaded", async () => {
       if (uploaderId == "certicateUpload") {
         if (!info.uuid.includes("~")) {
           let thisuniqueId = await generateUniqueId();
-          pendingUploads.certificates.push({
+          lawyerState.certificates.push({
             url,
             "unique id": thisuniqueId,
           });
         } else if (urls && Array.isArray(urls)) {
           for (let fileUrl of urls) {
             let thisuniqueId = await generateUniqueId();
-            pendingUploads.certificates.push({
+            lawyerState.certificates.push({
               url: fileUrl,
               "unique id": thisuniqueId,
             });
@@ -565,11 +599,11 @@ document.addEventListener("DOMContentLoaded", async () => {
       }
 
       if (uploaderId == "uploadprofileimage") {
-        pendingUploads.profileImage = url;
+        lawyerState.profileImage = url;
       }
 
       if (uploaderId == "uploadbannerimage") {
-        pendingUploads.profileBanner = url;
+        lawyerState.profileBanner = url;
       }
 
       updateallthefields(localStorage.getItem("userEmail"));
@@ -673,55 +707,141 @@ $(document).ready(async function () {
       let buttonId = parent.id;
 
       if (buttonId == "freeconsulationyes") {
-        offerconsultation = "yes";
+        lawyerState.offerConsultation = "yes";
         updateOfferConsultationCheckboxImages();
       }
 
       if (buttonId == "freeconsultationno") {
-        offerconsultation = "no";
+        lawyerState.offerConsultation = "no";
         updateOfferConsultationCheckboxImages();
       }
       if (buttonId == "offercontingencyyes") {
-        offercontingency = "yes";
+        lawyerState.offerContingency = "yes";
         updateOfferContingencyCheckboxImages();
       }
       if (buttonId == "offercontingencyno") {
-        offercontingency = "no";
+        lawyerState.offerContingency = "no";
         updateOfferContingencyCheckboxImages();
       }
       if (buttonId == "probonoyes") {
-        probonowork = "yes";
+        lawyerState.proBonoWork = "yes";
         updateProBonoCheckboxImages();
       }
       if (buttonId == "probonono") {
-        probonowork = "no";
+        lawyerState.proBonoWork = "no";
         updateProBonoCheckboxImages();
       }
     });
   });
 
-  let savethemapdetails = document.getElementById("savethemapdetails");
+  $("#addEducation").click(async function () {
+    let theinstitution = document.getElementById("institutioneducation").value;
+    let thedregree = document.getElementById("degreeinput").value;
+    let thestartDate = document.getElementById("thestartdate").value;
+    let theenddate = document.getElementById("endyear").value;
 
-  if (savethemapdetails) {
-    savethemapdetails.addEventListener("click", async () => {
-      console.log("clicked", savethemapdetails);
+    if (
+      theinstitution == undefined ||
+      theinstitution == null ||
+      theinstitution == ""
+    ) {
+      document.getElementById("messagetext").style.display = "block";
+      setTimeout(() => {
+        document.getElementById("messagetext").style.display = "none";
+      }, 1500);
+    } else {
+      let youreducation = {
+        education: theinstitution,
+        degree: thedregree,
+        "start date": thestartDate,
+        "end date": theenddate,
+      };
+      lawyerState.allEducation.push(youreducation);
 
-      document.getElementById("theloadingwait").style.display = "flex";
-      let thisUserId = localStorage.getItem("userEmail");
-      let dbuser = await getItem(thisUserId);
-      let mongodbuser = JSON.parse(dbuser);
-      let userData = mongodbuser.data.body;
-      let jsonUser = JSON.parse(JSON.parse(userData));
-      let address = jsonUser["address"];
+      if (
+        theinstitution == null ||
+        theinstitution == undefined ||
+        theinstitution == ""
+      ) {
+        theinstitution = "N/A";
+      }
+      if (thedregree == null || thedregree == undefined || thedregree == "") {
+        thedregree = "N/A";
+      }
+      if (
+        thestartDate == null ||
+        thestartDate == undefined ||
+        thestartDate == ""
+      ) {
+        thestartDate = "N/A";
+      }
+      if (theenddate == null || theenddate == undefined || theenddate == "") {
+        theenddate = "N/A";
+      }
 
-      let toChangeData = { address: theuserGeolocation };
-      console.log(toChangeData);
-      let updateduser = await updateItem(thisUserId, toChangeData);
-      let updatenewestdom = await updateallthefields(thisUserId);
-      document.getElementById("thesavealertshow").style.display = "flex";
-      let todelay = await delaysomeminutes();
-    });
-  }
+      let createeducation = createEducationBox(
+        theinstitution,
+        thedregree,
+        thestartDate,
+        theenddate,
+        lawyerState.allEducation.length
+      );
+      document.getElementById("thesavededucation").style.display = "none";
+    }
+  });
+
+  $("#save-cases").click(async function () {
+    let caseTitle = document.getElementById("casewinstitle").value;
+    let caseDescription = document.getElementById("casewinsdescription").value;
+    if (caseTitle && caseDescription) {
+      theuniqueId = await generateUniqueId();
+      let thiscase = {
+        uniqueId: theuniqueId,
+        title: caseTitle,
+        description: caseDescription,
+      };
+      lawyerState.notableCaseWins.push(thiscase);
+    }
+  });
+
+  $("#addMediaPress").click(async function () {
+    let mediapresslink = document.getElementById("thepreviewlinkinput").value;
+    let theuniqueId = await generateUniqueId();
+    let thismediapressdata = {
+      uniqueId: theuniqueId,
+      url: mediapresslink,
+    };
+    lawyerState.mediaPressMentions.push(thismediapressdata);
+  });
+
+  $("#addInterests").click(async function () {
+    let interestOrHobby = document.getElementById("interestedinput").value;
+    if (interestOrHobby) {
+      theuniqueId = await generateUniqueId();
+      let thiscase = {
+        uniqueId: theuniqueId,
+        title: interestOrHobby,
+      };
+      lawyerState.interestsAndHobbies.push(thiscase);
+    }
+    document.getElementById("interestedinput").value = "";
+  });
+
+  $("#addQA").click(async function () {
+    let qaquiz = document.getElementById("theqaquizinput").value;
+    let qaanswer = document.getElementById("qaanswerinput").value;
+    if (qaanswer && qaquiz) {
+      let theuniqueId = await generateUniqueId();
+      let thisqadata = {
+        uniqueId: theuniqueId,
+        title: qaquiz,
+        description: qaanswer,
+      };
+      lawyerState.personalQA.push(thisqadata);
+    }
+    document.getElementById("theqaquizinput").value = "";
+    document.getElementById("qaanswerinput").value = "";
+  });
 
   mapboxgl.accessToken =
     "pk.eyJ1IjoibGF3Z2dsZSIsImEiOiJja2RraDU0ZnYwb2lqMnhwbWw2eXVrMjNrIn0.ShD8eyKTv7exWDKR44bSoA";
@@ -768,6 +888,7 @@ $(document).ready(async function () {
       postalcode: postalCode,
       country: country,
     };
+    lawyerState.userGeoLocationDetails = theuserGeolocation;
 
     console.log({
       coords,
@@ -791,39 +912,18 @@ $(document).ready(async function () {
       let theindextodelete = Number(theindextodeletetext);
 
       if (buttonIdentifier == "education") {
-        let thisUserId = localStorage.getItem("userEmail");
-        let dbuser = await getItem(thisUserId);
-        let mongodbuser = JSON.parse(dbuser);
-        let userData = mongodbuser.data.body;
-        let jsonUser = JSON.parse(JSON.parse(userData));
-        let savededucation = jsonUser["AllEducation"]
-          ? jsonUser["AllEducation"]
-          : ["education"];
-        savededucation.splice(theindextodelete, 1);
+        lawyerState.allEducation.splice(theindextodelete, 1);
 
-        console.log(savededucation);
-
-        document.getElementById("theloadingwait").style.display = "flex";
-        let thefirsteducationObject = alleducation[0];
-        let educationsave = "";
-        if (
-          thefirsteducationObject != undefined &&
-          thefirsteducationObject != null
-        ) {
-          educationsave = thefirsteducationObject.education;
-        } else {
-          educationsave = "";
-        }
+        let thefirsteducationObject = lawyerState.allEducation[0];
         let updateemail = localStorage.getItem("userEmail");
         let savedata = {
-          education: educationsave,
-          AllEducation: savededucation,
+          AllEducation: lawyerState.allEducation,
         };
-        console.log(updateemail, savedata);
+
         updateduser = await updateItem(updateemail, savedata);
         updatedom = await updateallthefields(updateemail);
         document.getElementById("thesavealertshow").style.display = "flex";
-        let todelay = await delaysomeminutes();
+        await delaysomeminutes();
       }
 
       if (buttonIdentifier == "casewins") {
@@ -834,21 +934,15 @@ $(document).ready(async function () {
 
         console.log("🕌🕌🕌😄🏄🏽", typeof theindextodelete, theindextodelete);
         document.getElementById("theloadingwait").style.display = "flex";
-        let thisUserId = localStorage.getItem("userEmail");
-        let dbuser = await getItem(thisUserId);
-        let mongodbuser = JSON.parse(dbuser);
-        let userData = mongodbuser.data.body;
-        let jsonUser = JSON.parse(JSON.parse(userData));
-        let notablecasewins = jsonUser["notable case wins"];
-        notablecasewins.splice(theindextodelete, 1);
-        console.log("🦸🏽‍♂️🦸🏽‍♂️🦸🏽‍♂️", notablecasewins);
 
-        let toChangeData = { "notable case wins": notablecasewins };
+        lawyerState.notableCaseWins.splice(theindextodelete, 1);
+
+        let toChangeData = { "notable case wins": lawyerState.notableCaseWins };
         console.log(toChangeData);
-        let updateduser = await updateItem(thisUserId, toChangeData);
-        let updatenewestdom = await updateallthefields(thisUserId);
+        await updateItem(thisUserId, toChangeData);
+        await updateallthefields(thisUserId);
         document.getElementById("thesavealertshow").style.display = "flex";
-        let todelay = await delaysomeminutes();
+        await delaysomeminutes();
       }
       if (buttonIdentifier == "testimonials") {
         document.getElementById("theloadingwait").style.display = "flex";
@@ -880,19 +974,13 @@ $(document).ready(async function () {
           .getElementById("deleteclientstestimonials")
           .getAttribute("itemindex");
         document.getElementById("theloadingwait").style.display = "flex";
-        let thisUserId = localStorage.getItem("userEmail");
-        let dbuser = await getItem(thisUserId);
-        let mongodbuser = JSON.parse(dbuser);
-        let userData = mongodbuser.data.body;
-        let jsonUser = JSON.parse(JSON.parse(userData));
-        let mediapressbriefings = jsonUser["media press mentions"];
 
-        mediapressbriefings.splice(theindextodelete, 1);
+        lawyerState.mediaPressMentions.splice(theindextodelete, 1);
 
         let toChangeData = { "media press mentions": mediapressbriefings };
         console.log(toChangeData);
-        let updateduser = await updateItem(thisUserId, toChangeData);
-        let updatenewestdom = await updateallthefields(thisUserId);
+        await updateItem(thisUserId, toChangeData);
+        await updateallthefields(thisUserId);
         document.getElementById("thesavealertshow").style.display = "flex";
         let todelay = await delaysomeminutes();
       }
@@ -923,20 +1011,14 @@ $(document).ready(async function () {
           .getElementById("personalqacontainer")
           .getAttribute("itemindex");
         document.getElementById("theloadingwait").style.display = "flex";
-        let thisUserId = localStorage.getItem("userEmail");
-        let dbuser = await getItem(thisUserId);
-        let mongodbuser = JSON.parse(dbuser);
-        let userData = mongodbuser.data.body;
-        let jsonUser = JSON.parse(JSON.parse(userData));
-        let qaquestions = jsonUser["personal qa"];
-        qaquestions.splice(theindextodelete, 1);
+        lawyerState.personalQA.splice(theindextodelete, 1);
 
         let toChangeData = { "personal qa": qaquestions };
         console.log(toChangeData);
-        let updateduser = await updateItem(thisUserId, toChangeData);
-        let updatenewestdom = await updateallthefields(thisUserId);
+        await updateItem(thisUserId, toChangeData);
+        await updateallthefields(thisUserId);
         document.getElementById("thesavealertshow").style.display = "flex";
-        let todelay = await delaysomeminutes();
+        await delaysomeminutes();
       }
       if (buttonIdentifier == "certificates") {
         let theindextodelete = document
@@ -977,309 +1059,36 @@ $(document).ready(async function () {
 
       // Merge pending uploads with existing data
       let thedata = {
-        "profile image":
-          pendingUploads.profileImage || jsonUser["profile image"],
+        "profile image": lawyerState.profileImage || jsonUser["profile image"],
         "profile banner":
-          pendingUploads.profileBanner || jsonUser["profile banner"],
-        "profile video":
-          pendingUploads.profileVideo || jsonUser["profile video"],
+          lawyerState.profileBanner || jsonUser["profile banner"],
+        "profile video": lawyerState.profileVideo || jsonUser["profile video"],
         "client video testimonials": [
           ...(jsonUser["client video testimonials"] ?? []),
-          ...pendingUploads.testimonials,
+          ...lawyerState.testimonials,
         ],
         "case study walkthroughs": [
           ...(jsonUser["case study walkthroughs"] ?? []),
-          ...pendingUploads.caseStudies,
+          ...lawyerState.caseStudies,
         ],
         certificates: [
           ...(jsonUser["certificates"] ?? []),
-          ...pendingUploads.certificates,
+          ...lawyerState.certificates,
         ],
-        // Add other fields as needed
-      };
 
-      let theupdatedItem = await updateItem(updateemail, thedata);
-
-      // Clear pending uploads after successful save
-      pendingUploads.profileImage = null;
-      pendingUploads.profileBanner = null;
-      pendingUploads.profileVideo = null;
-      pendingUploads.testimonials = [];
-      pendingUploads.caseStudies = [];
-      pendingUploads.certificates = [];
-      pendingUploads.uploadcareUuids = [];
-
-      await updateallthefields(updateemail);
-      document.getElementById("thesavealertshow").style.display = "flex";
-      await delaysomeminutes();
-      document.getElementById("theloadingwait").style.display = "none";
-    });
-
-  let saveButtons = document.querySelectorAll(".savethedtails");
-  saveButtons.forEach((thisbutton) => {
-    thisbutton.addEventListener("click", async (event) => {
-      let button = event.target;
-      let buttonIdentifier = button.getAttribute("sect");
-
-      if (buttonIdentifier == "section1save") {
-        let thisUserId = localStorage.getItem("userEmail");
-        let dbuser = await getItem(thisUserId);
-        let mongodbuser = JSON.parse(dbuser);
-        let userData = mongodbuser.data.body;
-        let jsonUser = JSON.parse(JSON.parse(userData));
-        let savededucation = jsonUser["AllEducation"]
-          ? jsonUser["AllEducation"]
-          : [];
-
-        document.getElementById("theloadingwait").style.display = "flex";
-        let pronouns = await readselectnoImage("selectpronouns");
-        let name = document.getElementById("firstlastname").value;
-        let minhourlyRate = document.getElementById("minRate").value;
-        let maxhourlyRate = document.getElementById("maxRate").value;
-        let firmurl = document.getElementById("firmurl").value;
-        let expertCategory = await readselectnoImage("mySelect");
-        let expertSubCategory = await readselectnoImage("subSelect");
-        let thefirsteducationObject = alleducation[0];
-        let educationsave = "";
-        if (
-          thefirsteducationObject != undefined &&
-          thefirsteducationObject != null
-        ) {
-          educationsave = thefirsteducationObject.education;
-        } else {
-          educationsave = "";
-        }
-        let updateemail = localStorage.getItem("userEmail");
-        let savedata = {
-          pronouns: pronouns,
-          name: name,
-          "min hourly rate": minhourlyRate,
-          "max hourly rate": maxhourlyRate,
-          "firm url": firmurl,
-          "area of expertise": expertSubCategory,
-          education: educationsave,
-          AllEducation: [...alleducation, ...savededucation],
-        };
-        console.log(updateemail, savedata);
-        updateduser = await updateItem(updateemail, savedata);
-        updatedom = await updateallthefields(updateemail);
-        document.getElementById("thesavealertshow").style.display = "flex";
-        let todelay = await delaysomeminutes();
-      }
-      if (buttonIdentifier == "section2save") {
-        document.getElementById("theloadingwait").style.display = "flex";
-        let thisUserId = localStorage.getItem("userEmail");
-        let dbuser = await getItem(thisUserId);
-        let mongodbuser = JSON.parse(dbuser);
-        let userData = mongodbuser.data.body;
-        let jsonUser = JSON.parse(JSON.parse(userData));
-        let notablecasewins = jsonUser["notable case wins"] ?? [];
-        let caseTitle = document.getElementById("casewinstitle").value;
-        let caseDescription = document.getElementById(
-          "casewinsdescription"
-        ).value;
-        if (caseTitle && caseDescription) {
-          theuniqueId = await generateUniqueId();
-          let thiscase = {
-            uniqueId: theuniqueId,
-            title: caseTitle,
-            description: caseDescription,
-          };
-          notablecasewins.push(thiscase);
-          let toChangeData = { "notable case wins": notablecasewins };
-          console.log(toChangeData);
-          let updateduser = await updateItem(thisUserId, toChangeData);
-          let updatenewestdom = await updateallthefields(thisUserId);
-          document.getElementById("thesavealertshow").style.display = "flex";
-          let todelay = await delaysomeminutes();
-        } else {
-        }
-      }
-      if (buttonIdentifier == "sectionhobbysave") {
-        document.getElementById("theloadingwait").style.display = "flex";
-        let thisUserId = localStorage.getItem("userEmail");
-        let dbuser = await getItem(thisUserId);
-        let mongodbuser = JSON.parse(dbuser);
-        let userData = mongodbuser.data.body;
-        let jsonUser = JSON.parse(JSON.parse(userData));
-        let interestsHobbies = jsonUser["interests and hobbies"] ?? [];
-        let interestOrHobby = document.getElementById("interestedinput").value;
-        if (interestOrHobby) {
-          theuniqueId = await generateUniqueId();
-          let thiscase = {
-            uniqueId: theuniqueId,
-            title: interestOrHobby,
-          };
-          interestsHobbies.push(thiscase);
-          let toChangeData = { "interests and hobbies": interestsHobbies };
-          console.log(toChangeData);
-          let updateduser = await updateItem(thisUserId, toChangeData);
-          let updatenewestdom = await updateallthefields(thisUserId);
-          document.getElementById("thesavealertshow").style.display = "flex";
-          let todelay = await delaysomeminutes();
-        } else {
-        }
-      }
-
-      if (buttonIdentifier == "section3save") {
-        document.getElementById("theloadingwait").style.display = "flex";
-        let thisUserId = localStorage.getItem("userEmail");
-        let dbuser = await getItem(thisUserId);
-        let mongodbuser = JSON.parse(dbuser);
-        let userData = mongodbuser.data.body;
-        let jsonUser = JSON.parse(JSON.parse(userData));
-        let mediapressbriefings = jsonUser["media press mentions"] ?? [];
-        let mediapresslink = document.getElementById(
-          "thepreviewlinkinput"
-        ).value;
-        let theuniqueId = await generateUniqueId();
-        let thismediapressdata = {
-          uniqueId: theuniqueId,
-          url: mediapresslink,
-        };
-        mediapressbriefings.push(thismediapressdata);
-        let toChangeData = { "media press mentions": mediapressbriefings };
-        console.log(toChangeData);
-        let updateduser = await updateItem(thisUserId, toChangeData);
-        // reloadWindowAndPreserveScroll();
-        let updatenewestdom = await updateallthefields(thisUserId);
-        document.getElementById("thesavealertshow").style.display = "flex";
-        let todelay = await delaysomeminutes();
-      } else {
-      }
-      if (buttonIdentifier == "section4save") {
-        document.getElementById("theloadingwait").style.display = "flex";
-        let thisUserId = localStorage.getItem("userEmail");
-        let dbuser = await getItem(thisUserId);
-        let mongodbuser = JSON.parse(dbuser);
-        let userData = mongodbuser.data.body;
-        let jsonUser = JSON.parse(JSON.parse(userData));
-        let qaquestions = jsonUser["personal qa"] ?? [];
-        let qaquiz = document.getElementById("theqaquizinput").value;
-        let qaanswer = document.getElementById("qaanswerinput").value;
-        if (qaanswer && qaquiz) {
-          let theuniqueId = await generateUniqueId();
-          let thisqadata = {
-            uniqueId: theuniqueId,
-            title: qaquiz,
-            description: qaanswer,
-          };
-          qaquestions.push(thisqadata);
-          let toChangeData = { "personal qa": qaquestions };
-          console.log(toChangeData);
-          let updateduser = await updateItem(thisUserId, toChangeData);
-          let updatenewestdom = await updateallthefields(thisUserId);
-          document.getElementById("thesavealertshow").style.display = "flex";
-          let todelay = await delaysomeminutes();
-        }
-      }
-      if (buttonIdentifier == "section5save") {
-        document.getElementById("theloadingwait").style.display = "flex";
-        let thisUserId = localStorage.getItem("userEmail");
-        let lawyerlanguages = await readselect("thelanguage");
-        // No need to handle the interests and hobbies here it's handled in sectionhobbysave
-        // let theinterestsandhobbies = await readselectnoImage("HobbySelect");
-        let thelawyercerticates = thecertificates;
-        let awardText = document.getElementById("awardsrecognition").value;
-        let awardList = awardText.split(/\r?\n/);
-        let blogContributer = await readselectnoImage("BlogSelect");
-        let clientcentricMisssionStatement = document.getElementById(
-          "clientcentricMission"
-        ).value;
-        let dynamicbio = document.getElementById("dynamicbio").value;
-
-        let dbuser = await getItem(thisUserId);
-        let mongodbuser = JSON.parse(dbuser);
-        let userData = mongodbuser.data.body;
-        let jsonUser = JSON.parse(JSON.parse(userData));
-        let thecurrentCerts = jsonUser["certificates"] ?? [];
-
-        let toChangeData = {
-          languages: lawyerlanguages,
-          // "interests and hobbies": theinterestsandhobbies,
-          certificates: [...thelawyercerticates, ...thecurrentCerts],
-          "awards recognition": awardList,
-          "blog contributor": blogContributer,
-          "client centric mission": clientcentricMisssionStatement,
-          "dynamic bio": dynamicbio ? dynamicbio.trim() : "",
-        };
-
-        let updateduser = await updateItem(thisUserId, toChangeData);
-        document.getElementById("thesavealertshow").style.display = "flex";
-        let updatenewestdom = await updateallthefields(thisUserId);
-        let todelay = await delaysomeminutes();
-      }
-
-      if (buttonIdentifier == "section6save") {
-        let theinstitution = document.getElementById(
-          "institutioneducation"
-        ).value;
-        let thedregree = document.getElementById("degreeinput").value;
-        let thestartDate = document.getElementById("thestartdate").value;
-        let theenddate = document.getElementById("endyear").value;
-
-        if (
-          theinstitution == undefined ||
-          theinstitution == null ||
-          theinstitution == ""
-        ) {
-          document.getElementById("messagetext").style.display = "block";
-          setTimeout(() => {
-            document.getElementById("messagetext").style.display = "none";
-          }, 1500);
-        } else {
-          let youreducation = {
-            education: theinstitution,
-            degree: thedregree,
-            "start date": thestartDate,
-            "end date": theenddate,
-          };
-          alleducation.push(youreducation);
-
-          if (
-            theinstitution == null ||
-            theinstitution == undefined ||
-            theinstitution == ""
-          ) {
-            theinstitution = "N/A";
-          }
-          if (
-            thedregree == null ||
-            thedregree == undefined ||
-            thedregree == ""
-          ) {
-            thedregree = "N/A";
-          }
-          if (
-            thestartDate == null ||
-            thestartDate == undefined ||
-            thestartDate == ""
-          ) {
-            thestartDate = "N/A";
-          }
-          if (
-            theenddate == null ||
-            theenddate == undefined ||
-            theenddate == ""
-          ) {
-            theenddate = "N/A";
-          }
-
-          let createeducation = createEducationBox(
-            theinstitution,
-            thedregree,
-            thestartDate,
-            theenddate,
-            alleducation.length
-          );
-          document.getElementById("thesavededucation").style.display = "none";
-        }
-      }
-
-      if (buttonIdentifier == "section7save") {
-        let thisUserId = localStorage.getItem("userEmail");
-        document.getElementById("theloadingwait").style.display = "flex";
-        let socialMedias = [
+        pronouns: await readselectnoImage("selectpronouns"),
+        name: document.getElementById("firstlastname").value,
+        "min hourly rate": document.getElementById("minRate").value,
+        "max hourly rate": document.getElementById("maxRate").value,
+        "firm url": document.getElementById("firmurl").value,
+        "area of expertise": await readselectnoImage("expertiseSelect"),
+        AllEducation: lawyerState.allEducation,
+        "dynamic bio": document.getElementById("dynamicBio").value,
+        address: lawyerState.userGeoLocationDetails,
+        "offer consultation": lawyerState.offerConsultation,
+        "offer contingency": lawyerState.offerContingency,
+        "pro bono work": lawyerState.proBonoWork,
+        "social media": [
           {
             platform: "Twitter",
             url: document.getElementById("thexlink").value,
@@ -1296,20 +1105,30 @@ $(document).ready(async function () {
             platform: "Instagram",
             url: document.getElementById("theinstagramlink").value,
           },
-        ];
+        ],
+        languages: await readselect("thelanguage"),
+        "interests and hobbies": lawyerState.interestsAndHobbies,
+        "media press mentions": lawyerState.mediaPressMentions,
+        "notable case wins": lawyerState.notableCaseWins,
+        "personal qa": lawyerState.personalQA,
+        // Add other fields as needed
+      };
 
-        let toChangeData = { "social media": socialMedias };
-        console.log(toChangeData);
-        let updateduser = await updateItem(thisUserId, toChangeData);
-        let updatenewestdom = await updateallthefields(thisUserId);
-        document.getElementById("thesavealertshow").style.display = "flex";
-        let todelay = await delaysomeminutes();
-      }
+      let theupdatedItem = await updateItem(updateemail, thedata);
 
-      if (buttonIdentifier == "sectionmapsave") {
-      }
+      // Clear pending uploads after successful save
+      lawyerState.profileImage = null;
+      lawyerState.profileBanner = null;
+      lawyerState.profileVideo = null;
+      lawyerState.testimonials = [];
+      lawyerState.caseStudies = [];
+      lawyerState.certificates = [];
+
+      await updateallthefields(updateemail);
+      document.getElementById("thesavealertshow").style.display = "flex";
+      await delaysomeminutes();
+      document.getElementById("theloadingwait").style.display = "none";
     });
-  });
 
   //Memberstack read
   window.$memberstackDom.getCurrentMember().then(async ({ data: member }) => {
@@ -1571,9 +1390,9 @@ async function updateallthefields(email, member = {}) {
       theSubcategory2 = jsonUser["area of expertise"];
       let alltheIDS = ["selectpronouns"];
       let languagelist = [];
-      let lawyerlanguages = jsonUser["languages"];
-      for (let eachlangy in lawyerlanguages) {
-        languagelist.push(lawyerlanguages[eachlangy].value);
+      lawyerState.languages = jsonUser["languages"];
+      for (let eachlangy in lawyerState.languages) {
+        languagelist.push(lawyerState.languages[eachlangy].value);
       }
       let awards = jsonUser["awards recognition"];
       document.getElementById("awardsrecognition").value = awards;
@@ -1697,7 +1516,7 @@ async function updateallthefields(email, member = {}) {
       }
 
       let bannerImageUrl =
-        pendingUploads.profileBanner || jsonUser["profile banner"];
+        lawyerState.profileBanner || jsonUser["profile banner"];
 
       if (
         bannerImageUrl != null &&
@@ -1712,7 +1531,7 @@ async function updateallthefields(email, member = {}) {
       }
 
       let profileImageUrl =
-        pendingUploads.profileImage || jsonUser["profile image"];
+        lawyerState.profileImage || jsonUser["profile image"];
 
       if (
         profileImageUrl != null &&
@@ -1772,7 +1591,7 @@ async function updateallthefields(email, member = {}) {
             "https://cdn.prod.website-files.com/67e360f08a15ef65d8814b41/67f6df9d8c1aed7f8f8c1fc7_Group%201597881167.png";
           qaedit.setAttribute("itemindex", eachEducation);
 
-          qaedit.addEventListener("click", async () => {
+          qaedit.addEventListener("click", async (event) => {
             let theeditButton = event.target;
             let toeditindex = theeditButton.getAttribute("itemindex");
             let theeditcontainer = document.getElementById("editedededucation");
@@ -1871,16 +1690,18 @@ async function updateallthefields(email, member = {}) {
       }
 
       // Configure yes/no checkboxes
-      offerconsultation = jsonUser["free consultation"];
+      lawyerState.offerConsultation = jsonUser["free consultation"];
       updateOfferConsultationCheckboxImages();
-      offercontingency = jsonUser["offer contingency"];
+      lawyerState.offerContingency = jsonUser["offer contingency"];
       updateOfferContingencyCheckboxImages();
-      probonowork = jsonUser["community pro bono work"];
+      lawyerState.proBonoWork = jsonUser["community pro bono work"];
       updateProBonoCheckboxImages();
+
+      lawyerState.interestsAndHobbies = jsonUser["interests and hobbies"];
 
       $(`#BlogSelect`).val(jsonUser["blog contributor"]).trigger("change");
       $(`#HobbySelect`)
-        .val(jsonUser["interests and hobbies"])
+        .val(lawyerState.interestsAndHobbies ?? [])
         .trigger("change");
       $(`#thelanguage`).val(languagelist).trigger("change");
       $(`#selectpronouns`).val(jsonUser["pronouns"]).trigger("change");
@@ -1904,7 +1725,7 @@ async function updateallthefields(email, member = {}) {
 
       // Profile Video
       let profileVideoUrl =
-        pendingUploads.profileVideo || jsonUser["profile video"];
+        lawyerState.profileVideo || jsonUser["profile video"];
       if (
         profileVideoUrl != null &&
         profileVideoUrl != undefined &&
@@ -1946,7 +1767,8 @@ async function updateallthefields(email, member = {}) {
         }
       }
 
-      let caseWins = jsonUser["notable case wins"] ?? [];
+      lawyerState.notableCaseWins = jsonUser["notable case wins"] ?? [];
+      let caseWins = lawyerState.notableCaseWins;
       if (caseWins.length > 0) {
         caseWins <= 3
           ? $("#case-wins-error-text").hide()
@@ -2011,7 +1833,7 @@ async function updateallthefields(email, member = {}) {
 
       // Testimonials (example for video testimonials)
       let clientTestimonials = [
-        ...pendingUploads.testimonials,
+        ...lawyerState.testimonials,
         ...(jsonUser["client video testimonials"] ?? []),
       ];
       if (clientTestimonials.length > 0) {
@@ -2097,7 +1919,7 @@ async function updateallthefields(email, member = {}) {
 
       // Case Studies
       let caseStudyWalkthroughs = [
-        ...pendingUploads.caseStudies,
+        ...lawyerState.caseStudies,
         ...(jsonUser["case study walkthroughs"] ?? []),
       ];
 
@@ -2182,7 +2004,8 @@ async function updateallthefields(email, member = {}) {
         thecaseslider4.innerHTML = "";
       }
 
-      let questionsAndAnswers = jsonUser["personal qa"] ?? [];
+      lawyerState.personalQA = jsonUser["personal qa"] ?? [];
+      let questionsAndAnswers = lawyerState.personalQA;
       if (questionsAndAnswers.length > 0) {
         let thecaseslider5 = document.getElementById("qaquzicontainer");
         thecaseslider5.innerHTML = "";
@@ -2241,7 +2064,7 @@ async function updateallthefields(email, member = {}) {
       }
 
       let certificates = [
-        ...pendingUploads.certificates,
+        ...lawyerState.certificates,
         ...(jsonUser["certificates"] ?? []),
         ,
       ];
@@ -2526,10 +2349,10 @@ async function createEducationBox(
     "https://cdn.prod.website-files.com/67e360f08a15ef65d8814b41/67f6dfbc2b16d9977c85eeb2_Group%201597881168.png";
   qadelete.setAttribute("itemindex", `static${indexnumber}`);
 
-  qadelete.addEventListener("click", async () => {
+  qadelete.addEventListener("click", async (event) => {
     let thedeleteButton = event.target;
     let todeleteindex = thedeleteButton.getAttribute("itemindex");
-    alleducation.splice(todeleteindex, 1);
+    lawyerState.allEducation.splice(todeleteindex, 1);
 
     let allstaticDivs = document.querySelectorAll(".theqadiv");
     allstaticDivs.forEach((staticdiv) => {
@@ -2625,7 +2448,8 @@ function loadSwiperJS() {
 
 // Function to handle media and press mentions section
 function setupMediaAndPress(jsonUser) {
-  let themediaandPress = jsonUser["media press mentions"];
+  lawyerState.mediaPressMentions = jsonUser["media press mentions"] ?? [];
+  let themediaandPress = lawyerState.mediaPressMentions;
   let themediacontainer = document.getElementById("mediawrapper");
   themediacontainer.innerHTML = "";
 
@@ -2802,12 +2626,12 @@ function setupMediaAndPress(jsonUser) {
 }
 
 function updateOfferConsultationCheckboxImages() {
-  if (offerconsultation == "yes") {
+  if (lawyerState.offerConsultation == "yes") {
     document.getElementById("offerconsultancyimageno").src =
       "https://cdn.prod.website-files.com/67e360f08a15ef65d8814b41/67f688109c8eaf330c0f0e34_icons8-unchecked-checkbox-50.png";
     document.getElementById("offerconsultancyimageyes").src =
       "https://cdn.prod.website-files.com/67e360f08a15ef65d8814b41/67f689ee9a1a8514a23f8919_icons8-checked-box-24.png";
-  } else if (offerconsultation == "no") {
+  } else if (lawyerState.offerConsultation == "no") {
     document.getElementById("offerconsultancyimageno").src =
       "https://cdn.prod.website-files.com/67e360f08a15ef65d8814b41/67f689ee9a1a8514a23f8919_icons8-checked-box-24.png";
     document.getElementById("offerconsultancyimageyes").src =
@@ -2816,12 +2640,12 @@ function updateOfferConsultationCheckboxImages() {
 }
 
 function updateOfferContingencyCheckboxImages() {
-  if (offercontingency == "yes") {
+  if (lawyerState.offerContingency == "yes") {
     document.getElementById("offercontingencyimageno").src =
       "https://cdn.prod.website-files.com/67e360f08a15ef65d8814b41/67f688109c8eaf330c0f0e34_icons8-unchecked-checkbox-50.png";
     document.getElementById("offercontingencyimageyes").src =
       "https://cdn.prod.website-files.com/67e360f08a15ef65d8814b41/67f689ee9a1a8514a23f8919_icons8-checked-box-24.png";
-  } else if (offercontingency == "no") {
+  } else if (lawyerState.offerContingency == "no") {
     document.getElementById("offercontingencyimageno").src =
       "https://cdn.prod.website-files.com/67e360f08a15ef65d8814b41/67f689ee9a1a8514a23f8919_icons8-checked-box-24.png";
     document.getElementById("offercontingencyimageyes").src =
@@ -2830,12 +2654,12 @@ function updateOfferContingencyCheckboxImages() {
 }
 
 function updateProBonoCheckboxImages() {
-  if (probonowork == "yes") {
+  if (lawyerState.proBonoWork == "yes") {
     document.getElementById("probonoimageno").src =
       "https://cdn.prod.website-files.com/67e360f08a15ef65d8814b41/67f688109c8eaf330c0f0e34_icons8-unchecked-checkbox-50.png";
     document.getElementById("probonoimageyes").src =
       "https://cdn.prod.website-files.com/67e360f08a15ef65d8814b41/67f689ee9a1a8514a23f8919_icons8-checked-box-24.png";
-  } else if (probonowork == "no") {
+  } else if (lawyerState.proBonoWork == "no") {
     document.getElementById("probonoimageno").src =
       "https://cdn.prod.website-files.com/67e360f08a15ef65d8814b41/67f689ee9a1a8514a23f8919_icons8-checked-box-24.png";
     document.getElementById("probonoimageyes").src =
