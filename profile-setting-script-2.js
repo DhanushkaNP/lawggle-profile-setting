@@ -480,7 +480,7 @@ async function addSubCategories(thetargetCategories) {
   console.log("🔐🔐🔐🔐🔐🔐🔐💧💧💧", selectedAreaOfExpertise);
 
   selectedAreaOfExpertise.forEach((thissubcategory) => {
-    theselectedelement = document.getElementById("subSelect");
+    theselectedelement = document.getElementById("expertiseSelect");
     const option = document.createElement("option");
     option.value = thissubcategory.toLowerCase();
     option.textContent = thissubcategory;
@@ -1208,9 +1208,9 @@ $(document).ready(async function () {
         const image = $(this).data("image");
 
         if (elementId == "mySelect") {
-          document.getElementById("subSelect").innerHTML = "";
+          document.getElementById("expertiseSelect").innerHTML = "";
           await addSubCategories(["Business & Corporate Law"]);
-          await configureSelect("subSelect", "#thesubselectcontain");
+          await configureSelect("expertiseSelect", "#expertiseContain");
         }
 
         console.log("Selected: ", {
@@ -1230,8 +1230,8 @@ $(document).ready(async function () {
     },
     { id: "mySelect", container: "#expertiseselecthold", select: 2 },
     {
-      id: "subSelect",
-      container: "#thesubselectcontain",
+      id: "expertiseSelect",
+      container: "#expertiseContain",
       select: theSubcategory2,
     },
     { id: "thelanguage", container: "#thelangy", select: "theLawyerPronouns" },
@@ -1706,9 +1706,11 @@ async function updateallthefields(email, member = {}) {
       $(`#thelanguage`).val(languagelist).trigger("change");
       $(`#selectpronouns`).val(jsonUser["pronouns"]).trigger("change");
       $(`#mySelect`).val(jsonUser["expertise category"]).trigger("change");
-      document.getElementById("subSelect").innerHTML = "";
+      document.getElementById("expertiseSelect").innerHTML = "";
       let recreate = await addSubCategories("");
-      $(`#subSelect`).val(jsonUser["area of expertise"]).trigger("change");
+      $(`#expertiseSelect`)
+        .val(jsonUser["area of expertise"])
+        .trigger("change");
 
       // page inputs set initial values
       pageinputs.forEach((input) => {
