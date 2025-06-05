@@ -444,7 +444,6 @@ $(document).ready(async function () {
   });
 
   $("#addEducation").click(async function () {
-    document.getElementById("theloadingwait").style.display = "flex";
     let theinstitution = document.getElementById("institutioneducation").value;
     let thedregree = document.getElementById("degreeinput").value;
     let thestartDate = document.getElementById("thestartdate").value;
@@ -503,7 +502,6 @@ $(document).ready(async function () {
       document.getElementById("thestartdate").value = "";
       document.getElementById("endyear").value = "";
 
-      document.getElementById("theloadingwait").style.display = "none";
       document.getElementById("thesavededucation").style.display = "none";
     }
   });
@@ -934,6 +932,7 @@ $(document).ready(async function () {
 });
 
 async function updateItem(email, data) {
+  document.getElementById("theloadingwait").style.display = "flex";
   try {
     const myHeaders = new Headers();
     myHeaders.append("Content-Type", "application/json");
@@ -1046,6 +1045,7 @@ async function uploadFile(url, name) {
 
 async function updateallthefields(email, member = {}) {
   try {
+    document.getElementById("theloadingwait").style.display = "flex";
     let dbuser = await getItem(email);
     let mongodbuser = JSON.parse(dbuser);
     console.log("🤑🤑🤑🤑", mongodbuser.status, typeof mongodbuser.status);
@@ -1922,6 +1922,8 @@ async function updateallthefields(email, member = {}) {
     }
     document.getElementById("thepageloader").style.display = "none";
   }
+
+  document.getElementById("theloadingwait").style.display = "none";
 }
 
 async function mapBoxMap(latitude, longitude) {
