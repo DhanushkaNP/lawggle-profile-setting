@@ -649,29 +649,21 @@ $(document).ready(async function () {
       let theindextodelete = Number(theindextodeletetext);
 
       if (buttonIdentifier == "education") {
+        document.getElementById("theloadingwait").style.display = "flex";
         lawyerState.allEducation.splice(theindextodelete, 1);
         updatedom = await updateallthefields(localStorage.getItem("userEmail"));
-        document.getElementById("deletetheeducationcontainer").style.display =
-          "none";
+        await delaysomeminutes();
       }
 
       if (buttonIdentifier == "casewins") {
+        document.getElementById("theloadingwait").style.display = "flex";
         let theindextodeletetext = document
           .getElementById("deletecasesmaindiv")
           .getAttribute("itemindex");
         let theindextodelete = Number(theindextodeletetext);
-
-        console.log("🕌🕌🕌😄🏄🏽", typeof theindextodelete, theindextodelete);
-        document.getElementById("theloadingwait").style.display = "flex";
-
+        console.log(typeof theindextodelete, theindextodelete);
         lawyerState.notableCaseWins.splice(theindextodelete, 1);
-
-        let toChangeData = { "notable case wins": lawyerState.notableCaseWins };
-        console.log(toChangeData);
-        let updateemail = localStorage.getItem("userEmail");
-        await updateItem(updateemail, toChangeData);
         await updateallthefields(localStorage.getItem("userEmail"));
-        document.getElementById("thesavealertshow").style.display = "flex";
         await delaysomeminutes();
       }
       if (buttonIdentifier == "testimonials") {
@@ -680,61 +672,27 @@ $(document).ready(async function () {
         let theindextodelete = document
           .getElementById("deleteclientstestimonials")
           .getAttribute("itemindex");
-        let thisUserId = localStorage.getItem("userEmail");
-        let dbuser = await getItem(thisUserId);
-        let mongodbuser = JSON.parse(dbuser);
-        let userData = mongodbuser.data.body;
-        let jsonUser = JSON.parse(JSON.parse(userData));
-        let thetestimonials = jsonUser["client video testimonials"];
-        let thisuniqueId = await generateUniqueId();
-        thetestimonials.splice(theindextodelete, 1);
-
-        let thedata = {
-          "client video testimonials": thetestimonials,
-        };
-
-        let theupdatedItem = await updateItem(updateemail, thedata);
-        console.log(theupdatedItem);
+        lawyerState.testimonials.splice(theindextodelete, 1);
         updatedom = await updateallthefields(updateemail);
-        document.getElementById("thesavealertshow").style.display = "flex";
-        let hidepopup = await delaysomeminutes();
+        await delaysomeminutes();
       }
       if (buttonIdentifier == "mediapress") {
         let theindextodelete = document
           .getElementById("deleteclientstestimonials")
           .getAttribute("itemindex");
         document.getElementById("theloadingwait").style.display = "flex";
-
         lawyerState.mediaPressMentions.splice(theindextodelete, 1);
-
-        let toChangeData = { "media press mentions": mediapressbriefings };
-        console.log(toChangeData);
-        await updateItem(thisUserId, toChangeData);
-        await updateallthefields(thisUserId);
-        document.getElementById("thesavealertshow").style.display = "flex";
-        let todelay = await delaysomeminutes();
+        await updateallthefields(localStorage.getItem("userEmail"));
+        await delaysomeminutes();
       }
       if (buttonIdentifier == "casestudy") {
         let theindextodelete = document
           .getElementById("casestudiesdeletecontainer")
           .getAttribute("itemindex");
         let updateemail = localStorage.getItem("userEmail");
-        let dbuser = await getItem(updateemail);
-        let mongodbuser = JSON.parse(dbuser);
-        let userData = mongodbuser.data.body;
-        let jsonUser = JSON.parse(JSON.parse(userData));
-        let casestudywalkthroughs = jsonUser["case study walkthroughs"];
-        let thisuniqueId = await generateUniqueId();
-        casestudywalkthroughs.splice(theindextodelete, 1);
-
-        let thedata = {
-          "case study walkthroughs": casestudywalkthroughs,
-        };
-        let theupdatedItem = await updateItem(updateemail, thedata);
-        console.log(theupdatedItem);
+        lawyerState.caseStudies.splice(theindextodelete, 1);
         updatedom = await updateallthefields(updateemail);
-        document.getElementById("thesavealertshow").style.display = "flex";
-        let hidepopup = await delaysomeminutes();
+        await delaysomeminutes();
       }
       if (buttonIdentifier == "qa") {
         let theindextodelete = document
@@ -742,11 +700,7 @@ $(document).ready(async function () {
           .getAttribute("itemindex");
         document.getElementById("theloadingwait").style.display = "flex";
         lawyerState.personalQA.splice(theindextodelete, 1);
-
-        let toChangeData = { "personal qa": qaquestions };
-        console.log(toChangeData);
-        await updateItem(thisUserId, toChangeData);
-        await updateallthefields(thisUserId);
+        await updateallthefields(localStorage.getItem("userEmail"));
         document.getElementById("thesavealertshow").style.display = "flex";
         await delaysomeminutes();
       }
@@ -754,21 +708,11 @@ $(document).ready(async function () {
         let theindextodelete = document
           .getElementById("certdeletecontainer")
           .getAttribute("itemindex");
-        let thisUserId = localStorage.getItem("userEmail");
-
-        let dbuser = await getItem(thisUserId);
-        let mongodbuser = JSON.parse(dbuser);
-        let userData = mongodbuser.data.body;
-        let jsonUser = JSON.parse(JSON.parse(userData));
-        let thecurrentCerts = jsonUser["certificates"];
-        thecurrentCerts.splice(theindextodelete, 1);
-
-        let toChangeData = { certificates: thecurrentCerts };
-        console.log(toChangeData);
-        let updateduser = await updateItem(thisUserId, toChangeData);
-        let updatenewestdom = await updateallthefields(thisUserId);
+        let userEmail = localStorage.getItem("userEmail");
+        lawyerState.certificates.splice(theindextodelete, 1);
+        await updateallthefields(userEmail);
         document.getElementById("thesavealertshow").style.display = "flex";
-        let todelay = await delaysomeminutes();
+        await delaysomeminutes();
       }
     });
   });
@@ -793,10 +737,7 @@ $(document).ready(async function () {
         "profile banner":
           lawyerState.profileBanner || jsonUser["profile banner"],
         "profile video": lawyerState.profileVideo || jsonUser["profile video"],
-        "client video testimonials": [
-          ...(jsonUser["client video testimonials"] ?? []),
-          ...lawyerState.testimonials,
-        ],
+        "client video testimonials": [...lawyerState.testimonials],
         "case study walkthroughs": [
           ...(jsonUser["case study walkthroughs"] ?? []),
           ...lawyerState.caseStudies,
@@ -850,7 +791,6 @@ $(document).ready(async function () {
       lawyerState.profileImage = null;
       lawyerState.profileBanner = null;
       lawyerState.profileVideo = null;
-      lawyerState.testimonials = [];
       lawyerState.caseStudies = [];
       lawyerState.certificates = [];
 
@@ -1578,10 +1518,10 @@ async function updateallthefields(email, member = {}) {
       }
 
       // Testimonials (example for video testimonials)
-      let clientTestimonials = [
-        ...lawyerState.testimonials,
-        ...(jsonUser["client video testimonials"] ?? []),
-      ];
+      if (lawyerState.testimonials.length === 0) {
+        lawyerState.testimonials = jsonUser["client video testimonials"] || [];
+      }
+      let clientTestimonials = lawyerState.testimonials;
       if (clientTestimonials.length > 0) {
         let testimonialSlider = document.getElementById("testimonial-swiper");
         testimonialSlider.innerHTML = "";
@@ -1664,15 +1604,11 @@ async function updateallthefields(email, member = {}) {
       setupMediaAndPress(jsonUser);
 
       // Case Studies
-      let caseStudyWalkthroughs = [
-        ...lawyerState.caseStudies,
-        ...(jsonUser["case study walkthroughs"] ?? []),
-      ];
+      if (lawyerState.caseStudies.length === 0) {
+        lawyerState.caseStudies = jsonUser["case studies"] || [];
+      }
 
-      console.warn(
-        "caseStudyWalkthroughs length",
-        caseStudyWalkthroughs.length
-      );
+      let caseStudyWalkthroughs = lawyerState.caseStudies;
       if (caseStudyWalkthroughs.length > 0) {
         let videocaseslider = document.getElementById("case-study-swiper");
         videocaseslider.innerHTML = "";
@@ -1811,11 +1747,10 @@ async function updateallthefields(email, member = {}) {
       } else {
       }
 
-      let certificates = [
-        ...lawyerState.certificates,
-        ...(jsonUser["certificates"] ?? []),
-        ,
-      ];
+      if (lawyerState.certificates.length === 0) {
+        lawyerState.certificates = jsonUser["certificates"] || [];
+      }
+      let certificates = lawyerState.certificates;
 
       if (certificates.length > 0) {
         let certificateSlider = document.getElementById("certificate-swiper");
