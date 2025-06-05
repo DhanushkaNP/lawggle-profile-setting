@@ -943,7 +943,8 @@ $(document).ready(async function () {
 
         let toChangeData = { "notable case wins": lawyerState.notableCaseWins };
         console.log(toChangeData);
-        await updateItem(thisUserId, toChangeData);
+        let updateemail = localStorage.getItem("userEmail");
+        await updateItem(updateemail, toChangeData);
         await updateallthefields(thisUserId);
         document.getElementById("thesavealertshow").style.display = "flex";
         await delaysomeminutes();
