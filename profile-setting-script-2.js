@@ -1245,16 +1245,13 @@ async function updateallthefields(email, member = {}) {
           thequizcarrier.classList.add("theqadiv");
           let headcarrier = document.createElement("div");
           headcarrier.classList.add("qaheader", "foreducation");
-          //let headertext=document.createElement("p")
-          //headertext.classList.add("qaheadertext")
-          //headertext.innerText=questionsAndAnswers[eachquiz].question
           let qadelete = document.createElement("img");
           qadelete.classList.add("qaicons");
           qadelete.src =
             "https://cdn.prod.website-files.com/67e360f08a15ef65d8814b41/67f6dfbc2b16d9977c85eeb2_Group%201597881168.png";
           qadelete.setAttribute("itemindex", eachEducation);
 
-          qadelete.addEventListener("click", async () => {
+          qadelete.addEventListener("click", async (event) => {
             let thedeleteButton = event.target;
             let todeleteindex = thedeleteButton.getAttribute("itemindex");
             let thedeletecontainer = document.getElementById(
@@ -2220,7 +2217,7 @@ function setupMediaAndPress(jsonUser) {
     swiperWrapper.classList.add("swiper-wrapper", "swipper-wrapper-media-ps");
 
     // Add cards
-    themediaandPress.forEach((mediaItem) => {
+    themediaandPress.forEach((mediaItem, index) => {
       const url = mediaItem.url || "#";
       const domain = extractDomain(url);
       const meta = getMetadataByDomain(url, domain);
@@ -2237,6 +2234,20 @@ function setupMediaAndPress(jsonUser) {
       deleteIcon.src =
         "https://cdn.prod.website-files.com/67e360f08a15ef65d8814b41/67f6dfbc2b16d9977c85eeb2_Group%201597881168.png";
       deleteIcon.classList.add("deletebriefs-4");
+      deleteIcon.setAttribute("itemindex", index);
+
+      deleteIcon.addEventListener("click", function (e) {
+        e.preventDefault();
+        e.stopPropagation();
+
+        let thedeleteButton = e.target;
+        let todeleteindex = thedeleteButton.getAttribute("itemindex");
+        let thedeletecontainer = document.getElementById(
+          "pressdeletecontainer"
+        );
+        thedeletecontainer.style.display = "flex";
+        thedeletecontainer.setAttribute("itemindex", todeleteindex);
+      });
 
       // Image
       const img = document.createElement("img");
