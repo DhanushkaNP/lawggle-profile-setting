@@ -1418,20 +1418,20 @@ async function updateallthefields(email, member = {}) {
       thehobbyCarrier.classList.remove("hide-container");
 
       if (theusersHobbies.length > 0) {
-        for (let thehobby in theusersHobbies) {
+        theusersHobbies.forEach((hobby, index) => {
           let theHobbycontainer = document.createElement("div");
           theHobbycontainer.classList.add("theqadiv");
-          thehobbyheader = document.createElement("div");
+          let thehobbyheader = document.createElement("div");
           thehobbyheader.classList.add("qaheader");
           let thehobbyiconholder = document.createElement("div");
           thehobbyiconholder.classList.add("qaiconsholder");
           let thehobbyname = document.createElement("p");
           thehobbyname.classList.add("qaheadertext");
-          thehobbyname.innerText = theusersHobbies[thehobby].title;
-          hobbydeleteicon = document.createElement("img");
+          thehobbyname.innerText = hobby.title;
+          let hobbydeleteicon = document.createElement("img");
           hobbydeleteicon.src =
             "https://cdn.prod.website-files.com/67e360f08a15ef65d8814b41/67f6dfbc2b16d9977c85eeb2_Group%201597881168.png";
-          hobbydeleteicon.setAttribute("itemindex", thehobby);
+          hobbydeleteicon.setAttribute("itemindex", index);
 
           hobbydeleteicon.addEventListener("click", async (e) => {
             let thedeleteButton = e.target;
@@ -1445,7 +1445,7 @@ async function updateallthefields(email, member = {}) {
           thehobbyheader.append(thehobbyname, thehobbyiconholder);
           theHobbycontainer.append(thehobbyheader);
           thehobbyCarrier.append(theHobbycontainer);
-        }
+        });
       }
 
       if (lawyerState.notableCaseWins.length === 0) {
@@ -1475,7 +1475,7 @@ async function updateallthefields(email, member = {}) {
             "https://cdn.prod.website-files.com/67e360f08a15ef65d8814b41/67f6dfbc2b16d9977c85eeb2_Group%201597881168.png";
           qadelete.setAttribute("itemindex", eachcase);
 
-          qadelete.addEventListener("click", async () => {
+          qadelete.addEventListener("click", async (event) => {
             let thedeleteButton = event.target;
             let todeleteindex = thedeleteButton.getAttribute("itemindex");
             let thedeletecontainer =
