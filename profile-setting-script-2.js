@@ -935,7 +935,7 @@ $(document).ready(async function () {
         console.log(toChangeData);
         let updateemail = localStorage.getItem("userEmail");
         await updateItem(updateemail, toChangeData);
-        await updateallthefields(thisUserId);
+        await updateallthefields(localStorage.getItem("userEmail"));
         document.getElementById("thesavealertshow").style.display = "flex";
         await delaysomeminutes();
       }
