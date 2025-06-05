@@ -715,6 +715,7 @@ $(document).ready(async function () {
   });
 
   $("#addEducation").click(async function () {
+    displayLoading();
     let theinstitution = document.getElementById("institutioneducation").value;
     let thedregree = document.getElementById("degreeinput").value;
     let thestartDate = document.getElementById("thestartdate").value;
@@ -766,11 +767,13 @@ $(document).ready(async function () {
         theenddate,
         lawyerState.allEducation.length - 1
       );
+      hideLoading();
       document.getElementById("thesavededucation").style.display = "none";
     }
   });
 
   $("#save-cases").click(async function () {
+    displayLoading();
     let caseTitle = document.getElementById("casewinstitle").value;
     let caseDescription = document.getElementById("casewinsdescription").value;
     if (caseTitle && caseDescription) {
@@ -787,9 +790,11 @@ $(document).ready(async function () {
     document.getElementById("casewinsdescription").value = "";
     updateallthefields(localStorage.getItem("userEmail"));
     document.getElementById("addCase").style.display = "none";
+    hideLoading();
   });
 
   $("#addMediaPress").click(async function () {
+    displayLoading();
     let mediapresslink = document.getElementById("thepreviewlinkinput").value;
     let theuniqueId = await generateUniqueId();
     let thismediapressdata = {
@@ -799,9 +804,11 @@ $(document).ready(async function () {
     lawyerState.mediaPressMentions.push(thismediapressdata);
     document.getElementById("thepreviewlinkinput").value = "";
     updateallthefields(localStorage.getItem("userEmail"));
+    hideLoading();
   });
 
   $("#addInterests").click(async function () {
+    displayLoading();
     let interestOrHobby = document.getElementById("interestedinput").value;
     if (interestOrHobby) {
       theuniqueId = await generateUniqueId();
@@ -814,9 +821,11 @@ $(document).ready(async function () {
     document.getElementById("interestedinput").value = "";
     updateallthefields(localStorage.getItem("userEmail"));
     document.getElementById("interestAdd").style.display = "none";
+    hideLoading();
   });
 
   $("#addQA").click(async function () {
+    displayLoading();
     let qaquiz = document.getElementById("theqaquizinput").value;
     let qaanswer = document.getElementById("qaanswerinput").value;
     if (qaanswer && qaquiz) {
@@ -831,6 +840,7 @@ $(document).ready(async function () {
     document.getElementById("theqaquizinput").value = "";
     document.getElementById("qaanswerinput").value = "";
     updateallthefields(localStorage.getItem("userEmail"));
+    hideLoading();
     $("#thesaveqa").hide();
   });
 
@@ -2667,4 +2677,12 @@ function updateProBonoCheckboxImages() {
     document.getElementById("probonoimageyes").src =
       "https://cdn.prod.website-files.com/67e360f08a15ef65d8814b41/67f688109c8eaf330c0f0e34_icons8-unchecked-checkbox-50.png";
   }
+}
+
+function displayLoading() {
+  $("#theloadingwait").css("display", "flex");
+}
+
+function hideLoading() {
+  $("#theloadingwait").css("display", "none");
 }
