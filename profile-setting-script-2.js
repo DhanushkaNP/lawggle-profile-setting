@@ -1746,6 +1746,7 @@ async function updateallthefields(email, member = {}) {
       }
       let certificates = lawyerState.certificates;
 
+      console.warn("certificates", certificates);
       if (certificates.length > 0) {
         let certificateSlider = document.getElementById("certificate-swiper");
         certificateSlider.innerHTML = "";
