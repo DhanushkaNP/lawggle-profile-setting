@@ -2337,7 +2337,7 @@ async function createEducationBox(
   let thequizcarrier = document.createElement("div");
   thequizcarrier.classList.add("theqadiv");
   thequizcarrier.style.display = "flex";
-  thequizcarrier.setAttribute("itemindex", indexnumber);
+  thequizcarrier.setAttribute("itemindex", `static${indexnumber}`);
   let headcarrier = document.createElement("div");
   headcarrier.classList.add("qaheader", "foreducation");
   //let headertext=document.createElement("p")
@@ -2347,7 +2347,7 @@ async function createEducationBox(
   qadelete.classList.add("qaicons");
   qadelete.src =
     "https://cdn.prod.website-files.com/67e360f08a15ef65d8814b41/67f6dfbc2b16d9977c85eeb2_Group%201597881168.png";
-  qadelete.setAttribute("itemindex", indexnumber);
+  qadelete.setAttribute("itemindex", `static${indexnumber}`);
 
   qadelete.addEventListener("click", async (event) => {
     let thedeleteButton = event.target;
@@ -2356,7 +2356,7 @@ async function createEducationBox(
 
     let allstaticDivs = document.querySelectorAll(".theqadiv");
     allstaticDivs.forEach((staticdiv) => {
-      let thedivcontattr = Number(staticdiv.getAttribute("itemindex"));
+      let thedivcontattr = staticdiv.getAttribute("itemindex");
       if (thedivcontattr == todeleteindex) {
         document.getElementById("educationCarrier").removeChild(staticdiv);
       }
