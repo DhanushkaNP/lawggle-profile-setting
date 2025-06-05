@@ -501,6 +501,13 @@ $(document).ready(async function () {
         theenddate,
         lawyerState.allEducation.length - 1
       );
+
+      // Clear the input fields after capturing their values
+      document.getElementById("institutioneducation").value = "";
+      document.getElementById("degreeinput").value = "";
+      document.getElementById("thestartdate").value = "";
+      document.getElementById("endyear").value = "";
+
       hideLoading();
       document.getElementById("thesavededucation").style.display = "none";
     }
