@@ -1744,7 +1744,10 @@ async function updateallthefields(email, member = {}) {
         document.getElementById("uploadfilesprompt").style.display = "flex";
       }
 
-      let theusersHobbies = jsonUser["interests and hobbies"] ?? [];
+      if (lawyerState.interestsAndHobbies.length === 0) {
+        lawyerState.interestsAndHobbies =
+          jsonUser["interests and hobbies"] || [];
+      }
 
       let thehobbyCarrier = document.getElementById("Hobbymaincontainer");
       thehobbyCarrier.innerHTML = "";
@@ -2012,7 +2015,9 @@ async function updateallthefields(email, member = {}) {
         thecaseslider4.innerHTML = "";
       }
 
-      lawyerState.personalQA = jsonUser["personal qa"] ?? [];
+      if (lawyerState.personalQA.length === 0) {
+        lawyerState.personalQA = jsonUser["personal qa"] || [];
+      }
       let questionsAndAnswers = lawyerState.personalQA;
       if (questionsAndAnswers.length > 0) {
         let thecaseslider5 = document.getElementById("qaquzicontainer");
@@ -2456,7 +2461,9 @@ function loadSwiperJS() {
 
 // Function to handle media and press mentions section
 function setupMediaAndPress(jsonUser) {
-  lawyerState.mediaPressMentions = jsonUser["media press mentions"] ?? [];
+  if (lawyerState.mediaPressMentions === 0) {
+    lawyerState.mediaPressMentions = jsonUser["media press mentions"] || [];
+  }
   let themediaandPress = lawyerState.mediaPressMentions;
   let themediacontainer = document.getElementById("mediawrapper");
   themediacontainer.innerHTML = "";
