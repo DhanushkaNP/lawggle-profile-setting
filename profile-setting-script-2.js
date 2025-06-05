@@ -198,11 +198,6 @@ async function addSubCategories(thetargetCategories) {
   if (targetCategories.length <= 0) {
     targetCategories = thetargetCategories;
   }
-  /*
-    [
-    "Business & Corporate Law"
-    ];
-    */
   const selectedAreaOfExpertise = thenewsubcategories;
 
   console.log("🔐🔐🔐🔐🔐🔐🔐💧💧💧", selectedAreaOfExpertise);
@@ -655,17 +650,7 @@ $(document).ready(async function () {
 
       if (buttonIdentifier == "education") {
         lawyerState.allEducation.splice(theindextodelete, 1);
-
-        let thefirsteducationObject = lawyerState.allEducation[0];
-        let updateemail = localStorage.getItem("userEmail");
-        let savedata = {
-          AllEducation: lawyerState.allEducation,
-        };
-
-        updateduser = await updateItem(updateemail, savedata);
         updatedom = await updateallthefields(updateemail);
-        document.getElementById("thesavealertshow").style.display = "flex";
-        await delaysomeminutes();
       }
 
       if (buttonIdentifier == "casewins") {
@@ -1457,7 +1442,7 @@ async function updateallthefields(email, member = {}) {
       $(`#selectpronouns`).val(jsonUser["pronouns"]).trigger("change");
       $(`#mySelect`).val(jsonUser["expertise category"]).trigger("change");
       document.getElementById("expertiseSelect").innerHTML = "";
-      let recreate = await addSubCategories("");
+      await addSubCategories("");
       $(`#expertiseSelect`)
         .val(jsonUser["area of expertise"])
         .trigger("change");
