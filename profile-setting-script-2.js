@@ -1615,15 +1615,14 @@ async function updateallthefields(email, member = {}) {
         let swiperWrapper = document.createElement("div");
         swiperWrapper.classList.add("swiper-wrapper");
 
-        for (let eachcase in caseStudyWalkthroughs) {
-          console.warn("earch case", eachcase);
-
+        caseStudyWalkthroughs.forEach((caseStudy, index) => {
+          // caseStudy is the item, index is the number
           let caseSlide = document.createElement("div");
           caseSlide.classList.add("swiper-slide", "case-study-video-wrap");
 
           let caseVideo = document.createElement("video");
           caseVideo.classList.add("case-study-video-ps");
-          caseVideo.src = caseStudyWalkthroughs[eachcase].url;
+          caseVideo.src = caseStudy.url;
           caseVideo.controls = true;
           caseVideo.playsInline = true;
           caseVideo.poster =
@@ -1633,9 +1632,9 @@ async function updateallthefields(email, member = {}) {
           casetheimagecheck.classList.add("deletebriefs-3");
           casetheimagecheck.src =
             "https://cdn.prod.website-files.com/67e360f08a15ef65d8814b41/67f6dfbc2b16d9977c85eeb2_Group%201597881168.png";
-          casetheimagecheck.setAttribute("itemindex", eachcase);
+          casetheimagecheck.setAttribute("itemindex", index);
 
-          casetheimagecheck.addEventListener("click", async () => {
+          casetheimagecheck.addEventListener("click", async (event) => {
             let thedeleteButton = event.target;
             let todeleteindex = thedeleteButton.getAttribute("itemindex");
             let thedeletecontainer = document.getElementById(
@@ -1646,9 +1645,8 @@ async function updateallthefields(email, member = {}) {
           });
 
           caseSlide.append(caseVideo, casetheimagecheck);
-
           swiperWrapper.append(caseSlide);
-        }
+        });
         videocaseslider.append(swiperWrapper);
 
         if (window.innerWidth < 1024) {
