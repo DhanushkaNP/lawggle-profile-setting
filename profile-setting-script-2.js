@@ -444,7 +444,7 @@ $(document).ready(async function () {
   });
 
   $("#addEducation").click(async function () {
-    displayLoading();
+    document.getElementById("theloadingwait").style.display = "flex";
     let theinstitution = document.getElementById("institutioneducation").value;
     let thedregree = document.getElementById("degreeinput").value;
     let thestartDate = document.getElementById("thestartdate").value;
@@ -503,7 +503,7 @@ $(document).ready(async function () {
       document.getElementById("thestartdate").value = "";
       document.getElementById("endyear").value = "";
 
-      hideLoading();
+      document.getElementById("theloadingwait").style.display = "none";
       document.getElementById("thesavededucation").style.display = "none";
     }
   });
