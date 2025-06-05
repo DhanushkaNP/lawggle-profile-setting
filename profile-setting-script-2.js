@@ -2372,9 +2372,9 @@ function updateProBonoCheckboxImages() {
 }
 
 function displayLoading() {
-  $("#theloadingwait").css("display", "flex");
+  document.getElementById("theloadingwait").style.display = "flex";
 }
 
 function hideLoading() {
-  $("#theloadingwait").css("display", "none");
+  document.getElementById("theloadingwait").style.display = "none";
 }
