@@ -1426,8 +1426,7 @@ async function updateallthefields(email, member = {}) {
       thehobbyCarrier.classList.remove("hide-container");
 
       if (theusersHobbies.length > 0) {
-        for (let thehobby of theusersHobbies) {
-          console.log(thehobby);
+        for (let thehobby in theusersHobbies) {
           let theHobbycontainer = document.createElement("div");
           theHobbycontainer.classList.add("theqadiv");
           thehobbyheader = document.createElement("div");
@@ -1436,10 +1435,19 @@ async function updateallthefields(email, member = {}) {
           thehobbyiconholder.classList.add("qaiconsholder");
           let thehobbyname = document.createElement("p");
           thehobbyname.classList.add("qaheadertext");
-          thehobbyname.innerText = thehobby.title;
+          thehobbyname.innerText = theusersHobbies[thehobby].title;
           hobbydeleteicon = document.createElement("img");
           hobbydeleteicon.src =
             "https://cdn.prod.website-files.com/67e360f08a15ef65d8814b41/67f6dfbc2b16d9977c85eeb2_Group%201597881168.png";
+          hobbydeleteicon.setAttribute("itemindex", thehobby);
+
+          hobbydeleteicon.addEventListener("click", async (e) => {
+            let thedeleteButton = e.target;
+            let todeleteindex = thedeleteButton.getAttribute("itemindex");
+            let thedeletecontainer = document.getElementById("deleteInterests");
+            thedeletecontainer.style.display = "flex";
+            thedeletecontainer.setAttribute("itemindex", todeleteindex);
+          });
 
           thehobbyiconholder.append(hobbydeleteicon);
           thehobbyheader.append(thehobbyname, thehobbyiconholder);
