@@ -66,6 +66,7 @@ async function delaysomeminutes() {
     document.getElementById("pressdeletecontainer").style.display = "none";
     document.getElementById("casestudiesdeletecontainer").style.display =
       "none";
+    document.getElementById("deleteInterests").style.display = "none";
     document.getElementById("personalqacontainer").style.display = "none";
     document.getElementById("certdeletecontainer").style.display = "none";
     document.getElementById("theloadingwait").style.display = "none";
