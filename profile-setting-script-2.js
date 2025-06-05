@@ -1773,7 +1773,9 @@ async function updateallthefields(email, member = {}) {
         }
       }
 
-      lawyerState.notableCaseWins = jsonUser["notable case wins"] ?? [];
+      if (lawyerState.notableCaseWins.length === 0) {
+        lawyerState.notableCaseWins = jsonUser["notable case wins"] || [];
+      }
       let caseWins = lawyerState.notableCaseWins;
       if (caseWins.length > 0) {
         caseWins <= 3
