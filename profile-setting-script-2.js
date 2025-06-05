@@ -770,28 +770,24 @@ $(document).ready(async function () {
     }
   });
 
-  document
-    .getElementById("save-cases")
-    .addEventListener("click", async function () {
-      let caseTitle = document.getElementById("casewinstitle").value;
-      let caseDescription = document.getElementById(
-        "casewinsdescription"
-      ).value;
-      if (caseTitle && caseDescription) {
-        let theuniqueId = await generateUniqueId();
-        let thiscase = {
-          uniqueId: theuniqueId,
-          title: caseTitle,
-          description: caseDescription,
-        };
-        lawyerState.notableCaseWins.push(thiscase);
-        console.log("All case wins:", lawyerState.notableCaseWins);
-      }
-      document.getElementById("casewinstitle").value = "";
-      document.getElementById("casewinsdescription").value = "";
-      updateallthefields(localStorage.getItem("userEmail"));
-      document.getElementById("thesvecases").style.display = "none";
-    });
+  $("#save-cases").click(async function () {
+    let caseTitle = document.getElementById("casewinstitle").value;
+    let caseDescription = document.getElementById("casewinsdescription").value;
+    if (caseTitle && caseDescription) {
+      let theuniqueId = await generateUniqueId();
+      let thiscase = {
+        uniqueId: theuniqueId,
+        title: caseTitle,
+        description: caseDescription,
+      };
+      lawyerState.notableCaseWins.push(thiscase);
+      console.log("All case wins:", lawyerState.notableCaseWins);
+    }
+    document.getElementById("casewinstitle").value = "";
+    document.getElementById("casewinsdescription").value = "";
+    updateallthefields(localStorage.getItem("userEmail"));
+    document.getElementById("addCase").style.display = "none";
+  });
 
   $("#addMediaPress").click(async function () {
     let mediapresslink = document.getElementById("thepreviewlinkinput").value;
@@ -817,6 +813,7 @@ $(document).ready(async function () {
     }
     document.getElementById("interestedinput").value = "";
     updateallthefields(localStorage.getItem("userEmail"));
+    document.getElementById("interestAdd").style.display = "none";
   });
 
   $("#addQA").click(async function () {
