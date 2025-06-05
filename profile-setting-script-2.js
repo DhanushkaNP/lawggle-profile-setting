@@ -1,9 +1,3 @@
-console.warn("Hidden elements change 5");
-
-let offerconsultation;
-let offercontingency;
-let probonowork;
-
 const lawyerState = {
   // Basic Info
   pronouns: [],
@@ -802,6 +796,9 @@ $(document).ready(async function () {
       };
       lawyerState.notableCaseWins.push(thiscase);
     }
+    document.getElementById("casewinstitle").value = "";
+    document.getElementById("casewinsdescription").value = "";
+    updateallthefields(localStorage.getItem("userEmail"));
   });
 
   $("#addMediaPress").click(async function () {
@@ -812,6 +809,8 @@ $(document).ready(async function () {
       url: mediapresslink,
     };
     lawyerState.mediaPressMentions.push(thismediapressdata);
+    document.getElementById("thepreviewlinkinput").value = "";
+    updateallthefields(localStorage.getItem("userEmail"));
   });
 
   $("#addInterests").click(async function () {
@@ -825,6 +824,7 @@ $(document).ready(async function () {
       lawyerState.interestsAndHobbies.push(thiscase);
     }
     document.getElementById("interestedinput").value = "";
+    updateallthefields(localStorage.getItem("userEmail"));
   });
 
   $("#addQA").click(async function () {
@@ -841,6 +841,7 @@ $(document).ready(async function () {
     }
     document.getElementById("theqaquizinput").value = "";
     document.getElementById("qaanswerinput").value = "";
+    updateallthefields(localStorage.getItem("userEmail"));
   });
 
   mapboxgl.accessToken =
@@ -1085,9 +1086,9 @@ $(document).ready(async function () {
         AllEducation: [...lawyerState.allEducation],
         "dynamic bio": document.getElementById("dynamicbio").value,
         address: lawyerState.userGeoLocationDetails,
-        "offer consultation": lawyerState.offerConsultation,
+        "free consultation": lawyerState.offerConsultation,
         "offer contingency": lawyerState.offerContingency,
-        "pro bono work": lawyerState.proBonoWork,
+        "community pro bono work": lawyerState.proBonoWork,
         "social media": [
           {
             platform: "Twitter",
