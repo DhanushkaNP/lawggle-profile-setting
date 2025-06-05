@@ -304,16 +304,19 @@ document.addEventListener("DOMContentLoaded", async () => {
 
       if (uploaderId == "certicateUpload") {
         if (urls && Array.isArray(urls)) {
-          // Multiple files uploaded as a group
+          // Only handle group upload ONCE
           for (let fileUrl of urls) {
-            let thisuniqueId = await generateUniqueId();
-            lawyerState.certificates.push({
-              url: fileUrl,
-              "unique id": thisuniqueId,
-            });
+            if (
+              !lawyerState.certificates.some((cert) => cert.url === fileUrl)
+            ) {
+              lawyerState.certificates.push({
+                url: fileUrl,
+                "unique id": await generateUniqueId(),
+              });
+            }
           }
-        } else if (url) {
-          // Single file uploaded
+        } else if (url && (!info.uuid || !info.uuid.includes("~"))) {
+          // Only handle single file upload if not part of a group
           let thisuniqueId = await generateUniqueId();
           lawyerState.certificates.push({
             url,
