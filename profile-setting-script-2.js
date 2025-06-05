@@ -1413,7 +1413,8 @@ async function updateallthefields(email, member = {}) {
       thehobbyCarrier.classList.remove("hide-container");
 
       if (theusersHobbies.length > 0) {
-        theusersHobbies.forEach((hobby, index) => {
+        for (let i = 0; i < theusersHobbies.length; i++) {
+          let hobby = theusersHobbies[i];
           let theHobbycontainer = document.createElement("div");
           theHobbycontainer.classList.add("theqadiv");
           let thehobbyheader = document.createElement("div");
@@ -1426,7 +1427,7 @@ async function updateallthefields(email, member = {}) {
           let hobbydeleteicon = document.createElement("img");
           hobbydeleteicon.src =
             "https://cdn.prod.website-files.com/67e360f08a15ef65d8814b41/67f6dfbc2b16d9977c85eeb2_Group%201597881168.png";
-          hobbydeleteicon.setAttribute("itemindex", index);
+          hobbydeleteicon.setAttribute("itemindex", i);
 
           hobbydeleteicon.addEventListener("click", async (e) => {
             let thedeleteButton = e.target;
@@ -1440,7 +1441,7 @@ async function updateallthefields(email, member = {}) {
           thehobbyheader.append(thehobbyname, thehobbyiconholder);
           theHobbycontainer.append(thehobbyheader);
           thehobbyCarrier.append(theHobbycontainer);
-        });
+        }
       }
 
       if (lawyerState.notableCaseWins.length === 0) {
