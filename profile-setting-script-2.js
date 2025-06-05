@@ -303,13 +303,8 @@ document.addEventListener("DOMContentLoaded", async () => {
       }
 
       if (uploaderId == "certicateUpload") {
-        if (!info.uuid.includes("~")) {
-          let thisuniqueId = await generateUniqueId();
-          lawyerState.certificates.push({
-            url,
-            "unique id": thisuniqueId,
-          });
-        } else if (urls && Array.isArray(urls)) {
+        if (urls && Array.isArray(urls)) {
+          // Multiple files uploaded as a group
           for (let fileUrl of urls) {
             let thisuniqueId = await generateUniqueId();
             lawyerState.certificates.push({
@@ -317,8 +312,14 @@ document.addEventListener("DOMContentLoaded", async () => {
               "unique id": thisuniqueId,
             });
           }
+        } else if (url) {
+          // Single file uploaded
+          let thisuniqueId = await generateUniqueId();
+          lawyerState.certificates.push({
+            url,
+            "unique id": thisuniqueId,
+          });
         }
-        // Update DOM to show certificate preview (implement as needed)
       }
 
       if (uploaderId == "uploadprofileimage") {
