@@ -639,14 +639,12 @@ $(document).ready(async function () {
       let theindextodelete = Number(theindextodeletetext);
 
       if (buttonIdentifier == "education") {
-        document.getElementById("theloadingwait").style.display = "flex";
         lawyerState.allEducation.splice(theindextodelete, 1);
         updatedom = await updateallthefields(localStorage.getItem("userEmail"));
         await delaysomeminutes();
       }
 
       if (buttonIdentifier == "casewins") {
-        document.getElementById("theloadingwait").style.display = "flex";
         let theindextodeletetext = document
           .getElementById("deletecasesmaindiv")
           .getAttribute("itemindex");
@@ -657,7 +655,6 @@ $(document).ready(async function () {
         await delaysomeminutes();
       }
       if (buttonIdentifier == "testimonials") {
-        document.getElementById("theloadingwait").style.display = "flex";
         let updateemail = localStorage.getItem("userEmail");
         let theindextodelete = document
           .getElementById("deleteclientstestimonials")
@@ -670,7 +667,6 @@ $(document).ready(async function () {
         let theindextodelete = document
           .getElementById("deleteclientstestimonials")
           .getAttribute("itemindex");
-        document.getElementById("theloadingwait").style.display = "flex";
         lawyerState.mediaPressMentions.splice(theindextodelete, 1);
         await updateallthefields(localStorage.getItem("userEmail"));
         await delaysomeminutes();
@@ -688,10 +684,8 @@ $(document).ready(async function () {
         let theindextodelete = document
           .getElementById("personalqacontainer")
           .getAttribute("itemindex");
-        document.getElementById("theloadingwait").style.display = "flex";
         lawyerState.personalQA.splice(theindextodelete, 1);
         await updateallthefields(localStorage.getItem("userEmail"));
-        document.getElementById("thesavealertshow").style.display = "flex";
         await delaysomeminutes();
       }
       if (buttonIdentifier == "certificates") {
@@ -701,7 +695,16 @@ $(document).ready(async function () {
         let userEmail = localStorage.getItem("userEmail");
         lawyerState.certificates.splice(theindextodelete, 1);
         await updateallthefields(userEmail);
-        document.getElementById("thesavealertshow").style.display = "flex";
+        await delaysomeminutes();
+      }
+
+      if (buttonIdentifier == "interestsHobbies") {
+        let theindextodelete = document
+          .getElementById("deleteclientstestimonials")
+          .getAttribute("itemindex");
+        let userEmail = localStorage.getItem("userEmail");
+        lawyerState.interestsAndHobbies.splice(theindextodelete, 1);
+        await updateallthefields(userEmail);
         await delaysomeminutes();
       }
     });
@@ -712,7 +715,6 @@ $(document).ready(async function () {
   document
     .getElementById("universalSaveBtn")
     .addEventListener("click", async () => {
-      document.getElementById("theloadingwait").style.display = "flex";
       let updateemail = localStorage.getItem("userEmail");
 
       // Fetch current user data
@@ -775,7 +777,7 @@ $(document).ready(async function () {
         // Add other fields as needed
       };
 
-      let theupdatedItem = await updateItem(updateemail, thedata);
+      await updateItem(updateemail, thedata);
 
       // Clear pending uploads after successful save
       lawyerState.profileImage = null;
@@ -787,7 +789,6 @@ $(document).ready(async function () {
       await updateallthefields(updateemail);
       document.getElementById("thesavealertshow").style.display = "flex";
       await delaysomeminutes();
-      document.getElementById("theloadingwait").style.display = "none";
     });
 
   //Memberstack read
@@ -2361,12 +2362,4 @@ function updateProBonoCheckboxImages() {
     document.getElementById("probonoimageyes").src =
       "https://cdn.prod.website-files.com/67e360f08a15ef65d8814b41/67f688109c8eaf330c0f0e34_icons8-unchecked-checkbox-50.png";
   }
-}
-
-function displayLoading() {
-  document.getElementById("theloadingwait").style.display = "flex";
-}
-
-function hideLoading() {
-  document.getElementById("theloadingwait").style.display = "none";
 }
