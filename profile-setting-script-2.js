@@ -658,17 +658,6 @@ async function getUserautoGeoLocation() {
 }
 
 $(document).ready(async function () {
-  document
-    .getElementById("thepreviewlinkinput")
-    .addEventListener("change", function () {
-      document
-        .getElementById("thepreviewdisplay")
-        .setAttribute(
-          "href",
-          "https://lawggle-b065c1-7854620dcb65bd8d14aa462e.webflow.io/"
-        );
-      document.getElementById("thepreviewtestcont").style.display = "flex";
-    });
   //save data in mongodb
 
   document.querySelectorAll(".selectyesno").forEach((parent) => {
