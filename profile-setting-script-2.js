@@ -796,7 +796,7 @@ $(document).ready(async function () {
           description: caseDescription,
         };
         lawyerState.notableCaseWins.push(thiscase);
-        console.log("Case win added:", thiscase);
+        console.log("All case wins:", lawyerState.notableCaseWins);
       }
       document.getElementById("casewinstitle").value = "";
       document.getElementById("casewinsdescription").value = "";
