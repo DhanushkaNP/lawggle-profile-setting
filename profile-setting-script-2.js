@@ -507,7 +507,6 @@ $(document).ready(async function () {
   });
 
   $("#save-cases").click(async function () {
-    displayLoading();
     let caseTitle = document.getElementById("casewinstitle").value;
     let caseDescription = document.getElementById("casewinsdescription").value;
     if (caseTitle && caseDescription) {
@@ -524,11 +523,9 @@ $(document).ready(async function () {
     document.getElementById("casewinsdescription").value = "";
     updateallthefields(localStorage.getItem("userEmail"));
     document.getElementById("addCase").style.display = "none";
-    hideLoading();
   });
 
   $("#addMediaPress").click(async function () {
-    displayLoading();
     let mediapresslink = document.getElementById("thepreviewlinkinput").value;
     let theuniqueId = await generateUniqueId();
     let thismediapressdata = {
@@ -538,11 +535,9 @@ $(document).ready(async function () {
     lawyerState.mediaPressMentions.push(thismediapressdata);
     document.getElementById("thepreviewlinkinput").value = "";
     updateallthefields(localStorage.getItem("userEmail"));
-    hideLoading();
   });
 
   $("#addInterests").click(async function () {
-    displayLoading();
     let interestOrHobby = document.getElementById("interestedinput").value;
     if (interestOrHobby) {
       theuniqueId = await generateUniqueId();
@@ -555,11 +550,9 @@ $(document).ready(async function () {
     document.getElementById("interestedinput").value = "";
     updateallthefields(localStorage.getItem("userEmail"));
     document.getElementById("interestAdd").style.display = "none";
-    hideLoading();
   });
 
   $("#addQA").click(async function () {
-    displayLoading();
     let qaquiz = document.getElementById("theqaquizinput").value;
     let qaanswer = document.getElementById("qaanswerinput").value;
     if (qaanswer && qaquiz) {
@@ -574,7 +567,6 @@ $(document).ready(async function () {
     document.getElementById("theqaquizinput").value = "";
     document.getElementById("qaanswerinput").value = "";
     updateallthefields(localStorage.getItem("userEmail"));
-    hideLoading();
     $("#thesaveqa").hide();
   });
 
