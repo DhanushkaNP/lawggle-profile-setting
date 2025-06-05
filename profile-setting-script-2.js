@@ -834,6 +834,7 @@ $(document).ready(async function () {
     document.getElementById("theqaquizinput").value = "";
     document.getElementById("qaanswerinput").value = "";
     updateallthefields(localStorage.getItem("userEmail"));
+    $("#thesaveqa").hide();
   });
 
   mapboxgl.accessToken =
@@ -1691,8 +1692,6 @@ async function updateallthefields(email, member = {}) {
       lawyerState.proBonoWork = jsonUser["community pro bono work"];
       updateProBonoCheckboxImages();
 
-      lawyerState.interestsAndHobbies = jsonUser["interests and hobbies"];
-
       $(`#BlogSelect`).val(jsonUser["blog contributor"]).trigger("change");
       $(`#HobbySelect`)
         .val(lawyerState.interestsAndHobbies ?? [])
@@ -2048,7 +2047,7 @@ async function updateallthefields(email, member = {}) {
             "https://cdn.prod.website-files.com/67e360f08a15ef65d8814b41/67f6df9d8c1aed7f8f8c1fc7_Group%201597881167.png";
           qaedit.setAttribute("itemindex", eachquiz);
 
-          qaedit.addEventListener("click", async () => {
+          qaedit.addEventListener("click", async (event) => {
             let theeditButton = event.target;
             let toeditindex = theeditButton.getAttribute("itemindex");
             let theeditcontainer = document.getElementById("theeditqa");
