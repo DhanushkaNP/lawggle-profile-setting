@@ -255,6 +255,7 @@ document.addEventListener("DOMContentLoaded", async () => {
   const inputs = document.querySelectorAll("[role=uploadcare-uploader]");
 
   inputs.forEach((input, index) => {
+    document.getElementById("theloadingwait").style.display = "flex";
     const widget = uploadcare.Widget(input);
     const uploaderId = input.id;
 
@@ -917,6 +918,7 @@ $(document).ready(async function () {
 });
 
 async function updateItem(email, data) {
+  document.getElementById("theloadingwait").style.display = "flex";
   try {
     const myHeaders = new Headers();
     myHeaders.append("Content-Type", "application/json");
@@ -1029,6 +1031,7 @@ async function uploadFile(url, name) {
 
 async function updateallthefields(email, member = {}) {
   try {
+    document.getElementById("theloadingwait").style.display = "flex";
     let dbuser = await getItem(email);
     let mongodbuser = JSON.parse(dbuser);
     console.log("🤑🤑🤑🤑", mongodbuser.status, typeof mongodbuser.status);
