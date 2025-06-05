@@ -2451,7 +2451,7 @@ function loadSwiperJS() {
 
 // Function to handle media and press mentions section
 function setupMediaAndPress(jsonUser) {
-  if (lawyerState.mediaPressMentions === 0) {
+  if (lawyerState.mediaPressMentions.length === 0) {
     lawyerState.mediaPressMentions = jsonUser["media press mentions"] || [];
   }
   let themediaandPress = lawyerState.mediaPressMentions;
