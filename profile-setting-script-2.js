@@ -778,13 +778,6 @@ $(document).ready(async function () {
 
       await updateItem(updateemail, thedata);
 
-      // Clear pending uploads after successful save
-      lawyerState.profileImage = null;
-      lawyerState.profileBanner = null;
-      lawyerState.profileVideo = null;
-      lawyerState.caseStudies = [];
-      lawyerState.certificates = [];
-
       await updateallthefields(updateemail);
       document.getElementById("thesavealertshow").style.display = "flex";
       await delaysomeminutes();
