@@ -1749,6 +1749,7 @@ async function updateallthefields(email, member = {}) {
           jsonUser["interests and hobbies"] || [];
       }
 
+      let theusersHobbies = lawyerState.interestsAndHobbies;
       let thehobbyCarrier = document.getElementById("Hobbymaincontainer");
       thehobbyCarrier.innerHTML = "";
       thehobbyCarrier.classList.remove("hide-container");
@@ -1756,13 +1757,13 @@ async function updateallthefields(email, member = {}) {
       if (theusersHobbies.length > 0) {
         for (let thehobby of theusersHobbies) {
           console.log(thehobby);
-          theHobbycontainer = document.createElement("div");
+          let theHobbycontainer = document.createElement("div");
           theHobbycontainer.classList.add("theqadiv");
           thehobbyheader = document.createElement("div");
           thehobbyheader.classList.add("qaheader");
           let thehobbyiconholder = document.createElement("div");
           thehobbyiconholder.classList.add("qaiconsholder");
-          thehobbyname = document.createElement("p");
+          let thehobbyname = document.createElement("p");
           thehobbyname.classList.add("qaheadertext");
           thehobbyname.innerText = thehobby.title;
           hobbydeleteicon = document.createElement("img");
