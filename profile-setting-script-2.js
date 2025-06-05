@@ -1683,10 +1683,9 @@ async function updateallthefields(email, member = {}) {
       if (questionsAndAnswers.length > 0) {
         let thecaseslider5 = document.getElementById("qaquzicontainer");
         thecaseslider5.innerHTML = "";
-        //document.getElementById("casestudyeditswitch").style.display="flex"
-        for (let eachquiz of questionsAndAnswers) {
-          //let thequizcontainer=document.createElement("div")
-          //thequizcontainer.classList.add("qacarrierdiv")
+
+        for (let i = 0; i < questionsAndAnswers.length; i++) {
+          const eachquiz = questionsAndAnswers[i];
           let thequizcarrier = document.createElement("div");
           thequizcarrier.classList.add("theqadiv");
           let headcarrier = document.createElement("div");
@@ -1698,9 +1697,9 @@ async function updateallthefields(email, member = {}) {
           qadelete.classList.add("qaicons");
           qadelete.src =
             "https://cdn.prod.website-files.com/67e360f08a15ef65d8814b41/67f6dfbc2b16d9977c85eeb2_Group%201597881168.png";
-          qadelete.setAttribute("itemindex", eachquiz);
+          qadelete.setAttribute("itemindex", i);
 
-          qadelete.addEventListener("click", async () => {
+          qadelete.addEventListener("click", async (event) => {
             let thedeleteButton = event.target;
             let todeleteindex = thedeleteButton.getAttribute("itemindex");
             let thedeletecontainer = document.getElementById(
