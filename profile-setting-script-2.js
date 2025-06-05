@@ -650,7 +650,7 @@ $(document).ready(async function () {
 
       if (buttonIdentifier == "education") {
         lawyerState.allEducation.splice(theindextodelete, 1);
-        updatedom = await updateallthefields(updateemail);
+        updatedom = await updateallthefields(localStorage.getItem("userEmail"));
       }
 
       if (buttonIdentifier == "casewins") {
