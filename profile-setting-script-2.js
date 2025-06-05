@@ -715,6 +715,7 @@ $(document).ready(async function () {
   document
     .getElementById("universalSaveBtn")
     .addEventListener("click", async () => {
+      document.getElementById("theloadingwait").style.display = "flex";
       let updateemail = localStorage.getItem("userEmail");
 
       // Fetch current user data
