@@ -1677,7 +1677,7 @@ async function updateallthefields(email, member = {}) {
           });
         }
       } else {
-        let thecaseslider4 = document.getElementById("casestudyeditshowcase");
+        let thecaseslider4 = document.getElementById("case-study-swiper");
         thecaseslider4.innerHTML = "";
       }
 
