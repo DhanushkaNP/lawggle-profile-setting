@@ -527,8 +527,8 @@ $(document).ready(async function () {
     }
     document.getElementById("casewinstitle").value = "";
     document.getElementById("casewinsdescription").value = "";
-    updateallthefields(localStorage.getItem("userEmail"));
     document.getElementById("addCase").style.display = "none";
+    updateallthefields(localStorage.getItem("userEmail"));
   });
 
   $("#addMediaPress").click(async function () {
@@ -554,8 +554,8 @@ $(document).ready(async function () {
       lawyerState.interestsAndHobbies.push(thiscase);
     }
     document.getElementById("interestedinput").value = "";
-    updateallthefields(localStorage.getItem("userEmail"));
     document.getElementById("interestAdd").style.display = "none";
+    updateallthefields(localStorage.getItem("userEmail"));
   });
 
   $("#addQA").click(async function () {
@@ -572,8 +572,8 @@ $(document).ready(async function () {
     }
     document.getElementById("theqaquizinput").value = "";
     document.getElementById("qaanswerinput").value = "";
-    updateallthefields(localStorage.getItem("userEmail"));
     $("#thesaveqa").hide();
+    updateallthefields(localStorage.getItem("userEmail"));
   });
 
   mapboxgl.accessToken =
