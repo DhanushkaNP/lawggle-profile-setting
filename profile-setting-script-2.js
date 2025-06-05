@@ -1404,7 +1404,9 @@ async function updateallthefields(email, member = {}) {
       let dynamicBio = jsonUser["dynamic bio"];
       document.getElementById("dynamicbio").value = dynamicBio;
 
-      let thegeolocationaddress = jsonUser["address"];
+      if (lawyerState.userGeoLocationDetails === null) {
+        let thegeolocationaddress = jsonUser["address"];
+      }
 
       if (
         thegeolocationaddress != null &&
