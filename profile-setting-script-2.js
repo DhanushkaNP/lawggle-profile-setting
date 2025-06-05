@@ -735,14 +735,8 @@ $(document).ready(async function () {
           lawyerState.profileBanner || jsonUser["profile banner"],
         "profile video": lawyerState.profileVideo || jsonUser["profile video"],
         "client video testimonials": [...lawyerState.testimonials],
-        "case study walkthroughs": [
-          ...(jsonUser["case study walkthroughs"] ?? []),
-          ...lawyerState.caseStudies,
-        ],
-        certificates: [
-          ...(jsonUser["certificates"] ?? []),
-          ...lawyerState.certificates,
-        ],
+        "case study walkthroughs": [...lawyerState.caseStudies],
+        certificates: [...lawyerState.certificates],
 
         pronouns: await readselectnoImage("selectpronouns"),
         name: document.getElementById("firstlastname").value,
