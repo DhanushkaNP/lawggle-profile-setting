@@ -651,6 +651,8 @@ $(document).ready(async function () {
       if (buttonIdentifier == "education") {
         lawyerState.allEducation.splice(theindextodelete, 1);
         updatedom = await updateallthefields(localStorage.getItem("userEmail"));
+        document.getElementById("deletetheeducationcontainer").style.display =
+          "none";
       }
 
       if (buttonIdentifier == "casewins") {
@@ -1282,10 +1284,11 @@ async function updateallthefields(email, member = {}) {
         theprofyImage.style.backgroundRepeat = "no-repeat";
       }
 
-      let allEducation = jsonUser["AllEducation"]
-        ? jsonUser["AllEducation"]
-        : jsonUser["education"];
+      if (lawyerState.allEducation.length == 0) {
+        lawyerState.allEducation = jsonUser["AllEducation"] || [];
+      }
 
+      let allEducation = lawyerState.allEducation;
       console.log("allEducation", allEducation);
 
       let thecaseslider5 = document.getElementById("educationCarrier");
