@@ -278,20 +278,21 @@ document.addEventListener("DOMContentLoaded", async () => {
       ) {
         console.warn("Maximum testimonials reached. Cannot add more.");
         document.getElementById("theloadingwait").style.display = "none";
-        setTimeout(() => {
-          // Close the Uploadcare dialog if open
-          if (widget.dialog) {
-            widget.value(null);
-          }
-        }, 100);
 
         if (errorEl) {
           errorEl.style.display = "block";
         }
+
+        setTimeout(() => {
+          if (widget.dialog && widget.dialog.close) {
+            console.log("Closing dialog via widget method");
+            widget.dialog.close();
+          }
+        }, 50); // Reduced timeout for faster response
+
         throw new Error("Testimonial limit reached.");
       }
 
-      // Hide error if validation passes
       if (errorEl) {
         errorEl.style.display = "none";
       }
