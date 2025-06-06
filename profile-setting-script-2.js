@@ -760,6 +760,7 @@ $(document).ready(async function () {
           .getElementById("deleteclientstestimonials")
           .getAttribute("itemindex");
         lawyerState.mediaPressMentions.splice(theindextodelete, 1);
+        document.addMediaPress.classList.remove("disabled");
         await updateallthefields(localStorage.getItem("userEmail"));
         await delaysomeminutes();
       }
