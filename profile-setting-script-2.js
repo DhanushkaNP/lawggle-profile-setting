@@ -282,7 +282,11 @@ document.addEventListener("DOMContentLoaded", async () => {
         if (errorEl) {
           errorEl.style.display = "block";
         }
-        widget.api().closeDialog();
+
+        if (window.uploadcare && window.uploadcare.openedDialog) {
+          console.warn("Rejecting upload dialog due to limit.");
+          window.uploadcare.openedDialog.reject();
+        }
         throw new Error("Testimonial limit reached.");
       }
 
