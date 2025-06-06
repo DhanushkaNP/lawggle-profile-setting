@@ -716,6 +716,34 @@ $(document).ready(async function () {
     });
   });
 
+  document
+    .getElementById("profile-vid-delete")
+    .addEventListener("click", function () {
+      lawyerState.profileVideo = null;
+      // Hide video and show upload prompt
+      document.getElementById("showcaseprofile").src = "";
+      document.getElementById("uploadfilesprompt").style.display = "flex";
+      document.getElementById("profileimagecontainer").style.display = "none";
+    });
+
+  // Delete Profile Image
+  document
+    .getElementById("profile-img-delete")
+    .addEventListener("click", function () {
+      lawyerState.profileImage = null;
+      // Remove background image
+      document.getElementById("theprofileimage").style.backgroundImage = "";
+    });
+
+  // Delete Cover Photo
+  document
+    .getElementById("cover-img-delete")
+    .addEventListener("click", function () {
+      lawyerState.profileBanner = null;
+      // Remove background image
+      document.getElementById("thebannerimage").style.backgroundImage = "";
+    });
+
   // Universal save button for all sections
   // ...existing code...
   document
@@ -1194,6 +1222,9 @@ async function updateallthefields(email, member = {}) {
         bannerMainImage.style.backgroundSize = "cover";
         bannerMainImage.style.backgroundPosition = "center";
         bannerMainImage.style.backgroundRepeat = "no-repeat";
+        document.getElementById("cover-img-delete").style.display = "block";
+      } else {
+        document.getElementById("cover-img-delete").style.display = "none";
       }
 
       let profileImageUrl =
@@ -1209,6 +1240,9 @@ async function updateallthefields(email, member = {}) {
         theprofyImage.style.backgroundSize = "cover";
         theprofyImage.style.backgroundPosition = "center";
         theprofyImage.style.backgroundRepeat = "no-repeat";
+        document.getElementById("profile-img-delete").style.display = "block";
+      } else {
+        document.getElementById("profile-img-delete").style.display = "none";
       }
 
       if (lawyerState.allEducation.length == 0) {
@@ -1398,8 +1432,10 @@ async function updateallthefields(email, member = {}) {
         document.getElementById("showcaseprofile").src = profileVideoUrl;
         document.getElementById("uploadfilesprompt").style.display = "none";
         document.getElementById("profileimagecontainer").style.display = "flex";
+        document.getElementById("profile-vid-delete").style.display = "block";
       } else {
         document.getElementById("uploadfilesprompt").style.display = "flex";
+        document.getElementById("profile-vid-delete").style.display = "none";
       }
 
       if (lawyerState.interestsAndHobbies.length === 0) {
