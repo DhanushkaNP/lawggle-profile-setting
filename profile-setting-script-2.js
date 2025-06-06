@@ -283,18 +283,24 @@ document.addEventListener("DOMContentLoaded", async () => {
           errorEl.style.display = "block";
         }
 
-        setTimeout(() => {
-          if (widget.dialog && widget.dialog.close) {
-            console.log("Closing dialog via widget method");
-            widget.dialog.close();
-          }
-        }, 50); // Reduced timeout for faster response
-
-        throw new Error("Testimonial limit reached.");
+        throw new Error("Testimonial limit reached"); // Keep throwing the error
       }
 
       if (errorEl) {
         errorEl.style.display = "none";
+      }
+    });
+
+    // Add an event listener for upload errors
+    widget.onUploadError(function (file, error) {
+      console.error("Upload error:", error.message);
+      // Check if it's your specific validation error
+      if (error.message === "Testimonial limit reached") {
+        try {
+          widget.api().closeDialog();
+        } catch (e) {
+          console.log("Dialog close method not available after error:", e);
+        }
       }
     });
 
