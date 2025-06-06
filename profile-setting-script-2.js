@@ -606,6 +606,10 @@ $(document).ready(async function () {
   });
 
   $("#addMediaPress").click(async function () {
+    if (lawyerState.mediaPressMentions.length >= 3) {
+      updateMediaPressAddButton();
+      return;
+    }
     let mediapresslink = document.getElementById("thepreviewlinkinput").value;
     let theuniqueId = await generateUniqueId();
     let thismediapressdata = {
@@ -616,6 +620,14 @@ $(document).ready(async function () {
     document.getElementById("thepreviewlinkinput").value = "";
     updateallthefields(localStorage.getItem("userEmail"));
   });
+
+  function updateMediaPressAddButton() {
+    const addBtn = document.getElementById("addMediaPress");
+    addBtn.classList.add("disabled");
+    addBtn.disabled = true;
+    const errorEl = document.getElementById("media-press-error-text");
+    if (errorEl) errorEl.style.display = "block";
+  }
 
   $("#addInterests").click(async function () {
     let interestOrHobby = document.getElementById("interestedinput").value;
