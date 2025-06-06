@@ -260,17 +260,22 @@ document.addEventListener("DOMContentLoaded", async () => {
     const widget = uploadcare.Widget(input);
     const uploaderId = input.id;
 
+    // ...inside your widget.onChange handler...
     widget.onChange(function (file) {
-      // You can add more validations here (file type, etc.)
-      if (lawyerState.testimonials.length >= 3) {
-        console.warn("Maximum testimonials reached. Cannot add more.");
-        document.getElementById("testimonial-error-text").style.display =
-          "block";
+      if (
+        uploaderId === "uploadtestimonials" &&
+        lawyerState.testimonials.length >= 3
+      ) {
+        // Show error
+        const errorEl = document.getElementById("testimonial-error-text");
+        if (errorEl) errorEl.style.display = "block !important";
         document.getElementById("theloadingwait").style.display = "none";
-        return false;
+        return false; // Prevent upload
       }
-
-      return true; // Allow upload
+      // Hide error if under limit
+      const errorEl = document.getElementById("testimonial-error-text");
+      if (errorEl) errorEl.style.display = "none";
+      return true;
     });
 
     widget.onUploadComplete(async (info) => {
