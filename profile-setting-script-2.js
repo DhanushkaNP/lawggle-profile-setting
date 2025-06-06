@@ -282,24 +282,12 @@ document.addEventListener("DOMContentLoaded", async () => {
         if (errorEl) {
           errorEl.style.display = "block";
         }
+        widget.api().closeDialog();
         throw new Error("Testimonial limit reached.");
       }
 
       if (errorEl) {
         errorEl.style.display = "none";
-      }
-    });
-
-    widget.onUploadError(function (file, error) {
-      console.error("Upload error:", error.message, error);
-      if (error.message === "Testimonial limit reached.") {
-        // Now, programmatically close the dialog
-        try {
-          widget.api().closeDialog();
-          console.log("Uploadcare dialog closed due to validation error.");
-        } catch (e) {
-          console.error("Error closing Uploadcare dialog:", e);
-        }
       }
     });
 
