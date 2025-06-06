@@ -260,6 +260,19 @@ document.addEventListener("DOMContentLoaded", async () => {
     const widget = uploadcare.Widget(input);
     const uploaderId = input.id;
 
+    widget.onChange(function (file) {
+      // You can add more validations here (file type, etc.)
+      if (lawyerState.testimonials.length >= 3) {
+        console.warn("Maximum testimonials reached. Cannot add more.");
+        document.getElementById("testimonial-error-text").style.display =
+          "block";
+        document.getElementById("theloadingwait").style.display = "none";
+        return false;
+      }
+
+      return true; // Allow upload
+    });
+
     widget.onUploadComplete(async (info) => {
       document.getElementById("theloadingwait").style.display = "flex";
       let url, urls;
@@ -1558,7 +1571,9 @@ async function updateallthefields(email, member = {}) {
       if (lawyerState.testimonials.length === 0) {
         lawyerState.testimonials = jsonUser["client video testimonials"] || [];
       }
+      document.getElementById("testimonial-error-text").style.display = "none";
       let clientTestimonials = lawyerState.testimonials;
+
       if (clientTestimonials.length > 0) {
         let testimonialSlider = document.getElementById("testimonial-swiper");
         testimonialSlider.innerHTML = "";
