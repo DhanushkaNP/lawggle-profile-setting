@@ -277,24 +277,23 @@ document.addEventListener("DOMContentLoaded", async () => {
         lawyerState.testimonials.length >= 3
       ) {
         console.warn("Maximum testimonials reached. Cannot add more.");
+        document.getElementById("theloadingwait").style.display = "none";
+        setTimeout(() => {
+          // Close the Uploadcare dialog if open
+          if (widget.dialog) {
+            widget.value(null);
+          }
+        }, 100);
 
         if (errorEl) {
           errorEl.style.display = "block";
         }
-
-        input.style.display = "none";
-
-        // Hide custom loader
-        document.getElementById("theloadingwait").style.display = "none";
-
-        // Throw error to cancel upload
         throw new Error("Testimonial limit reached.");
       }
 
       // Hide error if validation passes
       if (errorEl) {
         errorEl.style.display = "none";
-        errorEl.innerText = "";
       }
     });
 
