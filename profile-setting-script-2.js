@@ -312,6 +312,26 @@ document.addEventListener("DOMContentLoaded", async () => {
         }, 1000);
         throw new Error("Certificate limit reached.");
       }
+
+      if (
+        uploaderId === "casestudywalkthroughuploader" &&
+        lawyerState.caseStudies.length >= 3
+      ) {
+        const errorEl = document.getElementById("casestudy-error-text");
+        console.warn("Maximum case studies reached. Cannot add more.");
+        document.getElementById("theloadingwait").style.display = "none";
+        if (errorEl) {
+          errorEl.style.display = "block";
+        }
+        console.warn("Rejecting upload dialog due to limit.");
+        setTimeout(() => {
+          document.querySelectorAll(".uploadcare--dialog").forEach((dialog) => {
+            dialog.classList.remove("uploadcare--dialog_status_active");
+            dialog.style.display = "none";
+          });
+        }, 1000);
+        throw new Error("Case study limit reached.");
+      }
     });
 
     widget.onUploadComplete(async (info) => {
