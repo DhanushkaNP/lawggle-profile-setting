@@ -721,6 +721,7 @@ $(document).ready(async function () {
     .addEventListener("click", function () {
       lawyerState.profileVideo = null;
       // Hide video and show upload prompt
+      lawyerState.profileVideo = null;
       document.getElementById("showcaseprofile").src = "";
       document.getElementById("uploadfilesprompt").style.display = "flex";
       document.getElementById("profileimagecontainer").style.display = "none";
@@ -763,10 +764,9 @@ $(document).ready(async function () {
 
       // Merge pending uploads with existing data
       let thedata = {
-        "profile image": lawyerState.profileImage || jsonUser["profile image"],
-        "profile banner":
-          lawyerState.profileBanner || jsonUser["profile banner"],
-        "profile video": lawyerState.profileVideo || jsonUser["profile video"],
+        "profile image": lawyerState.profileImage,
+        "profile banner": lawyerState.profileBanner,
+        "profile video": lawyerState.profileVideo,
         "client video testimonials": [...lawyerState.testimonials],
         "case study walkthroughs": [...lawyerState.caseStudies],
         certificates: [...lawyerState.certificates],
