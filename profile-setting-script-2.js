@@ -1212,8 +1212,10 @@ async function updateallthefields(email, member = {}) {
         }
       }
 
-      let bannerImageUrl =
-        lawyerState.profileBanner || jsonUser["profile banner"];
+      if (lawyerState.profileBanner == null) {
+        lawyerState.profileBanner = jsonUser["profile banner"];
+      }
+      let bannerImageUrl = lawyerState.profileBanner;
 
       if (
         bannerImageUrl != null &&
@@ -1230,8 +1232,10 @@ async function updateallthefields(email, member = {}) {
         document.getElementById("cover-img-delete").style.display = "none";
       }
 
-      let profileImageUrl =
-        lawyerState.profileImage || jsonUser["profile image"];
+      if (lawyerState.profileVideo == null) {
+        lawyerState.profileVideo = jsonUser["profile video"];
+      }
+      let profileImageUrl = lawyerState.profileImage;
 
       if (
         profileImageUrl != null &&
@@ -1425,8 +1429,10 @@ async function updateallthefields(email, member = {}) {
       });
 
       // Profile Video
-      let profileVideoUrl =
-        lawyerState.profileVideo || jsonUser["profile video"];
+      if (lawyerState.profileVideo == null) {
+        lawyerState.profileVideo = jsonUser["profile video"];
+      }
+      let profileVideoUrl = lawyerState.profileVideo;
       if (
         profileVideoUrl != null &&
         profileVideoUrl != undefined &&
