@@ -270,12 +270,11 @@ document.addEventListener("DOMContentLoaded", async () => {
     const uploaderId = input.id;
 
     widget.validators.push(function (fileInfo) {
-      const errorEl = document.getElementById("testimonial-error-text");
-
       if (
         uploaderId === "uploadtestimonials" &&
         lawyerState.testimonials.length >= 3
       ) {
+        const errorEl = document.getElementById("testimonial-error-text");
         console.warn("Maximum testimonials reached. Cannot add more.");
         document.getElementById("theloadingwait").style.display = "none";
 
@@ -294,8 +293,22 @@ document.addEventListener("DOMContentLoaded", async () => {
         throw new Error("Testimonial limit reached.");
       }
 
-      if (errorEl) {
-        errorEl.style.display = "none";
+      if (
+        (uploaderId = "certicateUpload" && lawyerState.certificates.length >= 3)
+      ) {
+        const errorEl = document.getElementById("certificate-error-text");
+        console.warn("Maximum certificates reached. Cannot add more.");
+        document.getElementById("theloadingwait").style.display = "none";
+        if (errorEl) {
+          errorEl.style.display = "block";
+        }
+        console.warn("Rejecting upload dialog due to limit.");
+        setTimeout(() => {
+          document.querySelectorAll(".uploadcare--dialog").forEach((dialog) => {
+            dialog.classList.remove("uploadcare--dialog_status_active");
+            dialog.style.display = "none";
+          });
+        }, 1000);
       }
     });
 
