@@ -623,10 +623,10 @@ $(document).ready(async function () {
 
   function updateMediaPressAddButton() {
     const addBtn = document.getElementById("addMediaPress");
-    addBtn.classList.add("disabled");
+    addBtn.classList.add("add-media-btn", "disabled");
     addBtn.disabled = true;
     const errorEl = document.getElementById("media-press-error-text");
-    if (errorEl) errorEl.style.display = "block";
+    errorEl.style.display = "block";
   }
 
   $("#addInterests").click(async function () {
