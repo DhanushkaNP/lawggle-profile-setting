@@ -45,8 +45,6 @@ const lawyerState = {
   personalQA: [],
 };
 
-let maxAreasOfLaw = 1;
-
 let activefileuploaderId = "";
 let theLawyerPronouns = [];
 let theCategory2 = [];
@@ -122,18 +120,20 @@ async function readselect(id) {
 }
 
 async function readselectnoImage(id) {
-  let selectedValues = [];
+  let selectedValuesWithoutImage = [];
+  let selectedwithImage = [];
 
   $(`#${id}`)
     .find(":selected")
     .each(function () {
       const value = $(this).val();
-      selectedValues.push(value);
+      const image = $(this).data("image");
+      selectedValuesWithoutImage.push(value);
     });
-  return selectedValues;
+  return selectedValuesWithoutImage;
 }
 
-let expertiseCategories = [
+let thenewsubcategories = [
   "Business Law",
   "Corporate Law",
   "Civil Litigation",
@@ -180,7 +180,29 @@ let expertiseCategories = [
   "Niche & Emerging Legal Areas",
 ];
 
-async function addExpertiseAreas() {
+async function addSubCategories(thetargetCategories) {
+  let selectedValuesWithoutImage = [];
+
+  $("#mySelect")
+    .find(":selected")
+    .each(function () {
+      const value = $(this).val();
+      const image = $(this).data("image");
+
+      if (!image) {
+        selectedValuesWithoutImage.push(value);
+      }
+    });
+
+  console.log("🦸🏽‍♂️🦸🏽‍♂️🦸🏽‍♂️🦸🏽‍♂️🦸🏽‍♂️🦸🏽‍♂️", selectedValuesWithoutImage);
+  let targetCategories = selectedValuesWithoutImage;
+  if (targetCategories.length <= 0) {
+    targetCategories = thetargetCategories;
+  }
+  const selectedAreaOfExpertise = thenewsubcategories;
+
+  console.log("🔐🔐🔐🔐🔐🔐🔐💧💧💧", selectedAreaOfExpertise);
+
   selectedAreaOfExpertise.forEach((thissubcategory) => {
     theselectedelement = document.getElementById("expertiseSelect");
     const option = document.createElement("option");
@@ -652,16 +674,6 @@ $(document).ready(async function () {
     updateallthefields(localStorage.getItem("userEmail"));
   });
 
-  $("#expertiseSelect").on("change", function () {
-    const selected = $(this).val();
-    if (selected.length > maxAreasOfLaw) {
-      // Remove the last selected option
-      selected.splice(maxAreasOfLaw);
-      $(this).val(selected).trigger("change");
-      alert(`You can only select up to ${maxAreasOfLaw} area(s) of law.`);
-    }
-  });
-
   mapboxgl.accessToken =
     "pk.eyJ1IjoibGF3Z2dsZSIsImEiOiJja2RraDU0ZnYwb2lqMnhwbWw2eXVrMjNrIn0.ShD8eyKTv7exWDKR44bSoA";
 
@@ -914,21 +926,10 @@ $(document).ready(async function () {
       console.log("Logged in Memberstack Member:", member);
       console.log("All Active Memberstack Subscriptions:", allMemberPlans);
 
-      // Example: Check for a specific plan ID (replace 'YOUR_3_AREAS_PLAN_ID' with your actual plan ID)
-      const planIds = allMemberPlans.map((plan) => plan.planId);
-      if (
-        planIds.includes("prc_lawggle-advanced-v2-r64d0s4c") ||
-        planIds.includes("prc_lawggle-advanced-v2-a6s0e6e")
-      ) {
-        maxAreasOfLaw = 3;
-      } else {
-        maxAreasOfLaw = 1;
-      }
-
       const memberemail = member.auth.email;
       localStorage.setItem("userEmail", member.auth.email);
 
-      await updateallthefields(memberemail, member);
+      const thegetuser = await updateallthefields(memberemail, member);
     } else {
       console.log("Not logged in");
     }
@@ -996,7 +997,7 @@ $(document).ready(async function () {
 
         if (elementId == "mySelect") {
           document.getElementById("expertiseSelect").innerHTML = "";
-          await addExpertiseAreas();
+          await addSubCategories(["Business & Corporate Law"]);
           await configureSelect("expertiseSelect", "#expertiseContain");
         }
 
@@ -1036,7 +1037,7 @@ $(document).ready(async function () {
 
   async function fillallSelect() {
     //await addCategories()
-    await addExpertiseAreas();
+    await addSubCategories(["Business & Corporate Law"]);
     await addlanguages();
     for (let element in selectelements) {
       configureSelect(
@@ -1515,7 +1516,7 @@ async function updateallthefields(email, member = {}) {
       $(`#selectpronouns`).val(jsonUser["pronouns"]).trigger("change");
       $(`#mySelect`).val(jsonUser["expertise category"]).trigger("change");
       document.getElementById("expertiseSelect").innerHTML = "";
-      await addExpertiseAreas();
+      await addSubCategories("");
       $(`#expertiseSelect`)
         .val(jsonUser["area of expertise"])
         .trigger("change");
