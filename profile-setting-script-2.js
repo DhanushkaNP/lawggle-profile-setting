@@ -255,6 +255,15 @@ document.addEventListener("DOMContentLoaded", async () => {
   // Get all uploadcare inputs
   const inputs = document.querySelectorAll("[role=uploadcare-uploader]");
 
+  window.UPLOADCARE_LOCALE_TRANSLATIONS = {
+    // Custom error messages
+    errors: {
+      custom: "You can only upload up to 3 testimonials.",
+      maxTestimonials:
+        "Maximum limit reached. You can only upload up to 3 testimonials.",
+    },
+  };
+
   inputs.forEach((input, index) => {
     document.getElementById("theloadingwait").style.display = "flex";
     const widget = uploadcare.Widget(input);
@@ -267,16 +276,15 @@ document.addEventListener("DOMContentLoaded", async () => {
       ) {
         console.warn("Maximum testimonials reached. Cannot add more.");
 
-        // Show your custom error in the DOM
+        // Show your custom error in DOM
         const errorEl = document.getElementById("testimonial-error-text");
         if (errorEl) errorEl.style.display = "block";
         document.getElementById("theloadingwait").style.display = "none";
 
-        // Return a rejection with your custom message
-        return uploadcare.utils.reject(
-          "You can only upload up to 3 testimonials."
-        );
+        // Throw error with message key that matches UPLOADCARE_LOCALE_TRANSLATIONS
+        throw new Error("maxTestimonials");
       }
+
       // Hide error if under limit
       const errorEl = document.getElementById("testimonial-error-text");
       if (errorEl) errorEl.style.display = "none";
