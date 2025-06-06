@@ -284,7 +284,10 @@ document.addEventListener("DOMContentLoaded", async () => {
         }
 
         console.warn("Rejecting upload dialog due to limit.");
-        window.uploadcare.openedDialog.reject();
+        document.querySelectorAll(".uploadcare--dialog").forEach((dialog) => {
+          dialog.classList.remove("uploadcare--dialog_status_active");
+          dialog.style.display = "none";
+        });
 
         throw new Error("Testimonial limit reached.");
       }
