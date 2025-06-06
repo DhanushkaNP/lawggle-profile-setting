@@ -283,10 +283,9 @@ document.addEventListener("DOMContentLoaded", async () => {
           errorEl.style.display = "block";
         }
 
-        if (window.uploadcare && window.uploadcare.openedDialog) {
-          console.warn("Rejecting upload dialog due to limit.");
-          window.uploadcare.openedDialog.reject();
-        }
+        console.warn("Rejecting upload dialog due to limit.");
+        window.uploadcare.openedDialog.reject();
+
         throw new Error("Testimonial limit reached.");
       }
 
