@@ -724,6 +724,7 @@ $(document).ready(async function () {
       document.getElementById("showcaseprofile").src = "";
       document.getElementById("uploadfilesprompt").style.display = "flex";
       document.getElementById("profileimagecontainer").style.display = "none";
+      document.getElementById("profile-vid-delete").style.display = "none";
     });
 
   // Delete Profile Image
@@ -733,6 +734,7 @@ $(document).ready(async function () {
       lawyerState.profileImage = null;
       // Remove background image
       document.getElementById("theprofileimage").style.backgroundImage = "";
+      document.getElementById("profile-img-delete").style.display = "none";
     });
 
   // Delete Cover Photo
@@ -742,6 +744,7 @@ $(document).ready(async function () {
       lawyerState.profileBanner = null;
       // Remove background image
       document.getElementById("thebannerimage").style.backgroundImage = "";
+      document.getElementById("cover-img-delete").style.display = "none";
     });
 
   // Universal save button for all sections
