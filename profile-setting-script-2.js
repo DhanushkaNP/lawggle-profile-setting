@@ -789,9 +789,7 @@ $(document).ready(async function () {
         await delaysomeminutes();
       }
       if (buttonIdentifier == "qa") {
-        let theindextodelete = document
-          .getElementById("personalqacontainer")
-          .getAttribute("itemindex");
+        let theindextodelete = Number(event.target.getAttribute("itemindex"));
         lawyerState.personalQA.splice(theindextodelete, 1);
         await updateallthefields(localStorage.getItem("userEmail"));
         document.getElementById("qa-error-text").style.display = "none";
