@@ -652,6 +652,11 @@ $(document).ready(async function () {
   });
 
   $("#addQA").click(async function () {
+    if (lawyerState.personalQA.length >= 5) {
+      const errorEl = document.getElementById("qa-error-text");
+      if (errorEl) errorEl.style.display = "block";
+      return;
+    }
     let qaquiz = document.getElementById("theqaquizinput").value;
     let qaanswer = document.getElementById("qaanswerinput").value;
     if (qaanswer && qaquiz) {
@@ -789,6 +794,7 @@ $(document).ready(async function () {
           .getAttribute("itemindex");
         lawyerState.personalQA.splice(theindextodelete, 1);
         await updateallthefields(localStorage.getItem("userEmail"));
+        document.getElementById("qa-error-text").style.display = "none";
         await delaysomeminutes();
       }
       if (buttonIdentifier == "certificates") {
