@@ -1634,7 +1634,7 @@ async function updateallthefields(email, member = {}) {
 
       // Case Studies
       if (lawyerState.caseStudies.length === 0) {
-        lawyerState.caseStudies = jsonUser["case studies"] || [];
+        lawyerState.caseStudies = jsonUser["case study walkthroughs"] || [];
       }
 
       let caseStudyWalkthroughs = lawyerState.caseStudies;
