@@ -1232,8 +1232,8 @@ async function updateallthefields(email, member = {}) {
         document.getElementById("cover-img-delete").style.display = "none";
       }
 
-      if (lawyerState.profileVideo == null) {
-        lawyerState.profileVideo = jsonUser["profile video"];
+      if (lawyerState.profileImage == null) {
+        lawyerState.profileImage = jsonUser["profile image"];
       }
       let profileImageUrl = lawyerState.profileImage;
 
