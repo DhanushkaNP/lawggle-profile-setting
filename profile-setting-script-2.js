@@ -270,24 +270,32 @@ document.addEventListener("DOMContentLoaded", async () => {
     const uploaderId = input.id;
 
     widget.validators.push(function (fileInfo) {
+      const errorEl = document.getElementById("testimonial-error-text");
+
       if (
         uploaderId === "uploadtestimonials" &&
         lawyerState.testimonials.length >= 3
       ) {
         console.warn("Maximum testimonials reached. Cannot add more.");
 
-        // Show your custom error in DOM
-        const errorEl = document.getElementById("testimonial-error-text");
-        if (errorEl) errorEl.style.display = "block";
+        if (errorEl) {
+          errorEl.style.display = "block";
+        }
+
+        input.style.display = "none";
+
+        // Hide custom loader
         document.getElementById("theloadingwait").style.display = "none";
 
-        // Throw error with message key that matches UPLOADCARE_LOCALE_TRANSLATIONS
-        throw new Error("maxTestimonials");
+        // Throw error to cancel upload
+        throw new Error("Testimonial limit reached.");
       }
 
-      // Hide error if under limit
-      const errorEl = document.getElementById("testimonial-error-text");
-      if (errorEl) errorEl.style.display = "none";
+      // Hide error if validation passes
+      if (errorEl) {
+        errorEl.style.display = "none";
+        errorEl.innerText = "";
+      }
     });
 
     widget.onUploadComplete(async (info) => {
