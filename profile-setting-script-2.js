@@ -270,7 +270,7 @@ document.addEventListener("DOMContentLoaded", async () => {
         const errorEl = document.getElementById("testimonial-error-text");
         if (errorEl) errorEl.style.display = "block";
         document.getElementById("theloadingwait").style.display = "none";
-        throw new Error("Maximum testimonials reached. Cannot add more.");
+        throw new Error("You can only upload up to 3 testimonials.");
       }
       // Hide error if under limit
       const errorEl = document.getElementById("testimonial-error-text");
