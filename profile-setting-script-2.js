@@ -1136,6 +1136,10 @@ async function uploadFile(url, name) {
 
 async function updateallthefields(email, member = {}) {
   try {
+    document.getElementById("casestudy-error-text").style.display = "none";
+    document.getElementById("certificate-error-text").style.display = "none";
+    document.getElementById("testimonial-error-text").style.display = "none";
+
     document.getElementById("theloadingwait").style.display = "flex";
     let dbuser = await getItem(email);
     let mongodbuser = JSON.parse(dbuser);
