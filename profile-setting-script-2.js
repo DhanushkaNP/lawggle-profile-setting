@@ -724,7 +724,6 @@ $(document).ready(async function () {
       lawyerState.profileVideo = null;
       document.getElementById("showcaseprofile").src = "";
       document.getElementById("uploadfilesprompt").style.display = "flex";
-      document.getElementById("profileimagecontainer").style.display = "none";
       document.getElementById("profile-vid-delete").style.display = "none";
     });
 
