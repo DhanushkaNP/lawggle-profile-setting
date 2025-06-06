@@ -310,6 +310,7 @@ document.addEventListener("DOMContentLoaded", async () => {
             dialog.style.display = "none";
           });
         }, 1000);
+        throw new Error("Certificate limit reached.");
       }
     });
 
