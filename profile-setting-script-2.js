@@ -260,17 +260,22 @@ document.addEventListener("DOMContentLoaded", async () => {
     const widget = uploadcare.Widget(input);
     const uploaderId = input.id;
 
-    // ...inside your widget.onChange handler...
     widget.validators.push(function (fileInfo) {
       if (
         uploaderId === "uploadtestimonials" &&
         lawyerState.testimonials.length >= 3
       ) {
         console.warn("Maximum testimonials reached. Cannot add more.");
+
+        // Show your custom error in the DOM
         const errorEl = document.getElementById("testimonial-error-text");
         if (errorEl) errorEl.style.display = "block";
         document.getElementById("theloadingwait").style.display = "none";
-        throw new Error("You can only upload up to 3 testimonials.");
+
+        // Return a rejection with your custom message
+        return uploadcare.utils.reject(
+          "You can only upload up to 3 testimonials."
+        );
       }
       // Hide error if under limit
       const errorEl = document.getElementById("testimonial-error-text");
