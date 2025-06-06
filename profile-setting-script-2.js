@@ -70,7 +70,7 @@ async function delaysomeminutes() {
     document.getElementById("personalqacontainer").style.display = "none";
     document.getElementById("certdeletecontainer").style.display = "none";
     document.getElementById("theloadingwait").style.display = "none";
-  }, 2000); // 2000 milliseconds = 2 seconds
+  }, 500); // 2000 milliseconds = 2 seconds
   return "continue";
 }
 
