@@ -587,6 +587,13 @@ $(document).ready(async function () {
   });
 
   $("#save-cases").click(async function () {
+    if (lawyerState.notableCaseWins.length >= 3) {
+      const errorEl = document.getElementById("casewins-error-text");
+      if (errorEl) errorEl.style.display = "block";
+      console.log("Maximum case wins reached. Cannot add more.");
+      return;
+    }
+
     let caseTitle = document.getElementById("casewinstitle").value;
     let caseDescription = document.getElementById("casewinsdescription").value;
     if (caseTitle && caseDescription) {
@@ -744,6 +751,7 @@ $(document).ready(async function () {
         console.log(typeof theindextodelete, theindextodelete);
         lawyerState.notableCaseWins.splice(theindextodelete, 1);
         await updateallthefields(localStorage.getItem("userEmail"));
+        document.getElementById("casewins-error-text").style.display = "none";
         await delaysomeminutes();
       }
       if (buttonIdentifier == "testimonials") {
@@ -761,6 +769,8 @@ $(document).ready(async function () {
           .getAttribute("itemindex");
         lawyerState.mediaPressMentions.splice(theindextodelete, 1);
         document.getElementById("addMediaPress").classList.remove("disabled");
+        document.getElementById("media-press-error-text").style.display =
+          "none";
         await updateallthefields(localStorage.getItem("userEmail"));
         await delaysomeminutes();
       }
@@ -1584,11 +1594,6 @@ async function updateallthefields(email, member = {}) {
       }
       let caseWins = lawyerState.notableCaseWins;
       if (caseWins.length > 0) {
-        caseWins <= 3
-          ? $("#case-wins-error-text").hide()
-          : $("#case-wins-error-text").show();
-        caseWins > 3 ? $("#save-cases").hide() : $("#save-cases").show();
-
         let thecaseslider = document.getElementById("casewinsContainer");
         thecaseslider.innerHTML = "";
         for (let eachcase in caseWins) {
