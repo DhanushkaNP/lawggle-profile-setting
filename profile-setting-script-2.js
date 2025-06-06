@@ -751,7 +751,7 @@ $(document).ready(async function () {
         console.log(typeof theindextodelete, theindextodelete);
         lawyerState.notableCaseWins.splice(theindextodelete, 1);
         await updateallthefields(localStorage.getItem("userEmail"));
-        document.getElementById("casewins-error-text").style.display = "none";
+        document.getElementById("case-wins-error-text").style.display = "none";
         await delaysomeminutes();
       }
       if (buttonIdentifier == "testimonials") {
@@ -1629,7 +1629,7 @@ async function updateallthefields(email, member = {}) {
 
           qaedit.setAttribute("itemindex", eachcase);
 
-          qaedit.addEventListener("click", async () => {
+          qaedit.addEventListener("click", async (event) => {
             let theeditButton = event.target;
             let toeditindex = theeditButton.getAttribute("itemindex");
             let theeditcontainer = document.getElementById("theeditcases");
