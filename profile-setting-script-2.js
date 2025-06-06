@@ -294,7 +294,8 @@ document.addEventListener("DOMContentLoaded", async () => {
       }
 
       if (
-        (uploaderId = "certicateUpload" && lawyerState.certificates.length >= 3)
+        uploaderId === "certicateUpload" &&
+        lawyerState.certificates.length >= 3
       ) {
         const errorEl = document.getElementById("certificate-error-text");
         console.warn("Maximum certificates reached. Cannot add more.");
