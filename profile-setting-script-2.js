@@ -261,7 +261,6 @@ document.addEventListener("DOMContentLoaded", async () => {
   dynamicBioInput.addEventListener("input", function () {
     const words = dynamicBioInput.value.trim().split(/\s+/).filter(Boolean);
     if (words.length > 200) {
-      dynamicBioInput.value = words.slice(0, 200).join(" ");
       errorEl.style.display = "block";
     } else {
       errorEl.style.display = "none";
@@ -899,6 +898,15 @@ $(document).ready(async function () {
       // Trim if plan only allows 1
       if (maxAreasOfLaw === 1 && expertiseArr.length > 1) {
         expertiseArr = [expertiseArr[0]];
+      }
+
+      let dynamicBio = document.getElementById("dynamicbio").value;
+      if (dynamicBio.length > 200) {
+        document.getElementById("bio-limit-error-text").style.display = "block";
+        document.getElementById("theloadingwait").style.display = "none";
+        return;
+      } else {
+        document.getElementById("bio-limit-error-text").style.display = "none";
       }
       // Merge pending uploads with existing data
       let thedata = {
