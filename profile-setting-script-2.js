@@ -937,6 +937,8 @@ $(document).ready(async function () {
       console.log("All Active Memberstack Subscriptions:", allMemberPlans);
 
       const planIds = allMemberPlans.map((plan) => plan.planId);
+
+      console.log("Active Plan IDs:", planIds);
       if (
         planIds.includes("prc_lawggle-advanced-v2-a6s0e6e") ||
         planIds.includes("prc_lawggle-advanced-v2-r64d0s4c")
