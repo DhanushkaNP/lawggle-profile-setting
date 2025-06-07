@@ -940,8 +940,8 @@ $(document).ready(async function () {
 
       console.log("Active Plan IDs:", planIds);
       if (
-        planIds.includes("prc_lawggle-advanced-v2-a6s0e6e") ||
-        planIds.includes("prc_lawggle-advanced-v2-r64d0s4c")
+        planIds.includes("pln_lawggle-advanced-v2-a6t0erf") ||
+        planIds.includes("pln_lawggle-advanced-v2-r74e0sgz")
       ) {
         maxAreasOfLaw = 3;
       } else {
