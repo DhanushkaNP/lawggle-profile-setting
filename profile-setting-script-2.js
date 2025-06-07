@@ -680,7 +680,9 @@ $(document).ready(async function () {
       // Remove the last selected option
       selected.splice(maxAreasOfLaw);
       $(this).val(selected).trigger("change");
-      alert(`You can only select up to ${maxAreasOfLaw} area(s) of law.`);
+      let errotrText = document.getElementById("Error-text-expertise");
+      errotrText.innerText = `You can only select up to ${maxAreasOfLaw} areas of expertise.`;
+      errotrText.style.display = "block";
     }
   });
 
