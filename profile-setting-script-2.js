@@ -252,6 +252,22 @@ document.addEventListener("DOMContentLoaded", async () => {
     }
   });
 
+  // Dynamic Bio Word Limit
+  const dynamicBioInput = document.getElementById("dynamicbio");
+  if (!dynamicBioInput) return;
+
+  let errorEl = document.getElementById("bio-limit-error-text");
+
+  dynamicBioInput.addEventListener("input", function () {
+    const words = dynamicBioInput.value.trim().split(/\s+/).filter(Boolean);
+    if (words.length > 200) {
+      dynamicBioInput.value = words.slice(0, 200).join(" ");
+      errorEl.style.display = "block";
+    } else {
+      errorEl.style.display = "none";
+    }
+  });
+
   // Get all uploadcare inputs
   const inputs = document.querySelectorAll("[role=uploadcare-uploader]");
 
@@ -1224,7 +1240,15 @@ async function updateallthefields(email, member = {}) {
       let clientcentricMission = jsonUser["client centric mission"];
       document.getElementById("clientcentricMission").value =
         clientcentricMission;
+
       let dynamicBio = jsonUser["dynamic bio"];
+
+      if (dynamicBio) {
+        const words = dynamicBio.trim().split(/\s+/).filter(Boolean);
+        if (words.length > 200) {
+          dynamicBio = words.slice(0, 200).join(" ");
+        }
+      }
       document.getElementById("dynamicbio").value = dynamicBio;
 
       let thegeolocationaddress;
