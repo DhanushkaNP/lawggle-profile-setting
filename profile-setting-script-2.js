@@ -886,28 +886,107 @@ $(document).ready(async function () {
     .getElementById("universalSaveBtn")
     .addEventListener("click", async () => {
       document.getElementById("theloadingwait").style.display = "flex";
-      let updateemail = localStorage.getItem("userEmail");
-
       // Fetch current user data
-      let dbuser = await getItem(updateemail);
-      let mongodbuser = JSON.parse(dbuser);
-      let userData = mongodbuser.data.body;
-      let jsonUser = JSON.parse(JSON.parse(userData));
 
-      let expertiseArr = await readselectnoImage("expertiseSelect");
-      // Trim if plan only allows 1
-      if (maxAreasOfLaw === 1 && expertiseArr.length > 1) {
-        expertiseArr = [expertiseArr[0]];
+      let hasError = false;
+
+      // Name validation
+      const name = document.getElementById("firstlastname").value.trim();
+      if (!name) {
+        document.getElementById("name-required-error-text").style.display =
+          "block";
+        hasError = true;
+      } else {
+        document.getElementById("name-required-error-text").style.display =
+          "none";
       }
 
-      let dynamicBio = document.getElementById("dynamicbio").value;
-      if (dynamicBio.length > 200) {
+      // Area of Expertise validation
+      let expertiseArr = await readselectnoImage("expertiseSelect");
+      // Trim if plan only allows 1
+      if (!expertiseArr || expertiseArr.length === 0) {
+        document.getElementById("expertise-required-error-text").style.display =
+          "block";
+        hasError = true;
+      } else if (maxAreasOfLaw === 1 && expertiseArr.length > 1) {
+        document.getElementById("expertise-error-text").style.display = "none";
+        document.getElementById("expertise-required-error-text").style.display =
+          "none";
+        expertiseArr = [expertiseArr[0]];
+      } else {
+        document.getElementById("expertise-error-text").style.display = "none";
+        document.getElementById("expertise-required-error-text").style.display =
+          "none";
+      }
+
+      if (!lawyerState.userGeoLocationDetails) {
+        document.getElementById("address-required-error-text").style.display =
+          "block";
+        hasError = true;
+      } else {
+        document.getElementById("address-required-error-text").style.display =
+          "none";
+      }
+
+      // Bio
+      let dynamicBio = document.getElementById("dynamicbio").value.trim();
+      const bioWords = dynamicBio.split(/\s+/).filter(Boolean);
+      if (!dynamicBio || bioWords.length === 0) {
         document.getElementById("bio-limit-error-text").style.display = "block";
-        document.getElementById("theloadingwait").style.display = "none";
-        return;
+        document.getElementById("bio-limit-error-text").innerText =
+          "Bio is required.";
+        hasError = true;
+      } else if (bioWords.length > 200) {
+        document.getElementById("bio-limit-error-text").style.display = "block";
+        document.getElementById("bio-limit-error-text").innerText =
+          "Bio cannot exceed 200 words.";
+        hasError = true;
       } else {
         document.getElementById("bio-limit-error-text").style.display = "none";
       }
+
+      const minRate = document.getElementById("minRate").value;
+      const maxRate = document.getElementById("maxRate").value;
+      const rateErrorEl = document.getElementById("rate-error-text");
+
+      if (!minRate && !maxRate) {
+        rateErrorEl.innerText =
+          "Please enter both minimum and maximum hourly rates.";
+        rateErrorEl.style.display = "block";
+        hasError = true;
+      } else if (!minRate) {
+        rateErrorEl.innerText = "Please enter a minimum hourly rate.";
+        rateErrorEl.style.display = "block";
+        hasError = true;
+      } else if (!maxRate) {
+        rateErrorEl.innerText = "Please enter a maximum hourly rate.";
+        rateErrorEl.style.display = "block";
+        hasError = true;
+      } else if (Number(maxRate) <= Number(minRate)) {
+        rateErrorEl.innerText =
+          "Maximum rate must be greater than minimum rate.";
+        rateErrorEl.style.display = "block";
+        hasError = true;
+      } else {
+        rateErrorEl.style.display = "none";
+      }
+
+      if (
+        !lawyerState.offerConsultation ||
+        !lawyerState.offerContingency ||
+        !lawyerState.proBonoWork
+      ) {
+        document.getElementById("yesno-error-text").style.display = "block";
+        hasError = true;
+      } else {
+        document.getElementById("yesno-error-text").style.display = "none";
+      }
+
+      if (hasError) {
+        document.getElementById("theloadingwait").style.display = "none";
+        return;
+      }
+
       // Merge pending uploads with existing data
       let thedata = {
         "profile image": lawyerState.profileImage,
@@ -924,7 +1003,7 @@ $(document).ready(async function () {
         "firm url": document.getElementById("firmurl").value,
         "area of expertise": expertiseArr,
         AllEducation: [...lawyerState.allEducation],
-        "dynamic bio": document.getElementById("dynamicbio").value,
+        "dynamic bio": dynamicBio,
         address: lawyerState.userGeoLocationDetails,
         "free consultation": lawyerState.offerConsultation,
         "offer contingency": lawyerState.offerContingency,
@@ -955,8 +1034,8 @@ $(document).ready(async function () {
         // Add other fields as needed
       };
 
+      let updateemail = localStorage.getItem("userEmail");
       await updateItem(updateemail, thedata);
-
       await updateallthefields(updateemail);
       document.getElementById("thesavealertshow").style.display = "flex";
       await delaysomeminutes();
