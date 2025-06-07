@@ -879,6 +879,11 @@ $(document).ready(async function () {
       let userData = mongodbuser.data.body;
       let jsonUser = JSON.parse(JSON.parse(userData));
 
+      let expertiseArr = await readselectnoImage("expertiseSelect");
+      // Trim if plan only allows 1
+      if (maxAreasOfLaw === 1 && expertiseArr.length > 1) {
+        expertiseArr = [expertiseArr[0]];
+      }
       // Merge pending uploads with existing data
       let thedata = {
         "profile image": lawyerState.profileImage,
@@ -893,7 +898,7 @@ $(document).ready(async function () {
         "min hourly rate": document.getElementById("minRate").value,
         "max hourly rate": document.getElementById("maxRate").value,
         "firm url": document.getElementById("firmurl").value,
-        "area of expertise": await readselectnoImage("expertiseSelect"),
+        "area of expertise": expertiseArr,
         AllEducation: [...lawyerState.allEducation],
         "dynamic bio": document.getElementById("dynamicbio").value,
         address: lawyerState.userGeoLocationDetails,
