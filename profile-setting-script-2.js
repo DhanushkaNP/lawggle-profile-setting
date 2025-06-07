@@ -680,7 +680,7 @@ $(document).ready(async function () {
       // Remove the last selected option
       selected.splice(maxAreasOfLaw);
       $(this).val(selected).trigger("change");
-      let errotrText = document.getElementById("Error-text-expertise");
+      let errotrText = document.getElementById("expertise-error-text");
       errotrText.innerText = `You can only select up to ${maxAreasOfLaw} areas of expertise.`;
       errotrText.style.display = "block";
     }
