@@ -683,6 +683,9 @@ $(document).ready(async function () {
       let errotrText = document.getElementById("expertise-error-text");
       errotrText.style.display = "block";
       errotrText.innerText = `You can only select up to ${maxAreasOfLaw} areas of expertise.`;
+    } else {
+      let errotrText = document.getElementById("expertise-error-text");
+      errotrText.style.display = "none";
     }
   });
 
