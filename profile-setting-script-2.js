@@ -539,6 +539,18 @@ $(document).ready(async function () {
   });
 
   $("#addEducation").click(async function () {
+    // Check for maximum 3 education entries
+    if (lawyerState.allEducation.length >= 3) {
+      const errorEl = document.getElementById("education-max-error-text");
+      if (errorEl) {
+        errorEl.style.display = "block";
+      }
+      return;
+    } else {
+      const errorEl = document.getElementById("education-error-text");
+      if (errorEl) errorEl.style.display = "none";
+    }
+
     let theinstitution = document.getElementById("institutioneducation").value;
     let thedregree = document.getElementById("degreeinput").value;
     let thestartDate = document.getElementById("thestartdate").value;
