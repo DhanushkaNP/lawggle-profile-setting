@@ -611,6 +611,19 @@ $(document).ready(async function () {
 
     let caseTitle = document.getElementById("casewinstitle").value;
     let caseDescription = document.getElementById("casewinsdescription").value;
+
+    const wordCount = caseDescription.trim().split(/\s+/).length;
+    if (wordCount > 150) {
+      const errorEl = document.getElementById("casewins-max-word-error-text");
+      if (errorEl) {
+        errorEl.style.display = "block";
+      }
+      return;
+    } else {
+      const errorEl = document.getElementById("casewins-error-text");
+      if (errorEl) errorEl.style.display = "none";
+    }
+
     if (caseTitle && caseDescription) {
       let theuniqueId = await generateUniqueId();
       let thiscase = {
