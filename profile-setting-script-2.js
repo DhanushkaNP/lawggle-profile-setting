@@ -2359,16 +2359,13 @@ async function createEducationBox(
   qadelete.addEventListener("click", async (event) => {
     let thedeleteButton = event.target;
     let todeleteindex = thedeleteButton.getAttribute("itemindex");
-    lawyerState.allEducation.splice(todeleteindex, 1);
-
-    let allstaticDivs = document.querySelectorAll(".theqadiv");
-    allstaticDivs.forEach((staticdiv) => {
-      let thedivcontattr = staticdiv.getAttribute("itemindex");
-      if (thedivcontattr == todeleteindex) {
-        document.getElementById("educationCarrier").removeChild(staticdiv);
-      }
-    });
+    let thedeletecontainer = document.getElementById(
+      "deletetheeducationcontainer"
+    );
+    thedeletecontainer.style.display = "flex";
+    thedeletecontainer.setAttribute("itemindex", todeleteindex);
   });
+
   let iconsHolder = document.createElement("div");
   iconsHolder.classList.add("qaiconsholder");
 
