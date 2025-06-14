@@ -399,6 +399,7 @@ document.addEventListener("DOMContentLoaded", async () => {
           "unique id": thisuniqueId,
         });
         // Update DOM to show case study preview (implement as needed)
+        document.getElementById("certificate-swiper").display = "block";
         const caseStudySwiperWrapper = document.getElementById(
           "case-study-swiper-wrapper"
         );
@@ -922,6 +923,7 @@ $(document).ready(async function () {
           .getAttribute("itemindex");
         lawyerState.certificates.splice(theindextodelete, 1);
 
+        document.getElementById("certificate-swiper").display = "block";
         const certificateSwiperWrapper = document.getElementById(
           "certificate-swiper-wrapper"
         );
@@ -1980,7 +1982,7 @@ async function updateallthefields(email, member = {}) {
           });
         });
       } else {
-        document.getElementById("certificate-swiper-wrapper").innerHTML = "";
+        document.getElementById("certificate-swiper").display = "none";
       }
 
       document.getElementById("thepageloader").style.display = "none";
