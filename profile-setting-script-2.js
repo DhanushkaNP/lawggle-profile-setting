@@ -1980,8 +1980,7 @@ async function updateallthefields(email, member = {}) {
           });
         });
       } else {
-        document.getElementById("certificate-swiper-wrapper").style.display =
-          "none";
+        document.getElementById("certificate-swiper-wrapper").innerHTML = "";
       }
 
       document.getElementById("thepageloader").style.display = "none";
