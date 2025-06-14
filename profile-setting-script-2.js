@@ -692,7 +692,7 @@ $(document).ready(async function () {
     );
     mediaPressSwiperWrapper.innerHTML = "";
     lawyerState.mediaPressMentions.forEach((mediaPress, idx) => {
-      createMediaPressCard(mediaPress.url, mediaPressSwiperWrapper, idx);
+      createMediaPressCard(mediaPress, mediaPressSwiperWrapper, idx);
     });
   });
 
@@ -895,7 +895,7 @@ $(document).ready(async function () {
         );
         mediaPressSwiperWrapper.innerHTML = "";
         lawyerState.mediaPressMentions.forEach((mediaPress, idx) => {
-          createMediaPressCard(mediaPress.url, mediaPressSwiperWrapper, idx);
+          createMediaPressCard(mediaPress, mediaPressSwiperWrapper, idx);
         });
         await HideModals();
       }
