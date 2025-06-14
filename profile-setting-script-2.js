@@ -800,7 +800,8 @@ $(document).ready(async function () {
       if (buttonIdentifier == "education") {
         lawyerState.allEducation.splice(theindextodelete, 1);
         const qadiv = button.closest(".theqadiv");
-        if (qadiv) qadiv.remove();
+        qadiv.remove();
+        delaysomeminutes();
       }
 
       if (buttonIdentifier == "casewins") {
