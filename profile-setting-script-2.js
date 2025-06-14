@@ -799,8 +799,24 @@ $(document).ready(async function () {
 
       if (buttonIdentifier == "education") {
         lawyerState.allEducation.splice(theindextodelete, 1);
-        const qadiv = button.closest(".theqadiv");
-        qadiv.remove();
+
+        const thecaseslider5 = document.getElementById("educationCarrier");
+        thecaseslider5.innerHTML = "";
+        lawyerState.allEducation.forEach((edu, idx) => {
+          createEducationBox(
+            edu.education,
+            edu.degree,
+            edu["start date"],
+            edu["end date"],
+            idx
+          );
+        });
+
+        // Optionally hide the container if empty
+        if (lawyerState.allEducation.length === 0) {
+          thecaseslider5.classList.add("hide-container");
+        }
+
         delaysomeminutes();
       }
 
