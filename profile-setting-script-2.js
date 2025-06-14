@@ -1907,7 +1907,6 @@ async function updateallthefields(email, member = {}) {
       } else {
         let thecaseslider2 = document.getElementById("testimonial-swiper");
         thecaseslider2.innerHTML = "";
-        thecaseslider2.style.display = "none";
       }
       setupMediaAndPress(jsonUser);
 
