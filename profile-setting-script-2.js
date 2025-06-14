@@ -419,15 +419,6 @@ document.addEventListener("DOMContentLoaded", async () => {
                 url: fileUrl,
                 "unique id": await generateUniqueId(),
               });
-
-              // Update DOM to show certificate preview (implement as needed)
-              const certificateSwiperWrapper = document.getElementById(
-                "certificate-swiper-wrapper"
-              );
-              certificateSwiperWrapper.innerHTML = "";
-              lawyerState.certificates.forEach((cert, idx) => {
-                createCertificateUI(cert.url, certificateSwiperWrapper, idx);
-              });
             }
           }
         } else if (url && (!info.uuid || !info.uuid.includes("~"))) {
@@ -438,6 +429,15 @@ document.addEventListener("DOMContentLoaded", async () => {
             "unique id": thisuniqueId,
           });
         }
+
+        // Always update the DOM after updating the array
+        const certificateSwiperWrapper = document.getElementById(
+          "certificate-swiper-wrapper"
+        );
+        certificateSwiperWrapper.innerHTML = "";
+        lawyerState.certificates.forEach((cert, idx) => {
+          createCertificateUI(cert.url, certificateSwiperWrapper, idx);
+        });
       }
 
       if (uploaderId == "uploadprofileimage") {
