@@ -843,12 +843,19 @@ $(document).ready(async function () {
       }
 
       if (buttonIdentifier == "testimonials") {
-        let updateemail = localStorage.getItem("userEmail");
         let theindextodelete = document
           .getElementById("deleteclientstestimonials")
           .getAttribute("itemindex");
         lawyerState.testimonials.splice(theindextodelete, 1);
-        updatedom = await updateallthefields(updateemail);
+
+        const testimonialSwipperWrapper = document.getElementById(
+          "testimonial-swiper-wrapper"
+        );
+
+        testimonialSwipperWrapper.innerHTML = "";
+        lawyerState.testimonials.forEach((testimonial, idx) => {
+          createTestimonialUI(testimonial.url, testimonialSwipperWrapper, idx);
+        });
         await HideModals();
       }
       if (buttonIdentifier == "mediapress") {
@@ -2316,6 +2323,42 @@ async function createCaseWinUI(title, description, index) {
   headcarrier.append(headertext, iconsHolder);
   thequizcarrier.append(headcarrier, qaanswer);
   thecaseslider.append(thequizcarrier);
+}
+
+async function createTestimonialUI(videoUrl, testimonialSwipperWrapper, index) {
+  // Create the main container
+  const slide = document.createElement("div");
+  slide.classList.add("swiper-slide", "testimonial-video-wrap");
+
+  // Create the video element
+  const testimonial = document.createElement("video");
+  testimonial.classList.add("testimonial-video-ps");
+  testimonial.src = videoUrl;
+  testimonial.controls = true;
+  testimonial.playsInline = true;
+
+  // Create the delete icon
+  const deleteIcon = document.createElement("img");
+  deleteIcon.classList.add("deletebriefs-3");
+  deleteIcon.src =
+    "https://cdn.prod.website-files.com/67e360f08a15ef65d8814b41/67f6dfbc2b16d9977c85eeb2_Group%201597881168.png";
+  deleteIcon.setAttribute("itemindex", index);
+
+  // Delete icon click handler
+  deleteIcon.addEventListener("click", async (event) => {
+    const todeleteindex = event.target.getAttribute("itemindex");
+    const deleteContainer = document.getElementById(
+      "deleteclientstestimonials"
+    );
+    deleteContainer.style.display = "flex";
+    deleteContainer.setAttribute("itemindex", todeleteindex);
+  });
+
+  // Append video and delete icon to the slide
+  slide.append(testimonial, deleteIcon);
+
+  // Append the slide to the container
+  testimonialSwipperWrapper.append(slide);
 }
 
 function loadSwiperJS() {
