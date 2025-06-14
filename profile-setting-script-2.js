@@ -851,7 +851,6 @@ $(document).ready(async function () {
         const testimonialSwipperWrapper = document.getElementById(
           "testimonial-swiper-wrapper"
         );
-
         testimonialSwipperWrapper.innerHTML = "";
         lawyerState.testimonials.forEach((testimonial, idx) => {
           createTestimonialUI(testimonial.url, testimonialSwipperWrapper, idx);
@@ -1711,6 +1710,7 @@ async function updateallthefields(email, member = {}) {
           "swiper-wrapper",
           "swiper-wrapper-testimonial"
         );
+        swiperWrapper.id = "testimonial-swiper-wrapper";
 
         for (let testimonialvideos in clientTestimonials) {
           let slide = document.createElement("div");
