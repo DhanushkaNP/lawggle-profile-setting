@@ -57,7 +57,7 @@ let theuserGeolocation;
 let thelawyercerticates = [];
 let theLawyersHobbies = [];
 
-async function delaysomeminutes() {
+async function HideModals() {
   setTimeout(() => {
     document.getElementById("thesavealertshow").style.display = "none";
     document.getElementById("thesaveqa").style.display = "none";
@@ -72,7 +72,7 @@ async function delaysomeminutes() {
     document.getElementById("personalqacontainer").style.display = "none";
     document.getElementById("certdeletecontainer").style.display = "none";
     document.getElementById("theloadingwait").style.display = "none";
-  }, 500); // 2000 milliseconds = 2 seconds
+  }, 100); // 2000 milliseconds = 2 seconds
   return "continue";
 }
 
@@ -817,20 +817,27 @@ $(document).ready(async function () {
           thecaseslider5.classList.add("hide-container");
         }
 
-        delaysomeminutes();
+        HideModals();
       }
 
       if (buttonIdentifier == "casewins") {
         let theindextodeletetext = document
           .getElementById("deletecasesmaindiv")
           .getAttribute("itemindex");
+
         let theindextodelete = Number(theindextodeletetext);
         console.log(typeof theindextodelete, theindextodelete);
         lawyerState.notableCaseWins.splice(theindextodelete, 1);
-        await updateallthefields(localStorage.getItem("userEmail"));
+
+        document.getElementById("casewinsContainer").innerHTML = "";
+        lawyerState.notableCaseWins.forEach((caseWin, idx) => {
+          createCaseWinUI(caseWin.title, caseWin.description, idx);
+        });
+
         document.getElementById("case-wins-error-text").style.display = "none";
-        await delaysomeminutes();
+        await HideModals();
       }
+
       if (buttonIdentifier == "testimonials") {
         let updateemail = localStorage.getItem("userEmail");
         let theindextodelete = document
@@ -838,7 +845,7 @@ $(document).ready(async function () {
           .getAttribute("itemindex");
         lawyerState.testimonials.splice(theindextodelete, 1);
         updatedom = await updateallthefields(updateemail);
-        await delaysomeminutes();
+        await HideModals();
       }
       if (buttonIdentifier == "mediapress") {
         let theindextodelete = document
@@ -849,7 +856,7 @@ $(document).ready(async function () {
         document.getElementById("media-press-error-text").style.display =
           "none";
         await updateallthefields(localStorage.getItem("userEmail"));
-        await delaysomeminutes();
+        await HideModals();
       }
       if (buttonIdentifier == "casestudy") {
         let theindextodelete = document
@@ -858,7 +865,7 @@ $(document).ready(async function () {
         let updateemail = localStorage.getItem("userEmail");
         lawyerState.caseStudies.splice(theindextodelete, 1);
         updatedom = await updateallthefields(updateemail);
-        await delaysomeminutes();
+        await HideModals();
       }
       if (buttonIdentifier == "qa") {
         let theindextodelete = document
@@ -867,7 +874,7 @@ $(document).ready(async function () {
         lawyerState.personalQA.splice(theindextodelete, 1);
         await updateallthefields(localStorage.getItem("userEmail"));
         document.getElementById("qa-error-text").style.display = "none";
-        await delaysomeminutes();
+        await HideModals();
       }
       if (buttonIdentifier == "certificates") {
         let theindextodelete = document
@@ -876,7 +883,7 @@ $(document).ready(async function () {
         let userEmail = localStorage.getItem("userEmail");
         lawyerState.certificates.splice(theindextodelete, 1);
         await updateallthefields(userEmail);
-        await delaysomeminutes();
+        await HideModals();
       }
 
       if (buttonIdentifier == "interestsHobbies") {
@@ -886,7 +893,7 @@ $(document).ready(async function () {
         let userEmail = localStorage.getItem("userEmail");
         lawyerState.interestsAndHobbies.splice(theindextodelete, 1);
         await updateallthefields(userEmail);
-        await delaysomeminutes();
+        await HideModals();
       }
     });
   });
@@ -1080,7 +1087,7 @@ $(document).ready(async function () {
       await updateItem(updateemail, thedata);
       await updateallthefields(updateemail);
       document.getElementById("thesavealertshow").style.display = "flex";
-      await delaysomeminutes();
+      await HideModals();
     });
 
   //Memberstack read
@@ -2423,6 +2430,56 @@ async function createEducationBox(
     allDatesWrap
   );
   thecaseslider5.append(thequizcarrier);
+}
+
+async function createCaseWinUI(title, description, index) {
+  let thecaseslider = document.getElementById("casewinsContainer");
+
+  let thequizcarrier = document.createElement("div");
+  thequizcarrier.classList.add("theqadiv");
+  let headcarrier = document.createElement("div");
+  headcarrier.classList.add("qaheader");
+  let headertext = document.createElement("p");
+  headertext.classList.add("qaheadertext");
+  headertext.innerText = title;
+  let qadelete = document.createElement("img");
+  qadelete.classList.add("qaicons");
+  qadelete.src =
+    "https://cdn.prod.website-files.com/67e360f08a15ef65d8814b41/67f6dfbc2b16d9977c85eeb2_Group%201597881168.png";
+  qadelete.setAttribute("itemindex", index);
+
+  qadelete.addEventListener("click", async (event) => {
+    let thedeleteButton = event.target;
+    let todeleteindex = thedeleteButton.getAttribute("itemindex");
+    let thedeletecontainer = document.getElementById("deletecasesmaindiv");
+    thedeletecontainer.style.display = "flex";
+    thedeletecontainer.setAttribute("itemindex", todeleteindex);
+  });
+
+  let iconsHolder = document.createElement("div");
+  iconsHolder.classList.add("qaiconsholder");
+  let qaedit = document.createElement("img");
+  qaedit.classList.add("qaicons");
+  qaedit.src =
+    "https://cdn.prod.website-files.com/67e360f08a15ef65d8814b41/67f6df9d8c1aed7f8f8c1fc7_Group%201597881167.png";
+
+  qaedit.setAttribute("itemindex", index);
+
+  qaedit.addEventListener("click", async (event) => {
+    let theeditButton = event.target;
+    let toeditindex = theeditButton.getAttribute("itemindex");
+    let theeditcontainer = document.getElementById("theeditcases");
+    theeditcontainer.style.display = "flex";
+    theeditcontainer.setAttribute("itemindex", toeditindex);
+  });
+
+  let qaanswer = document.createElement("p");
+  qaanswer.classList.add("qapragraph");
+  qaanswer.innerText = description;
+  iconsHolder.append(qaedit, qadelete);
+  headcarrier.append(headertext, iconsHolder);
+  thequizcarrier.append(headcarrier, qaanswer);
+  thecaseslider.append(thequizcarrier);
 }
 
 function loadSwiperJS() {
