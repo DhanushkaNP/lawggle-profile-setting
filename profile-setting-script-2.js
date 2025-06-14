@@ -735,11 +735,14 @@ $(document).ready(async function () {
         description: qaanswer,
       };
       lawyerState.personalQA.push(thisqadata);
+      document.getElementById("qaquzicontainer").innerHTML = "";
+      lawyerState.personalQA.forEach((qaItem, idx) => {
+        createPersonalQAUI(qaItem, idx);
+      });
     }
     document.getElementById("theqaquizinput").value = "";
     document.getElementById("qaanswerinput").value = "";
     $("#thesaveqa").hide();
-    updateallthefields(localStorage.getItem("userEmail"));
   });
 
   $("#expertiseSelect").on("change", function () {
@@ -919,7 +922,13 @@ $(document).ready(async function () {
           .getElementById("personalqacontainer")
           .getAttribute("itemindex");
         lawyerState.personalQA.splice(theindextodelete, 1);
-        await updateallthefields(localStorage.getItem("userEmail"));
+
+        const qaWrapper = document.getElementById("qaquzicontainer");
+        qaWrapper.innerHTML = "";
+        lawyerState.personalQA.forEach((qaItem, idx) => {
+          createPersonalQAUI(qaItem, idx);
+        });
+
         document.getElementById("qa-error-text").style.display = "none";
         await HideModals();
       }
@@ -1855,54 +1864,10 @@ async function updateallthefields(email, member = {}) {
         let thecaseslider5 = document.getElementById("qaquzicontainer");
         thecaseslider5.innerHTML = "";
 
-        for (let i = 0; i < questionsAndAnswers.length; i++) {
-          const eachquiz = questionsAndAnswers[i];
-          let thequizcarrier = document.createElement("div");
-          thequizcarrier.classList.add("theqadiv");
-          let headcarrier = document.createElement("div");
-          headcarrier.classList.add("qaheader");
-          let headertext = document.createElement("p");
-          headertext.classList.add("qaheadertext");
-          headertext.innerText = eachquiz.title;
-          let qadelete = document.createElement("img");
-          qadelete.classList.add("qaicons");
-          qadelete.src =
-            "https://cdn.prod.website-files.com/67e360f08a15ef65d8814b41/67f6dfbc2b16d9977c85eeb2_Group%201597881168.png";
-          qadelete.setAttribute("itemindex", i);
-
-          qadelete.addEventListener("click", async (event) => {
-            let thedeleteButton = event.target;
-            let todeleteindex = thedeleteButton.getAttribute("itemindex");
-            let thedeletecontainer = document.getElementById(
-              "personalqacontainer"
-            );
-            thedeletecontainer.style.display = "flex";
-            thedeletecontainer.setAttribute("itemindex", todeleteindex);
+        if (questionsAndAnswers.length > 0) {
+          questionsAndAnswers.forEach((qaItem, idx) => {
+            createPersonalQAUI(qaItem, idx);
           });
-
-          let iconsHolder = document.createElement("div");
-          iconsHolder.classList.add("qaiconsholder");
-          let qaedit = document.createElement("img");
-          qaedit.classList.add("qaicons");
-          qaedit.src =
-            "https://cdn.prod.website-files.com/67e360f08a15ef65d8814b41/67f6df9d8c1aed7f8f8c1fc7_Group%201597881167.png";
-          qaedit.setAttribute("itemindex", eachquiz);
-
-          qaedit.addEventListener("click", async (event) => {
-            let theeditButton = event.target;
-            let toeditindex = theeditButton.getAttribute("itemindex");
-            let theeditcontainer = document.getElementById("theeditqa");
-            theeditcontainer.style.display = "flex";
-            theeditcontainer.setAttribute("itemindex", toeditindex);
-          });
-
-          let qaanswer = document.createElement("p");
-          qaanswer.classList.add("qapragraph");
-          qaanswer.innerText = eachquiz.description;
-          iconsHolder.append(qaedit, qadelete);
-          headcarrier.append(headertext, iconsHolder);
-          thequizcarrier.append(headcarrier, qaanswer);
-          thecaseslider5.append(thequizcarrier);
         }
       } else {
       }
@@ -2516,6 +2481,59 @@ function createMediaPressCard(mediaItem, mediaPressWrapper, index) {
   card.appendChild(content);
   swiperSlide.appendChild(card);
   mediaPressWrapper.appendChild(swiperSlide);
+}
+
+function createPersonalQAUI(qaItem, index) {
+  const thequizcarrier = document.createElement("div");
+  thequizcarrier.classList.add("theqadiv");
+
+  const headcarrier = document.createElement("div");
+  headcarrier.classList.add("qaheader");
+
+  const headertext = document.createElement("p");
+  headertext.classList.add("qaheadertext");
+  headertext.innerText = qaItem.title;
+
+  const iconsHolder = document.createElement("div");
+  iconsHolder.classList.add("qaiconsholder");
+
+  // Edit icon
+  const qaedit = document.createElement("img");
+  qaedit.classList.add("qaicons");
+  qaedit.src =
+    "https://cdn.prod.website-files.com/67e360f08a15ef65d8814b41/67f6df9d8c1aed7f8f8c1fc7_Group%201597881167.png";
+  qaedit.setAttribute("itemindex", index);
+  qaedit.addEventListener("click", async (event) => {
+    let theeditButton = event.target;
+    let toeditindex = theeditButton.getAttribute("itemindex");
+    let theeditcontainer = document.getElementById("theeditqa");
+    theeditcontainer.style.display = "flex";
+    theeditcontainer.setAttribute("itemindex", toeditindex);
+  });
+
+  // Delete icon
+  const qadelete = document.createElement("img");
+  qadelete.classList.add("qaicons");
+  qadelete.src =
+    "https://cdn.prod.website-files.com/67e360f08a15ef65d8814b41/67f6dfbc2b16d9977c85eeb2_Group%201597881168.png";
+  qadelete.setAttribute("itemindex", index);
+  qadelete.addEventListener("click", async (event) => {
+    let thedeleteButton = event.target;
+    let todeleteindex = thedeleteButton.getAttribute("itemindex");
+    let thedeletecontainer = document.getElementById("personalqacontainer");
+    thedeletecontainer.style.display = "flex";
+    thedeletecontainer.setAttribute("itemindex", todeleteindex);
+  });
+
+  iconsHolder.append(qaedit, qadelete);
+  headcarrier.append(headertext, iconsHolder);
+
+  const qaanswer = document.createElement("p");
+  qaanswer.classList.add("qapragraph");
+  qaanswer.innerText = qaItem.description;
+
+  thequizcarrier.append(headcarrier, qaanswer);
+  document.getElementById("qaquzicontainer").appendChild(thequizcarrier);
 }
 
 function loadSwiperJS() {
