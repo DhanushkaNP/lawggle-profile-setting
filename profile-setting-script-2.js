@@ -649,7 +649,11 @@ $(document).ready(async function () {
     document.getElementById("casewinstitle").value = "";
     document.getElementById("casewinsdescription").value = "";
     document.getElementById("addCase").style.display = "none";
-    updateallthefields(localStorage.getItem("userEmail"));
+
+    document.getElementById("casewinsContainer").innerHTML = "";
+    lawyerState.notableCaseWins.forEach((caseWin, idx) => {
+      createCaseWinUI(caseWin.title, caseWin.description, idx);
+    });
   });
 
   $("#addMediaPress").click(async function () {
@@ -1559,137 +1563,15 @@ async function updateallthefields(email, member = {}) {
       let thecaseslider5 = document.getElementById("educationCarrier");
       thecaseslider5.innerHTML = "";
 
-      for (let eachEducation in allEducation) {
-        let educationText = allEducation[eachEducation].education;
-        if (
-          educationText != "" &&
-          educationText != null &&
-          educationText != undefined
-        ) {
-          let thequizcarrier = document.createElement("div");
-          thequizcarrier.classList.add("theqadiv");
-          let headcarrier = document.createElement("div");
-          headcarrier.classList.add("qaheader", "foreducation");
-          let qadelete = document.createElement("img");
-          qadelete.classList.add("qaicons");
-          qadelete.src =
-            "https://cdn.prod.website-files.com/67e360f08a15ef65d8814b41/67f6dfbc2b16d9977c85eeb2_Group%201597881168.png";
-          qadelete.setAttribute("itemindex", eachEducation);
-
-          qadelete.addEventListener("click", async (event) => {
-            let thedeleteButton = event.target;
-            let todeleteindex = thedeleteButton.getAttribute("itemindex");
-            let thedeletecontainer = document.getElementById(
-              "deletetheeducationcontainer"
-            );
-            thedeletecontainer.style.display = "flex";
-            thedeletecontainer.setAttribute("itemindex", todeleteindex);
-          });
-          let iconsHolder = document.createElement("div");
-          iconsHolder.classList.add("qaiconsholder");
-          let qaedit = document.createElement("img");
-          qaedit.classList.add("qaicons");
-          qaedit.src =
-            "https://cdn.prod.website-files.com/67e360f08a15ef65d8814b41/67f6df9d8c1aed7f8f8c1fc7_Group%201597881167.png";
-          qaedit.setAttribute("itemindex", eachEducation);
-
-          qaedit.addEventListener("click", async (event) => {
-            let theeditButton = event.target;
-            let toeditindex = theeditButton.getAttribute("itemindex");
-            let theeditcontainer = document.getElementById("editedededucation");
-            theeditcontainer.style.display = "flex";
-            theeditcontainer.setAttribute("itemindex", toeditindex);
-          });
-
-          let theeducationwrap = document.createElement("div");
-          theeducationwrap.classList.add("wraptheelements");
-          let educationheader = document.createElement("p");
-          educationheader.classList.add("Institutionhead");
-          educationheader.innerText = "Institution";
-          let educationParagraph = document.createElement("p");
-          educationParagraph.classList.add("theparagraph");
-          let youreducation = allEducation[eachEducation].education;
-          if (
-            youreducation == "" ||
-            youreducation == null ||
-            youreducation == undefined
-          ) {
-            youreducation = "N/A";
-          }
-          educationParagraph.innerText = youreducation;
-          theeducationwrap.append(educationheader, educationParagraph);
-
-          let thedegreewrap = document.createElement("div");
-          thedegreewrap.classList.add("wraptheelements");
-          let degreeheader = document.createElement("p");
-          degreeheader.classList.add("Institutionhead");
-          degreeheader.innerText = "Degree";
-          let degreeParagraph = document.createElement("p");
-          degreeParagraph.classList.add("theparagraph");
-          let yourdegree = allEducation[eachEducation].degree;
-          if (
-            yourdegree == "" ||
-            yourdegree == null ||
-            yourdegree == undefined
-          ) {
-            yourdegree = "N/A";
-          }
-          degreeParagraph.innerText = yourdegree;
-          thedegreewrap.append(degreeheader, degreeParagraph);
-
-          let allDatesWrap = document.createElement("div");
-          allDatesWrap.classList.add("thedateswrap");
-
-          let startdatewrap = document.createElement("div");
-          startdatewrap.classList.add("wraptheelements");
-          let startdateheader = document.createElement("p");
-          startdateheader.classList.add("Institutionhead");
-          startdateheader.innerText = "Start Year";
-          let startdateParagraph = document.createElement("p");
-          startdateParagraph.classList.add("theparagraph");
-          let yourstartyear = (innerText =
-            allEducation[eachEducation]["start date"]);
-          if (
-            yourstartyear == "" ||
-            yourstartyear == null ||
-            yourstartyear == undefined
-          ) {
-            yourstartyear = "N/A";
-          }
-          startdateParagraph.innerText = yourstartyear;
-          startdatewrap.append(startdateheader, startdateParagraph);
-
-          let enddatewrap = document.createElement("div");
-          enddatewrap.classList.add("wraptheelements");
-          let enddateheader = document.createElement("p");
-          enddateheader.classList.add("Institutionhead");
-          enddateheader.innerText = "End Year";
-          let enddateParagraph = document.createElement("p");
-          enddateParagraph.classList.add("theparagraph");
-          let yourendyear = (innerText =
-            allEducation[eachEducation]["start date"]);
-          if (
-            yourendyear == "" ||
-            yourendyear == null ||
-            yourendyear == undefined
-          ) {
-            yourendyear = "N/A";
-          }
-          enddateParagraph.innerText = yourendyear;
-          enddatewrap.append(enddateheader, enddateParagraph);
-
-          iconsHolder.append(qaedit, qadelete);
-          headcarrier.append(iconsHolder);
-          allDatesWrap.append(startdatewrap, enddatewrap);
-          thequizcarrier.append(
-            headcarrier,
-            theeducationwrap,
-            thedegreewrap,
-            allDatesWrap
-          );
-          thecaseslider5.append(thequizcarrier);
-        }
-      }
+      lawyerState.allEducation.forEach((edu, idx) => {
+        createEducationBox(
+          edu.education,
+          edu.degree,
+          edu["start date"],
+          edu["end date"],
+          idx
+        );
+      });
 
       // Configure yes/no checkboxes
       lawyerState.offerConsultation = jsonUser["free consultation"];
@@ -1793,55 +1675,9 @@ async function updateallthefields(email, member = {}) {
       if (caseWins.length > 0) {
         let thecaseslider = document.getElementById("casewinsContainer");
         thecaseslider.innerHTML = "";
-        for (let eachcase in caseWins) {
-          console.log(eachcase);
-          let thequizcarrier = document.createElement("div");
-          thequizcarrier.classList.add("theqadiv");
-          let headcarrier = document.createElement("div");
-          headcarrier.classList.add("qaheader");
-          let headertext = document.createElement("p");
-          headertext.classList.add("qaheadertext");
-          headertext.innerText = caseWins[eachcase].title;
-          let qadelete = document.createElement("img");
-          qadelete.classList.add("qaicons");
-          qadelete.src =
-            "https://cdn.prod.website-files.com/67e360f08a15ef65d8814b41/67f6dfbc2b16d9977c85eeb2_Group%201597881168.png";
-          qadelete.setAttribute("itemindex", eachcase);
-
-          qadelete.addEventListener("click", async (event) => {
-            let thedeleteButton = event.target;
-            let todeleteindex = thedeleteButton.getAttribute("itemindex");
-            let thedeletecontainer =
-              document.getElementById("deletecasesmaindiv");
-            thedeletecontainer.style.display = "flex";
-            thedeletecontainer.setAttribute("itemindex", todeleteindex);
-          });
-
-          let iconsHolder = document.createElement("div");
-          iconsHolder.classList.add("qaiconsholder");
-          let qaedit = document.createElement("img");
-          qaedit.classList.add("qaicons");
-          qaedit.src =
-            "https://cdn.prod.website-files.com/67e360f08a15ef65d8814b41/67f6df9d8c1aed7f8f8c1fc7_Group%201597881167.png";
-
-          qaedit.setAttribute("itemindex", eachcase);
-
-          qaedit.addEventListener("click", async (event) => {
-            let theeditButton = event.target;
-            let toeditindex = theeditButton.getAttribute("itemindex");
-            let theeditcontainer = document.getElementById("theeditcases");
-            theeditcontainer.style.display = "flex";
-            theeditcontainer.setAttribute("itemindex", toeditindex);
-          });
-
-          let qaanswer = document.createElement("p");
-          qaanswer.classList.add("qapragraph");
-          qaanswer.innerText = caseWins[eachcase].description;
-          iconsHolder.append(qaedit, qadelete);
-          headcarrier.append(headertext, iconsHolder);
-          thequizcarrier.append(headcarrier, qaanswer);
-          thecaseslider.append(thequizcarrier);
-        }
+        lawyerState.notableCaseWins.forEach((caseWin, index) => {
+          createCaseWinUI(caseWin.title, caseWin.description, index);
+        });
       } else {
         let thecaseslider = document.getElementById("casewinsContainer");
         thecaseslider.innerHTML = "";
