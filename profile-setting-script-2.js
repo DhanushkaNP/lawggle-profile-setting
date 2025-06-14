@@ -917,6 +917,7 @@ $(document).ready(async function () {
           .getAttribute("itemindex");
         lawyerState.certificates.splice(theindextodelete, 1);
 
+        console.log("Certificates after deletion:", lawyerState.certificates);
         createCertificateSwiper(lawyerState.certificates);
         await HideModals();
       }
@@ -2333,7 +2334,7 @@ async function createCertificateSwiper(certificates) {
       });
     });
   } else {
-    document.getElementById("certificate-swiper").display = "none";
+    document.getElementById("certificate-swiper").innerHTML = "";
   }
 }
 
