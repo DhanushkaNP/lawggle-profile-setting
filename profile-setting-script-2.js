@@ -595,7 +595,7 @@ $(document).ready(async function () {
         theenddate = "N/A";
       }
 
-      let createeducation = createEducationBox(
+      createEducationBox(
         theinstitution,
         thedregree,
         thestartDate,
@@ -799,8 +799,8 @@ $(document).ready(async function () {
 
       if (buttonIdentifier == "education") {
         lawyerState.allEducation.splice(theindextodelete, 1);
-        updatedom = await updateallthefields(localStorage.getItem("userEmail"));
-        await delaysomeminutes();
+        const qadiv = button.closest(".theqadiv");
+        if (qadiv) qadiv.remove();
       }
 
       if (buttonIdentifier == "casewins") {
