@@ -419,6 +419,15 @@ document.addEventListener("DOMContentLoaded", async () => {
                 url: fileUrl,
                 "unique id": await generateUniqueId(),
               });
+
+              // Update DOM to show certificate preview (implement as needed)
+              const certificateSwiperWrapper = document.getElementById(
+                "certificate-swiper-wrapper"
+              );
+              certificateSwiperWrapper.innerHTML = "";
+              lawyerState.certificates.forEach((cert, idx) => {
+                createCertificateUI(cert.url, certificateSwiperWrapper, idx);
+              });
             }
           }
         } else if (url && (!info.uuid || !info.uuid.includes("~"))) {
@@ -911,9 +920,15 @@ $(document).ready(async function () {
         let theindextodelete = document
           .getElementById("certdeletecontainer")
           .getAttribute("itemindex");
-        let userEmail = localStorage.getItem("userEmail");
         lawyerState.certificates.splice(theindextodelete, 1);
-        await updateallthefields(userEmail);
+
+        const certificateSwiperWrapper = document.getElementById(
+          "certificate-swiper-wrapper"
+        );
+        certificateSwiperWrapper.innerHTML = "";
+        lawyerState.certificates.forEach((cert, idx) => {
+          createCertificateUI(cert.url, certificateSwiperWrapper, idx);
+        });
         await HideModals();
       }
 
@@ -1917,47 +1932,11 @@ async function updateallthefields(email, member = {}) {
 
         const swiperWrapper = document.createElement("div");
         swiperWrapper.classList.add("swiper-wrapper");
+        swiperWrapper.id = "certificate-swiper-wrapper";
 
-        for (let eachcert in certificates) {
-          const swiperSlide = document.createElement("div");
-          swiperSlide.classList.add("swiper-slide");
-          swiperSlide.style.cssText = `width: auto; flex-shrink: 0; padding: 0 10px;`;
-
-          let imageContainer = document.createElement("div");
-          imageContainer.classList.add("certificate-img-wrap");
-
-          const imageConatiner2 = document.createElement("div");
-
-          let certimage = document.createElement("img");
-          certimage.classList.add("cert-image-ps");
-          certimage.src = certificates[eachcert].url;
-          certimage.style.width = "auto";
-          /*
-                theimageWrap.style.backgroundImage = `url('${mongodbcertificates[eachcert]}')`;
-                theimageWrap.style.backgroundSize = "cover"; // Makes the image cover the div
-                theimageWrap.style.backgroundPosition = "center"; // Centers the image
-                */
-          let certdelete = document.createElement("img");
-          certdelete.classList.add("deletebriefs-2");
-          certdelete.src =
-            "https://cdn.prod.website-files.com/67e360f08a15ef65d8814b41/67f6dfbc2b16d9977c85eeb2_Group%201597881168.png";
-          certdelete.setAttribute("itemindex", eachcert);
-
-          certdelete.addEventListener("click", async (event) => {
-            let thedeleteButton = event.target;
-            let todeleteindex = thedeleteButton.getAttribute("itemindex");
-            let thedeletecontainer = document.getElementById(
-              "certdeletecontainer"
-            );
-            thedeletecontainer.style.display = "flex";
-            thedeletecontainer.setAttribute("itemindex", todeleteindex);
-          });
-
-          imageConatiner2.append(certdelete, certimage);
-          imageContainer.append(imageConatiner2);
-          swiperSlide.append(imageContainer);
-          swiperWrapper.append(swiperSlide);
-        }
+        certificates.forEach((cert, idx) => {
+          createCertificateUI(cert.url, swiperWrapper, idx);
+        });
 
         certificateSlider.append(prevBtn, nextBtn, swiperWrapper, pagination);
 
@@ -2001,7 +1980,8 @@ async function updateallthefields(email, member = {}) {
           });
         });
       } else {
-        document.getElementById("certificate-swiper").style.display = "none";
+        document.getElementById("certificate-swiper-wrapper").style.display =
+          "none";
       }
 
       document.getElementById("thepageloader").style.display = "none";
@@ -2331,6 +2311,42 @@ async function createTestimonialUI(videoUrl, testimonialSwipperWrapper, index) {
 
   // Append the slide to the container
   testimonialSwipperWrapper.append(slide);
+}
+
+async function createCertificateUI(certUrl, certificateSwiperWrapper, index) {
+  // Create the main container
+  const slide = document.createElement("div");
+  slide.classList.add("swiper-slide");
+
+  // Create the image container
+  const imageContainer = document.createElement("div");
+  imageContainer.classList.add("certificate-img-wrap");
+
+  // Create the certificate image
+  const certImage = document.createElement("img");
+  certImage.classList.add("cert-image-ps");
+  certImage.src = certUrl;
+  certImage.style.width = "auto";
+
+  // Create the delete icon
+  const deleteIcon = document.createElement("img");
+  deleteIcon.classList.add("deletebriefs-2");
+  deleteIcon.src =
+    "https://cdn.prod.website-files.com/67e360f08a15ef65d8814b41/67f6dfbc2b16d9977c85eeb2_Group%201597881168.png";
+  deleteIcon.setAttribute("itemindex", index);
+
+  // Delete icon click handler
+  deleteIcon.addEventListener("click", async (event) => {
+    const todeleteindex = event.target.getAttribute("itemindex");
+    const deleteContainer = document.getElementById("certdeletecontainer");
+    deleteContainer.style.display = "flex";
+    deleteContainer.setAttribute("itemindex", todeleteindex);
+  });
+
+  // Compose and append
+  imageContainer.append(deleteIcon, certImage);
+  slide.append(imageContainer);
+  certificateSwiperWrapper.append(slide);
 }
 
 async function createCaseStudyUI(videoUrl, caseStudySwiperWrapper, index) {
