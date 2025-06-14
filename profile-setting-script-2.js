@@ -714,9 +714,13 @@ $(document).ready(async function () {
       };
       lawyerState.interestsAndHobbies.push(thiscase);
     }
+    document.getElementById("Hobbymaincontainer").innerHTML = "";
+    lawyerState.interestsAndHobbies.forEach((hobby, idx) => {
+      createInterestHobbyUI(hobby, idx);
+    });
+
     document.getElementById("interestedinput").value = "";
     document.getElementById("interestAdd").style.display = "none";
-    updateallthefields(localStorage.getItem("userEmail"));
   });
 
   $("#addQA").click(async function () {
@@ -947,9 +951,12 @@ $(document).ready(async function () {
         let theindextodelete = document
           .getElementById("deleteclientstestimonials")
           .getAttribute("itemindex");
-        let userEmail = localStorage.getItem("userEmail");
         lawyerState.interestsAndHobbies.splice(theindextodelete, 1);
-        await updateallthefields(userEmail);
+        document.getElementById("Hobbymaincontainer").innerHTML = "";
+        lawyerState.interestsAndHobbies.forEach((hobby, idx) => {
+          createInterestHobbyUI(hobby, idx);
+        });
+
         await HideModals();
       }
     });
@@ -2534,6 +2541,39 @@ function createPersonalQAUI(qaItem, index) {
 
   thequizcarrier.append(headcarrier, qaanswer);
   document.getElementById("qaquzicontainer").appendChild(thequizcarrier);
+}
+
+function createInterestHobbyUI(hobby, index) {
+  const theHobbycontainer = document.createElement("div");
+  theHobbycontainer.classList.add("theqadiv");
+
+  const thehobbyheader = document.createElement("div");
+  thehobbyheader.classList.add("qaheader");
+
+  const thehobbyiconholder = document.createElement("div");
+  thehobbyiconholder.classList.add("qaiconsholder");
+
+  const thehobbyname = document.createElement("p");
+  thehobbyname.classList.add("qaheadertext");
+  thehobbyname.innerText = hobby.title;
+
+  const hobbydeleteicon = document.createElement("img");
+  hobbydeleteicon.src =
+    "https://cdn.prod.website-files.com/67e360f08a15ef65d8814b41/67f6dfbc2b16d9977c85eeb2_Group%201597881168.png";
+  hobbydeleteicon.setAttribute("itemindex", index);
+
+  hobbydeleteicon.addEventListener("click", async (e) => {
+    let thedeleteButton = e.target;
+    let todeleteindex = thedeleteButton.getAttribute("itemindex");
+    let thedeletecontainer = document.getElementById("deleteInterests");
+    thedeletecontainer.style.display = "flex";
+    thedeletecontainer.setAttribute("itemindex", todeleteindex);
+  });
+
+  thehobbyiconholder.append(hobbydeleteicon);
+  thehobbyheader.append(thehobbyname, thehobbyiconholder);
+  theHobbycontainer.append(thehobbyheader);
+  document.getElementById("Hobbymaincontainer").appendChild(theHobbycontainer);
 }
 
 function loadSwiperJS() {
