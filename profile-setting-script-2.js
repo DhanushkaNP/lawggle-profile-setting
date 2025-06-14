@@ -399,6 +399,13 @@ document.addEventListener("DOMContentLoaded", async () => {
           "unique id": thisuniqueId,
         });
         // Update DOM to show case study preview (implement as needed)
+        const caseStudySwiperWrapper = document.getElementById(
+          "case-study-swiper-wrapper"
+        );
+        caseStudySwiperWrapper.innerHTML = "";
+        lawyerState.caseStudies.forEach((caseStudy, idx) => {
+          createCaseStudyUI(caseStudy.url, caseStudySwiperWrapper, idx);
+        });
       }
 
       if (uploaderId == "certicateUpload") {
@@ -880,9 +887,15 @@ $(document).ready(async function () {
         let theindextodelete = document
           .getElementById("casestudiesdeletecontainer")
           .getAttribute("itemindex");
-        let updateemail = localStorage.getItem("userEmail");
         lawyerState.caseStudies.splice(theindextodelete, 1);
-        updatedom = await updateallthefields(updateemail);
+
+        const caseStudySwiperWrapper = document.getElementById(
+          "case-study-swiper-wrapper"
+        );
+        caseStudySwiperWrapper.innerHTML = "";
+        lawyerState.caseStudies.forEach((caseStudy, idx) => {
+          createCaseStudyUI(caseStudy.url, caseStudySwiperWrapper, idx);
+        });
         await HideModals();
       }
       if (buttonIdentifier == "qa") {
@@ -1773,39 +1786,12 @@ async function updateallthefields(email, member = {}) {
 
         let swiperWrapper = document.createElement("div");
         swiperWrapper.classList.add("swiper-wrapper");
+        swiperWrapper.id = "case-study-swiper-wrapper";
 
         caseStudyWalkthroughs.forEach((caseStudy, index) => {
-          // caseStudy is the item, index is the number
-          let caseSlide = document.createElement("div");
-          caseSlide.classList.add("swiper-slide", "case-study-video-wrap");
-
-          let caseVideo = document.createElement("video");
-          caseVideo.classList.add("case-study-video-ps");
-          caseVideo.src = caseStudy.url;
-          caseVideo.controls = true;
-          caseVideo.playsInline = true;
-          caseVideo.poster =
-            "https://cdn.prod.website-files.com/67e360f08a15ef65d8814b41/683031d15554289474aca28d_case%20study%20banner.png";
-
-          let casetheimagecheck = document.createElement("img");
-          casetheimagecheck.classList.add("deletebriefs-3");
-          casetheimagecheck.src =
-            "https://cdn.prod.website-files.com/67e360f08a15ef65d8814b41/67f6dfbc2b16d9977c85eeb2_Group%201597881168.png";
-          casetheimagecheck.setAttribute("itemindex", index);
-
-          casetheimagecheck.addEventListener("click", async (event) => {
-            let thedeleteButton = event.target;
-            let todeleteindex = thedeleteButton.getAttribute("itemindex");
-            let thedeletecontainer = document.getElementById(
-              "casestudiesdeletecontainer"
-            );
-            thedeletecontainer.style.display = "flex";
-            thedeletecontainer.setAttribute("itemindex", todeleteindex);
-          });
-
-          caseSlide.append(caseVideo, casetheimagecheck);
-          swiperWrapper.append(caseSlide);
+          createCaseStudyUI(caseStudy.url, swiperWrapper, index);
         });
+
         videocaseslider.append(swiperWrapper);
 
         if (window.innerWidth < 1024) {
@@ -2341,6 +2327,44 @@ async function createTestimonialUI(videoUrl, testimonialSwipperWrapper, index) {
 
   // Append the slide to the container
   testimonialSwipperWrapper.append(slide);
+}
+
+async function createCaseStudyUI(videoUrl, caseStudySwiperWrapper, index) {
+  // Create the main container
+  const slide = document.createElement("div");
+  slide.classList.add("swiper-slide", "case-study-video-wrap");
+
+  // Create the video element
+  const caseStudyVideo = document.createElement("video");
+  caseStudyVideo.classList.add("case-study-video-ps");
+  caseStudyVideo.src = videoUrl;
+  caseStudyVideo.controls = true;
+  caseStudyVideo.playsInline = true;
+  caseStudyVideo.poster =
+    "https://cdn.prod.website-files.com/67e360f08a15ef65d8814b41/683031d15554289474aca28d_case%20study%20banner.png";
+
+  // Create the delete icon
+  const deleteIcon = document.createElement("img");
+  deleteIcon.classList.add("deletebriefs-3");
+  deleteIcon.src =
+    "https://cdn.prod.website-files.com/67e360f08a15ef65d8814b41/67f6dfbc2b16d9977c85eeb2_Group%201597881168.png";
+  deleteIcon.setAttribute("itemindex", index);
+
+  // Delete icon click handler
+  deleteIcon.addEventListener("click", async (event) => {
+    const todeleteindex = event.target.getAttribute("itemindex");
+    const deleteContainer = document.getElementById(
+      "casestudiesdeletecontainer"
+    );
+    deleteContainer.style.display = "flex";
+    deleteContainer.setAttribute("itemindex", todeleteindex);
+  });
+
+  // Append video and delete icon to the slide
+  slide.append(caseStudyVideo, deleteIcon);
+
+  // Append the slide to the container
+  caseStudySwiperWrapper.append(slide);
 }
 
 function loadSwiperJS() {
