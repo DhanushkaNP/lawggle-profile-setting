@@ -382,6 +382,14 @@ document.addEventListener("DOMContentLoaded", async () => {
           "unique id": thisuniqueId,
         });
         // Update DOM to show testimonial preview (implement as needed)
+
+        const testimonialSwipperWrapper = document.getElementById(
+          "testimonial-swiper-wrapper"
+        );
+        testimonialSwipperWrapper.innerHTML = "";
+        lawyerState.testimonials.forEach((testimonial, idx) => {
+          createTestimonialUI(testimonial.url, testimonialSwipperWrapper, idx);
+        });
       }
 
       if (uploaderId == "casestudywalkthroughuploader") {
@@ -424,7 +432,7 @@ document.addEventListener("DOMContentLoaded", async () => {
         lawyerState.profileBanner = url;
       }
 
-      updateallthefields(localStorage.getItem("userEmail"));
+      // updateallthefields(localStorage.getItem("userEmail"));
       document.getElementById("theloadingwait").style.display = "none";
     });
   });
@@ -1712,35 +1720,9 @@ async function updateallthefields(email, member = {}) {
         );
         swiperWrapper.id = "testimonial-swiper-wrapper";
 
-        for (let testimonialvideos in clientTestimonials) {
-          let slide = document.createElement("div");
-          slide.classList.add("swiper-slide", "testimonial-video-wrap");
-
-          let testimonial = document.createElement("video");
-          testimonial.classList.add("testimonial-video-ps");
-          testimonial.src = clientTestimonials[testimonialvideos].url;
-          testimonial.controls = true;
-          testimonial.playsInline = true;
-
-          let theimagecheck = document.createElement("img");
-          theimagecheck.classList.add("deletebriefs-3");
-          theimagecheck.src =
-            "https://cdn.prod.website-files.com/67e360f08a15ef65d8814b41/67f6dfbc2b16d9977c85eeb2_Group%201597881168.png";
-          theimagecheck.setAttribute("itemindex", testimonialvideos);
-
-          theimagecheck.addEventListener("click", async (event) => {
-            let thedeleteButton = event.target;
-            let todeleteindex = thedeleteButton.getAttribute("itemindex");
-            let thedeletecontainer = document.getElementById(
-              "deleteclientstestimonials"
-            );
-            thedeletecontainer.style.display = "flex";
-            thedeletecontainer.setAttribute("itemindex", todeleteindex);
-          });
-
-          slide.append(testimonial, theimagecheck);
-          swiperWrapper.append(slide);
-        }
+        clientTestimonials.forEach((testimonial, index) => {
+          createTestimonialUI(testimonial.url, swiperWrapper, index);
+        });
 
         testimonialSlider.append(swiperWrapper, pagination);
 
