@@ -1767,7 +1767,9 @@ async function updateallthefields(email, member = {}) {
           });
         }
       } else {
-        let thecaseslider2 = document.getElementById("testimonial-swiper");
+        let thecaseslider2 = document.getElementById(
+          "testimonial-swiper-wrapper"
+        );
         thecaseslider2.innerHTML = "";
       }
       setupMediaAndPress(jsonUser);
@@ -1822,7 +1824,9 @@ async function updateallthefields(email, member = {}) {
           });
         }
       } else {
-        let thecaseslider4 = document.getElementById("case-study-swiper");
+        let thecaseslider4 = document.getElementById(
+          "case-study-swiper-wrapper"
+        );
         thecaseslider4.innerHTML = "";
       }
 
