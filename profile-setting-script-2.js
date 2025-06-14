@@ -399,7 +399,6 @@ document.addEventListener("DOMContentLoaded", async () => {
           "unique id": thisuniqueId,
         });
         // Update DOM to show case study preview (implement as needed)
-        document.getElementById("certificate-swiper").display = "block";
         const caseStudySwiperWrapper = document.getElementById(
           "case-study-swiper-wrapper"
         );
@@ -431,6 +430,7 @@ document.addEventListener("DOMContentLoaded", async () => {
           });
         }
 
+        document.getElementById("certificate-swiper").display = "block";
         // Always update the DOM after updating the array
         const certificateSwiperWrapper = document.getElementById(
           "certificate-swiper-wrapper"
