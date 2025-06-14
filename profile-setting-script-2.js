@@ -687,8 +687,13 @@ $(document).ready(async function () {
       url: mediapresslink,
     };
     lawyerState.mediaPressMentions.push(thismediapressdata);
-    document.getElementById("thepreviewlinkinput").value = "";
-    updateallthefields(localStorage.getItem("userEmail"));
+    const mediaPressSwiperWrapper = document.getElementById(
+      "media-swiper-wrapper"
+    );
+    mediaPressSwiperWrapper.innerHTML = "";
+    lawyerState.mediaPressMentions.forEach((mediaPress, idx) => {
+      createMediaPressCard(mediaPress.url, mediaPressSwiperWrapper, idx);
+    });
   });
 
   function updateMediaPressAddButton() {
@@ -884,7 +889,14 @@ $(document).ready(async function () {
         document.getElementById("addMediaPress").classList.remove("disabled");
         document.getElementById("media-press-error-text").style.display =
           "none";
-        await updateallthefields(localStorage.getItem("userEmail"));
+
+        const mediaPressSwiperWrapper = document.getElementById(
+          "media-swiper-wrapper"
+        );
+        mediaPressSwiperWrapper.innerHTML = "";
+        lawyerState.mediaPressMentions.forEach((mediaPress, idx) => {
+          createMediaPressCard(mediaPress.url, mediaPressSwiperWrapper, idx);
+        });
         await HideModals();
       }
       if (buttonIdentifier == "casestudy") {
@@ -2376,7 +2388,7 @@ async function createCaseStudyUI(videoUrl, caseStudySwiperWrapper, index) {
   caseStudySwiperWrapper.append(slide);
 }
 
-function extractDomain(url) {
+function extractDomainForMediaPress(url) {
   try {
     const urlObj = new URL(url);
     return urlObj.hostname.replace("www.", "");
@@ -2385,7 +2397,7 @@ function extractDomain(url) {
   }
 }
 
-function getMetadataByDomain(url, domain) {
+function getMetadataByDomainForMediaPress(url, domain) {
   if (url.includes("youtube.com") || url.includes("youtu.be")) {
     return {
       title: "YouTube Video",
@@ -2448,8 +2460,8 @@ function getMetadataByDomain(url, domain) {
 function createMediaPressCard(mediaItem, mediaPressWrapper, index) {
   // Helper functions (reuse from your code)
   const url = mediaItem.url || "#";
-  const domain = extractDomain(url);
-  const meta = getMetadataByDomain(url, domain);
+  const domain = extractDomainForMediaPress(url);
+  const meta = getMetadataByDomainForMediaPress(url, domain);
 
   const swiperSlide = document.createElement("div");
   swiperSlide.classList.add("swiper-slide", "swiper-slide-ps");
