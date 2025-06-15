@@ -688,13 +688,7 @@ $(document).ready(async function () {
       url: mediapresslink,
     };
     lawyerState.mediaPressMentions.push(thismediapressdata);
-    const mediaPressSwiperWrapper = document.getElementById(
-      "media-swiper-wrapper"
-    );
-    mediaPressSwiperWrapper.innerHTML = "";
-    lawyerState.mediaPressMentions.forEach((mediaPress, idx) => {
-      createMediaPressCard(mediaPress, mediaPressSwiperWrapper, idx);
-    });
+    setupMediaAndPress(lawyerState.mediaPressMentions);
   });
 
   function updateMediaPressAddButton() {
@@ -898,13 +892,7 @@ $(document).ready(async function () {
         document.getElementById("media-press-error-text").style.display =
           "none";
 
-        const mediaPressSwiperWrapper = document.getElementById(
-          "media-swiper-wrapper"
-        );
-        mediaPressSwiperWrapper.innerHTML = "";
-        lawyerState.mediaPressMentions.forEach((mediaPress, idx) => {
-          createMediaPressCard(mediaPress, mediaPressSwiperWrapper, idx);
-        });
+        setupMediaAndPress(lawyerState.mediaPressMentions);
         await HideModals();
       }
       if (buttonIdentifier == "casestudy") {
@@ -1773,7 +1761,13 @@ async function updateallthefields(email, member = {}) {
         );
         thecaseslider2.innerHTML = "";
       }
-      setupMediaAndPress(jsonUser);
+
+      if (lawyerState.mediaPressMentions.length === 0) {
+        lawyerState.mediaPressMentions = jsonUser["media press mentions"] || [];
+      }
+      let themediaandPress = lawyerState.mediaPressMentions;
+
+      setupMediaAndPress(themediaandPress);
 
       // Case Studies
       if (lawyerState.caseStudies.length === 0) {
@@ -2328,136 +2322,6 @@ async function createCaseStudyUI(videoUrl, caseStudySwiperWrapper, index) {
   caseStudySwiperWrapper.append(slide);
 }
 
-function extractDomainForMediaPress(url) {
-  try {
-    const urlObj = new URL(url);
-    return urlObj.hostname.replace("www.", "");
-  } catch (e) {
-    return url;
-  }
-}
-
-function getMetadataByDomainForMediaPress(url, domain) {
-  if (url.includes("youtube.com") || url.includes("youtu.be")) {
-    return {
-      title: "YouTube Video",
-      description: "Click to watch this video on YouTube",
-      imageUrl: "https://placehold.co/300x200/FF0000/FFFFFF?text=YouTube",
-      favicon: "https://www.youtube.com/favicon.ico",
-      host: "youtube.com",
-    };
-  } else if (url.includes("linkedin.com")) {
-    return {
-      title: "LinkedIn Article",
-      description: "Professional content shared on LinkedIn",
-      imageUrl: "https://placehold.co/300x200/0077B5/FFFFFF?text=LinkedIn",
-      favicon: "https://www.linkedin.com/favicon.ico",
-      host: "linkedin.com",
-    };
-  } else if (url.includes("medium.com")) {
-    return {
-      title: "Medium Article",
-      description: "Read this story on Medium",
-      imageUrl: "https://placehold.co/300x200/000000/FFFFFF?text=Medium",
-      favicon: "https://medium.com/favicon.ico",
-      host: "medium.com",
-    };
-  } else if (url.includes("twitter.com") || url.includes("x.com")) {
-    return {
-      title: "Tweet",
-      description: "View this post on Twitter/X",
-      imageUrl: "https://placehold.co/300x200/1DA1F2/FFFFFF?text=Twitter",
-      favicon: "https://twitter.com/favicon.ico",
-      host: "twitter.com",
-    };
-  } else if (url.includes("instagram.com")) {
-    return {
-      title: "Instagram Post",
-      description: "View this post on Instagram",
-      imageUrl: "https://placehold.co/300x200/E1306C/FFFFFF?text=Instagram",
-      favicon: "https://www.instagram.com/favicon.ico",
-      host: "instagram.com",
-    };
-  } else if (url.includes("facebook.com")) {
-    return {
-      title: "Facebook Post",
-      description: "View this content on Facebook",
-      imageUrl: "https://placehold.co/300x200/4267B2/FFFFFF?text=Facebook",
-      favicon: "https://www.facebook.com/favicon.ico",
-      host: "facebook.com",
-    };
-  } else {
-    return {
-      title: `Article on ${domain}`,
-      description: `View this content on ${domain}`,
-      imageUrl: `https://placehold.co/300x200/333333/cccccc?text=${domain}`,
-      favicon: null,
-      host: domain,
-    };
-  }
-}
-
-function createMediaPressCard(mediaItem, mediaPressWrapper, index) {
-  // Helper functions (reuse from your code)
-  const url = mediaItem.url || "#";
-  const domain = extractDomainForMediaPress(url);
-  const meta = getMetadataByDomainForMediaPress(url, domain);
-
-  const swiperSlide = document.createElement("div");
-  swiperSlide.classList.add("swiper-slide", "swiper-slide-ps");
-
-  const card = document.createElement("a");
-  card.classList.add("media-card-ps");
-  card.href = url;
-
-  // delete icon
-  const deleteIcon = document.createElement("img");
-  deleteIcon.src =
-    "https://cdn.prod.website-files.com/67e360f08a15ef65d8814b41/67f6dfbc2b16d9977c85eeb2_Group%201597881168.png";
-  deleteIcon.classList.add("deletebriefs-4");
-  deleteIcon.setAttribute("itemindex", index);
-
-  deleteIcon.addEventListener("click", function (e) {
-    e.preventDefault();
-    e.stopPropagation();
-    let thedeletecontainer = document.getElementById("pressdeletecontainer");
-    thedeletecontainer.style.display = "flex";
-    thedeletecontainer.setAttribute("itemindex", index);
-  });
-
-  // Image
-  const img = document.createElement("img");
-  img.src = meta.imageUrl;
-  img.alt = meta.title;
-  img.classList.add("media-image-ps");
-
-  // Content
-  const content = document.createElement("div");
-  content.classList.add("media-content-ps");
-
-  const title = document.createElement("h3");
-  title.classList.add("media-heading-ps");
-  title.textContent = meta.title;
-
-  const desc = document.createElement("p");
-  desc.classList.add("media-descrip-ps");
-  desc.textContent = meta.description;
-
-  const host = document.createElement("p");
-  host.classList.add("media-host-ps");
-  host.textContent = meta.host;
-
-  content.appendChild(title);
-  content.appendChild(desc);
-  content.appendChild(host);
-
-  card.appendChild(deleteIcon);
-  card.appendChild(img);
-  card.appendChild(content);
-  swiperSlide.appendChild(card);
-  mediaPressWrapper.appendChild(swiperSlide);
-}
-
 function createPersonalQAUI(qaItem, index) {
   const thequizcarrier = document.createElement("div");
   thequizcarrier.classList.add("theqadiv");
@@ -2620,15 +2484,80 @@ function loadSwiperJS() {
 }
 
 // Function to handle media and press mentions section
-function setupMediaAndPress(jsonUser) {
-  if (lawyerState.mediaPressMentions.length === 0) {
-    lawyerState.mediaPressMentions = jsonUser["media press mentions"] || [];
-  }
-  let themediaandPress = lawyerState.mediaPressMentions;
+function setupMediaAndPress(themediaandPress) {
   let themediacontainer = document.getElementById("mediawrapper");
   themediacontainer.innerHTML = "";
 
   if (themediaandPress && themediaandPress.length > 0) {
+    function extractDomainForMediaPress(url) {
+      try {
+        const urlObj = new URL(url);
+        return urlObj.hostname.replace("www.", "");
+      } catch (e) {
+        return url;
+      }
+    }
+
+    function getMetadataByDomainForMediaPress(url, domain) {
+      if (url.includes("youtube.com") || url.includes("youtu.be")) {
+        return {
+          title: "YouTube Video",
+          description: "Click to watch this video on YouTube",
+          imageUrl: "https://placehold.co/300x200/FF0000/FFFFFF?text=YouTube",
+          favicon: "https://www.youtube.com/favicon.ico",
+          host: "youtube.com",
+        };
+      } else if (url.includes("linkedin.com")) {
+        return {
+          title: "LinkedIn Article",
+          description: "Professional content shared on LinkedIn",
+          imageUrl: "https://placehold.co/300x200/0077B5/FFFFFF?text=LinkedIn",
+          favicon: "https://www.linkedin.com/favicon.ico",
+          host: "linkedin.com",
+        };
+      } else if (url.includes("medium.com")) {
+        return {
+          title: "Medium Article",
+          description: "Read this story on Medium",
+          imageUrl: "https://placehold.co/300x200/000000/FFFFFF?text=Medium",
+          favicon: "https://medium.com/favicon.ico",
+          host: "medium.com",
+        };
+      } else if (url.includes("twitter.com") || url.includes("x.com")) {
+        return {
+          title: "Tweet",
+          description: "View this post on Twitter/X",
+          imageUrl: "https://placehold.co/300x200/1DA1F2/FFFFFF?text=Twitter",
+          favicon: "https://twitter.com/favicon.ico",
+          host: "twitter.com",
+        };
+      } else if (url.includes("instagram.com")) {
+        return {
+          title: "Instagram Post",
+          description: "View this post on Instagram",
+          imageUrl: "https://placehold.co/300x200/E1306C/FFFFFF?text=Instagram",
+          favicon: "https://www.instagram.com/favicon.ico",
+          host: "instagram.com",
+        };
+      } else if (url.includes("facebook.com")) {
+        return {
+          title: "Facebook Post",
+          description: "View this content on Facebook",
+          imageUrl: "https://placehold.co/300x200/4267B2/FFFFFF?text=Facebook",
+          favicon: "https://www.facebook.com/favicon.ico",
+          host: "facebook.com",
+        };
+      } else {
+        return {
+          title: `Article on ${domain}`,
+          description: `View this content on ${domain}`,
+          imageUrl: `https://placehold.co/300x200/333333/cccccc?text=${domain}`,
+          favicon: null,
+          host: domain,
+        };
+      }
+    }
+
     // Create Swiper container
     const swiperContainer = document.createElement("div");
     swiperContainer.classList.add("swiper", "media-swiper-ps");
@@ -2643,7 +2572,65 @@ function setupMediaAndPress(jsonUser) {
 
     // Add cards
     themediaandPress.forEach((mediaItem, index) => {
-      createMediaPressCard(mediaItem, swiperWrapper, index);
+      const url = mediaItem.url || "#";
+      const domain = extractDomainForMediaPress(url);
+      const meta = getMetadataByDomainForMediaPress(url, domain);
+
+      const swiperSlide = document.createElement("div");
+      swiperSlide.classList.add("swiper-slide", "swiper-slide-ps");
+
+      const card = document.createElement("a");
+      card.classList.add("media-card-ps");
+      card.href = url;
+
+      // delete icon
+      const deleteIcon = document.createElement("img");
+      deleteIcon.src =
+        "https://cdn.prod.website-files.com/67e360f08a15ef65d8814b41/67f6dfbc2b16d9977c85eeb2_Group%201597881168.png";
+      deleteIcon.classList.add("deletebriefs-4");
+      deleteIcon.setAttribute("itemindex", index);
+
+      deleteIcon.addEventListener("click", function (e) {
+        e.preventDefault();
+        e.stopPropagation();
+        let thedeletecontainer = document.getElementById(
+          "pressdeletecontainer"
+        );
+        thedeletecontainer.style.display = "flex";
+        thedeletecontainer.setAttribute("itemindex", index);
+      });
+
+      // Image
+      const img = document.createElement("img");
+      img.src = meta.imageUrl;
+      img.alt = meta.title;
+      img.classList.add("media-image-ps");
+
+      // Content
+      const content = document.createElement("div");
+      content.classList.add("media-content-ps");
+
+      const title = document.createElement("h3");
+      title.classList.add("media-heading-ps");
+      title.textContent = meta.title;
+
+      const desc = document.createElement("p");
+      desc.classList.add("media-descrip-ps");
+      desc.textContent = meta.description;
+
+      const host = document.createElement("p");
+      host.classList.add("media-host-ps");
+      host.textContent = meta.host;
+
+      content.appendChild(title);
+      content.appendChild(desc);
+      content.appendChild(host);
+
+      card.appendChild(deleteIcon);
+      card.appendChild(img);
+      card.appendChild(content);
+      swiperSlide.appendChild(card);
+      swiperWrapper.appendChild(swiperSlide);
     });
 
     swiperContainer.appendChild(swiperWrapper);
@@ -2681,7 +2668,7 @@ function setupMediaAndPress(jsonUser) {
       });
     }
   } else {
-    document.getElementById("mediawrapper").style.display = "none";
+    document.getElementById("media-swiper-wrapper").style.display = "none";
   }
 }
 
