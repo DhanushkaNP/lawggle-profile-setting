@@ -504,8 +504,6 @@ async function getUserautoGeoLocation() {
 }
 
 $(document).ready(async function () {
-  //save data in mongodb
-
   document.querySelectorAll(".selectyesno").forEach((parent) => {
     const children = parent.querySelectorAll("*");
 
@@ -1100,6 +1098,11 @@ $(document).ready(async function () {
 
       if (hasError) {
         document.getElementById("theloadingwait").style.display = "none";
+
+        // Show popup/alert for required fields
+        alert(
+          "Please complete all required fields before saving your profile.\n\nMandatory fields ensure we have the essential information needed to showcase your services accurately."
+        );
         return;
       }
 
