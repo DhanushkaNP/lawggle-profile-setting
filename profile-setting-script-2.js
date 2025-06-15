@@ -2668,7 +2668,7 @@ function setupMediaAndPress(themediaandPress) {
       });
     }
   } else {
-    document.getElementById("media-swiper-wrapper").style.display = "none";
+    document.getElementById("mediawrapper").innerHTML = "";
   }
 }
 
