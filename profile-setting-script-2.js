@@ -441,6 +441,7 @@ document.addEventListener("DOMContentLoaded", async () => {
 
       if (uploaderId == "uploadbannerimage") {
         lawyerState.profileBanner = url;
+        setUpBannerImage(lawyerState.profileBanner);
       }
 
       // updateallthefields(localStorage.getItem("userEmail"));
@@ -1578,20 +1579,7 @@ async function updateallthefields(email, member = {}) {
       }
       let bannerImageUrl = lawyerState.profileBanner;
 
-      if (
-        bannerImageUrl != null &&
-        bannerImageUrl != "" &&
-        bannerImageUrl != undefined
-      ) {
-        let bannerMainImage = document.getElementById("thebannerimage");
-        bannerMainImage.style.backgroundImage = `url(${bannerImageUrl})`;
-        bannerMainImage.style.backgroundSize = "cover";
-        bannerMainImage.style.backgroundPosition = "center";
-        bannerMainImage.style.backgroundRepeat = "no-repeat";
-        document.getElementById("cover-img-delete").style.display = "block";
-      } else {
-        document.getElementById("cover-img-delete").style.display = "none";
-      }
+      setUpBannerImage(bannerImageUrl);
 
       if (lawyerState.profileImage == null) {
         lawyerState.profileImage = jsonUser["profile image"];
@@ -2574,6 +2562,23 @@ function createInterestHobbyUI(hobby, index) {
   thehobbyheader.append(thehobbyname, thehobbyiconholder);
   theHobbycontainer.append(thehobbyheader);
   document.getElementById("Hobbymaincontainer").appendChild(theHobbycontainer);
+}
+
+function setUpBannerImage(bannerImageUrl) {
+  if (
+    bannerImageUrl != null &&
+    bannerImageUrl != "" &&
+    bannerImageUrl != undefined
+  ) {
+    let bannerMainImage = document.getElementById("thebannerimage");
+    bannerMainImage.style.backgroundImage = `url(${bannerImageUrl})`;
+    bannerMainImage.style.backgroundSize = "cover";
+    bannerMainImage.style.backgroundPosition = "center";
+    bannerMainImage.style.backgroundRepeat = "no-repeat";
+    document.getElementById("cover-img-delete").style.display = "block";
+  } else {
+    document.getElementById("cover-img-delete").style.display = "none";
+  }
 }
 
 function loadSwiperJS() {
