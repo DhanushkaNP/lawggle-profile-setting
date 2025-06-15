@@ -2674,44 +2674,37 @@ function setupMediaAndPress(themediaandPress) {
   }
 }
 
+const CHECKED_IMG_URL =
+  "https://cdn.prod.website-files.com/67e360f08a15ef65d8814b41/684e7f57ebb6661a4f5dc2de_checkbox-checked-dark-gray.svg";
+const UNCHECKED_IMG_URL =
+  "https://cdn.prod.website-files.com/67e360f08a15ef65d8814b41/67f688109c8eaf330c0f0e34_icons8-unchecked-checkbox-50.png";
+
 function updateOfferConsultationCheckboxImages() {
   if (lawyerState.offerConsultation == "yes") {
-    document.getElementById("offerconsultancyimageno").src =
-      "https://cdn.prod.website-files.com/67e360f08a15ef65d8814b41/67f688109c8eaf330c0f0e34_icons8-unchecked-checkbox-50.png";
-    document.getElementById("offerconsultancyimageyes").src =
-      "https://cdn.prod.website-files.com/67e360f08a15ef65d8814b41/67f689ee9a1a8514a23f8919_icons8-checked-box-24.png";
+    document.getElementById("offerconsultancyimageno").src = UNCHECKED_IMG_URL;
+    document.getElementById("offerconsultancyimageyes").src = CHECKED_IMG_URL;
   } else if (lawyerState.offerConsultation == "no") {
-    document.getElementById("offerconsultancyimageno").src =
-      "https://cdn.prod.website-files.com/67e360f08a15ef65d8814b41/67f689ee9a1a8514a23f8919_icons8-checked-box-24.png";
-    document.getElementById("offerconsultancyimageyes").src =
-      "https://cdn.prod.website-files.com/67e360f08a15ef65d8814b41/67f688109c8eaf330c0f0e34_icons8-unchecked-checkbox-50.png";
+    document.getElementById("offerconsultancyimageno").src = CHECKED_IMG_URL;
+    document.getElementById("offerconsultancyimageyes").src = UNCHECKED_IMG_URL;
   }
 }
 
 function updateOfferContingencyCheckboxImages() {
   if (lawyerState.offerContingency == "yes") {
-    document.getElementById("offercontingencyimageno").src =
-      "https://cdn.prod.website-files.com/67e360f08a15ef65d8814b41/67f688109c8eaf330c0f0e34_icons8-unchecked-checkbox-50.png";
-    document.getElementById("offercontingencyimageyes").src =
-      "https://cdn.prod.website-files.com/67e360f08a15ef65d8814b41/67f689ee9a1a8514a23f8919_icons8-checked-box-24.png";
+    document.getElementById("offercontingencyimageno").src = UNCHECKED_IMG_URL;
+    document.getElementById("offercontingencyimageyes").src = CHECKED_IMG_URL;
   } else if (lawyerState.offerContingency == "no") {
-    document.getElementById("offercontingencyimageno").src =
-      "https://cdn.prod.website-files.com/67e360f08a15ef65d8814b41/67f689ee9a1a8514a23f8919_icons8-checked-box-24.png";
-    document.getElementById("offercontingencyimageyes").src =
-      "https://cdn.prod.website-files.com/67e360f08a15ef65d8814b41/67f688109c8eaf330c0f0e34_icons8-unchecked-checkbox-50.png";
+    document.getElementById("offercontingencyimageno").src = CHECKED_IMG_URL;
+    document.getElementById("offercontingencyimageyes").src = UNCHECKED_IMG_URL;
   }
 }
 
 function updateProBonoCheckboxImages() {
   if (lawyerState.proBonoWork == "yes") {
-    document.getElementById("probonoimageno").src =
-      "https://cdn.prod.website-files.com/67e360f08a15ef65d8814b41/67f688109c8eaf330c0f0e34_icons8-unchecked-checkbox-50.png";
-    document.getElementById("probonoimageyes").src =
-      "https://cdn.prod.website-files.com/67e360f08a15ef65d8814b41/67f689ee9a1a8514a23f8919_icons8-checked-box-24.png";
+    document.getElementById("probonoimageno").src = UNCHECKED_IMG_URL;
+    document.getElementById("probonoimageyes").src = CHECKED_IMG_URL;
   } else if (lawyerState.proBonoWork == "no") {
-    document.getElementById("probonoimageno").src =
-      "https://cdn.prod.website-files.com/67e360f08a15ef65d8814b41/67f689ee9a1a8514a23f8919_icons8-checked-box-24.png";
-    document.getElementById("probonoimageyes").src =
-      "https://cdn.prod.website-files.com/67e360f08a15ef65d8814b41/67f688109c8eaf330c0f0e34_icons8-unchecked-checkbox-50.png";
+    document.getElementById("probonoimageno").src = CHECKED_IMG_URL;
+    document.getElementById("probonoimageyes").src = UNCHECKED_IMG_URL;
   }
 }
