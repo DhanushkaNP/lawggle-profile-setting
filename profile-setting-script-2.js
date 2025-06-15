@@ -2486,6 +2486,7 @@ function loadSwiperJS() {
 // Function to handle media and press mentions section
 function setupMediaAndPress(themediaandPress) {
   let themediacontainer = document.getElementById("mediawrapper");
+  themediacontainer.style.display = "flex";
   themediacontainer.innerHTML = "";
 
   if (themediaandPress && themediaandPress.length > 0) {
@@ -2668,7 +2669,7 @@ function setupMediaAndPress(themediaandPress) {
       });
     }
   } else {
-    document.getElementById("mediawrapper").innerHTML = "";
+    document.getElementById("mediawrapper").style.display = "none";
   }
 }
 
