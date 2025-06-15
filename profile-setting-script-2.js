@@ -1823,13 +1823,13 @@ async function updateallthefields(email, member = {}) {
               allowTouchMove: true,
               navigation: false,
               pagination: false,
-              breakpoints: {
-                768: {
-                  slidesPerView: 2,
-                  spaceBetween: 25,
-                  allowTouchMove: true,
-                },
-              },
+              // breakpoints: {
+              //   768: {
+              //     slidesPerView: 2,
+              //     spaceBetween: 25,
+              //     allowTouchMove: true,
+              //   },
+              // },
               on: {
                 touchStart: function () {
                   this.el.style.transition = "none";
