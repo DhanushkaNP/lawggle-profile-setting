@@ -373,6 +373,7 @@ document.addEventListener("DOMContentLoaded", async () => {
 
       if (uploaderId == "uploadfile") {
         lawyerState.profileVideo = url;
+        setUpProfileVideo(lawyerState.profileVideo);
       }
 
       if (uploaderId == "uploadtestimonials") {
@@ -437,6 +438,7 @@ document.addEventListener("DOMContentLoaded", async () => {
 
       if (uploaderId == "uploadprofileimage") {
         lawyerState.profileImage = url;
+        setUpProfileImage(lawyerState.profileImage);
       }
 
       if (uploaderId == "uploadbannerimage") {
@@ -1586,20 +1588,7 @@ async function updateallthefields(email, member = {}) {
       }
       let profileImageUrl = lawyerState.profileImage;
 
-      if (
-        profileImageUrl != null &&
-        profileImageUrl != "" &&
-        profileImageUrl != undefined
-      ) {
-        let theprofyImage = document.getElementById("theprofileimage");
-        theprofyImage.style.backgroundImage = `url(${profileImageUrl})`;
-        theprofyImage.style.backgroundSize = "cover";
-        theprofyImage.style.backgroundPosition = "center";
-        theprofyImage.style.backgroundRepeat = "no-repeat";
-        document.getElementById("profile-img-delete").style.display = "block";
-      } else {
-        document.getElementById("profile-img-delete").style.display = "none";
-      }
+      setUpProfileImage(profileImageUrl);
 
       if (lawyerState.allEducation.length == 0) {
         lawyerState.allEducation = jsonUser["AllEducation"] || [];
@@ -1660,19 +1649,7 @@ async function updateallthefields(email, member = {}) {
         lawyerState.profileVideo = jsonUser["profile video"];
       }
       let profileVideoUrl = lawyerState.profileVideo;
-      if (
-        profileVideoUrl != null &&
-        profileVideoUrl != undefined &&
-        profileVideoUrl != ""
-      ) {
-        document.getElementById("showcaseprofile").src = profileVideoUrl;
-        document.getElementById("uploadfilesprompt").style.display = "none";
-        document.getElementById("profileimagecontainer").style.display = "flex";
-        document.getElementById("profile-vid-delete").style.display = "block";
-      } else {
-        document.getElementById("uploadfilesprompt").style.display = "flex";
-        document.getElementById("profile-vid-delete").style.display = "none";
-      }
+      setUpProfileVideo(profileVideoUrl);
 
       if (lawyerState.interestsAndHobbies.length === 0) {
         lawyerState.interestsAndHobbies =
@@ -2578,6 +2555,39 @@ function setUpBannerImage(bannerImageUrl) {
     document.getElementById("cover-img-delete").style.display = "block";
   } else {
     document.getElementById("cover-img-delete").style.display = "none";
+  }
+}
+
+function setUpProfileImage(profileImageUrl) {
+  if (
+    profileImageUrl != null &&
+    profileImageUrl !== "" &&
+    profileImageUrl !== undefined
+  ) {
+    let profileMainImage = document.getElementById("theprofileimage");
+    profileMainImage.style.backgroundImage = `url(${profileImageUrl})`;
+    profileMainImage.style.backgroundSize = "cover";
+    profileMainImage.style.backgroundPosition = "center";
+    profileMainImage.style.backgroundRepeat = "no-repeat";
+    document.getElementById("profile-img-delete").style.display = "block";
+  } else {
+    document.getElementById("profile-img-delete").style.display = "none";
+  }
+}
+
+function setUpProfileVideo(profileVideoUrl) {
+  if (
+    profileVideoUrl != null &&
+    profileVideoUrl != undefined &&
+    profileVideoUrl != ""
+  ) {
+    document.getElementById("showcaseprofile").src = profileVideoUrl;
+    document.getElementById("uploadfilesprompt").style.display = "none";
+    document.getElementById("profileimagecontainer").style.display = "flex";
+    document.getElementById("profile-vid-delete").style.display = "block";
+  } else {
+    document.getElementById("uploadfilesprompt").style.display = "flex";
+    document.getElementById("profile-vid-delete").style.display = "none";
   }
 }
 
