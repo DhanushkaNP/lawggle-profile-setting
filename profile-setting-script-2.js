@@ -1734,9 +1734,6 @@ async function updateallthefields(email, member = {}) {
         testimonialSlider.innerHTML = "";
         testimonialSlider.classList.add("swiper", "testimonial-container");
         console.warn("reached editclientvideotestimonials");
-        // Create pagination
-        const pagination = document.createElement("div");
-        pagination.className = "swiper-pagination";
 
         let swiperWrapper = document.createElement("div");
         swiperWrapper.classList.add(
@@ -1749,7 +1746,7 @@ async function updateallthefields(email, member = {}) {
           createTestimonialUI(testimonial.url, swiperWrapper, index);
         });
 
-        testimonialSlider.append(swiperWrapper, pagination);
+        testimonialSlider.append(swiperWrapper);
 
         if (window.innerWidth < 1024) {
           loadSwiperJS().then(() => {
@@ -1759,14 +1756,13 @@ async function updateallthefields(email, member = {}) {
               centeredSlides: false,
               allowTouchMove: true,
               navigation: false,
-              pagination: false,
-              breakpoints: {
-                768: {
-                  slidesPerView: 2,
-                  spaceBetween: 25,
-                  allowTouchMove: true,
-                },
-              },
+              // breakpoints: {
+              //   768: {
+              //     slidesPerView: 2,
+              //     spaceBetween: 25,
+              //     allowTouchMove: true,
+              //   },
+              // },
               on: {
                 touchStart: function () {
                   this.el.style.transition = "none";
@@ -1822,8 +1818,6 @@ async function updateallthefields(email, member = {}) {
               slidesOffsetAfter: 30,
               centeredSlides: false,
               allowTouchMove: true,
-              navigation: false,
-              pagination: false,
               // breakpoints: {
               //   768: {
               //     slidesPerView: 2,
