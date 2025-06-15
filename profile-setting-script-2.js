@@ -1097,8 +1097,8 @@ $(document).ready(async function () {
           errorBanner.style.color = "#fff";
           errorBanner.style.background = "#d32f2f";
           errorBanner.style.padding = "12px 20px";
-          errorBanner.style.margin = "16px 0";
-          errorBanner.style.borderRadius = "6px";
+          // errorBanner.style.margin = "16px 0";
+          // errorBanner.style.borderRadius = "6px";
           errorBanner.style.fontWeight = "bold";
           errorBanner.style.fontSize = "16px";
           errorBanner.style.textAlign = "center";
@@ -1112,7 +1112,7 @@ $(document).ready(async function () {
         errorBanner.style.display = "block";
         setTimeout(() => {
           errorBanner.style.display = "none";
-        }, 4000);
+        }, 6000);
 
         return;
       }
