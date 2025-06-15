@@ -2675,7 +2675,7 @@ function setupMediaAndPress(themediaandPress) {
 }
 
 const CHECKED_IMG_URL =
-  "https://cdn.prod.website-files.com/67e360f08a15ef65d8814b41/684e8356a06692292b492008_checkbox-checked-dark-gray-70.svg";
+  "https://cdn.prod.website-files.com/67e360f08a15ef65d8814b41/684e85957baf55c36cd79a9e_checkbox-checked-svgrepo-com%20(4).svg";
 const UNCHECKED_IMG_URL =
   "https://cdn.prod.website-files.com/67e360f08a15ef65d8814b41/67f688109c8eaf330c0f0e34_icons8-unchecked-checkbox-50.png";
 
