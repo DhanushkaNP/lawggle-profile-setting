@@ -2163,7 +2163,7 @@ async function createCaseWinUI(title, description, index) {
 async function createTestimonialUI(videoUrl, testimonialSwipperWrapper, index) {
   // Create the main container
   const slide = document.createElement("div");
-  slide.classList.add("swiper-slide", "testimonial-video-wrap");
+  slide.classList.add("swiper-slide");
 
   // Create the video element
   const testimonial = document.createElement("video");
