@@ -1089,9 +1089,31 @@ $(document).ready(async function () {
         document.getElementById("theloadingwait").style.display = "none";
 
         // Show popup/alert for required fields
-        alert(
-          "Please complete all required fields before saving your profile.\n\nMandatory fields ensure we have the essential information needed to showcase your services accurately."
-        );
+        // Show a red error message instead of alert
+        let errorBanner = document.getElementById("universal-error-banner");
+        if (!errorBanner) {
+          errorBanner = document.createElement("div");
+          errorBanner.id = "universal-error-banner";
+          errorBanner.style.color = "#fff";
+          errorBanner.style.background = "#d32f2f";
+          errorBanner.style.padding = "12px 20px";
+          errorBanner.style.margin = "16px 0";
+          errorBanner.style.borderRadius = "6px";
+          errorBanner.style.fontWeight = "bold";
+          errorBanner.style.fontSize = "16px";
+          errorBanner.style.textAlign = "center";
+          errorBanner.style.zIndex = "9999";
+          // Insert at the top of the form or body
+          const form = document.getElementById("profile-form") || document.body;
+          form.prepend(errorBanner);
+        }
+        errorBanner.textContent =
+          "Please review and correct the highlighted fields before saving.";
+        errorBanner.style.display = "block";
+        setTimeout(() => {
+          errorBanner.style.display = "none";
+        }, 4000);
+
         return;
       }
 
