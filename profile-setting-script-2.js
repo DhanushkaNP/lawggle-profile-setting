@@ -2295,8 +2295,6 @@ async function createCaseStudyUI(videoUrl, caseStudySwiperWrapper, index) {
   caseStudyVideo.src = videoUrl;
   caseStudyVideo.controls = true;
   caseStudyVideo.playsInline = true;
-  caseStudyVideo.poster =
-    "https://cdn.prod.website-files.com/67e360f08a15ef65d8814b41/683031d15554289474aca28d_case%20study%20banner.png";
 
   // Create the delete icon
   const deleteIcon = document.createElement("img");
@@ -2583,6 +2581,8 @@ function setupMediaAndPress(themediaandPress) {
       const card = document.createElement("a");
       card.classList.add("media-card-ps");
       card.href = url;
+      card.target = "_blank";
+      card.rel = "noopener noreferrer";
 
       // delete icon
       const deleteIcon = document.createElement("img");
