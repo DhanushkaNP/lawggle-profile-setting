@@ -1819,6 +1819,7 @@ async function updateallthefields(email, member = {}) {
             new Swiper(videocaseslider, {
               slidesPerView: 1.1,
               spaceBetween: 25,
+              slidesOffsetAfter: 30,
               centeredSlides: false,
               allowTouchMove: true,
               navigation: false,
@@ -2666,6 +2667,7 @@ function setupMediaAndPress(themediaandPress) {
         new Swiper(swiperContainer, {
           slidesPerView: 1.2,
           spaceBetween: 20,
+          slidesOffsetAfter: 30,
           centeredSlides: false,
           allowTouchMove: true,
           navigation: false,
@@ -2673,13 +2675,13 @@ function setupMediaAndPress(themediaandPress) {
             el: pagination,
             clickable: true,
           },
-          breakpoints: {
-            768: {
-              slidesPerView: 2,
-              spaceBetween: 25,
-              allowTouchMove: true,
-            },
-          },
+          // breakpoints: {
+          //   768: {
+          //     slidesPerView: 2,
+          //     spaceBetween: 25,
+          //     allowTouchMove: true,
+          //   },
+          // },
           on: {
             touchStart: function () {
               this.el.style.transition = "none";
