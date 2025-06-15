@@ -805,6 +805,7 @@ $(document).ready(async function () {
       country: country,
     };
     lawyerState.userGeoLocationDetails = theuserGeolocation;
+    mapBoxMap(coords[1], coords[0]);
 
     console.log({
       coords,
