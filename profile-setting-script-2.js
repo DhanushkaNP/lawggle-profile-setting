@@ -1806,8 +1806,7 @@ async function updateallthefields(email, member = {}) {
         if (window.innerWidth < 1024) {
           loadSwiperJS().then(() => {
             new Swiper(videocaseslider, {
-              slidesPerView: 1.1,
-              spaceBetween: 25,
+              slidesPerView: 1.2,
               slidesOffsetAfter: 30,
               centeredSlides: false,
               allowTouchMove: true,
