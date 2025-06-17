@@ -2614,8 +2614,8 @@ function setupMediaAndPress(themediaandPress) {
 
       // Image
       const img = document.createElement("img");
-      img.src = meta.imageUrl;
-      img.alt = meta.title;
+      img.src = mediaItem.image;
+      img.alt = mediaItem.title;
       img.classList.add("media-image-ps");
 
       // Content
@@ -2624,15 +2624,15 @@ function setupMediaAndPress(themediaandPress) {
 
       const title = document.createElement("h3");
       title.classList.add("media-heading-ps");
-      title.textContent = meta.title;
+      title.textContent = mediaItem.title;
 
       const desc = document.createElement("p");
       desc.classList.add("media-descrip-ps");
-      desc.textContent = meta.description;
+      desc.textContent = mediaItem.description;
 
       const host = document.createElement("p");
       host.classList.add("media-host-ps");
-      host.textContent = meta.host;
+      host.textContent = domain;
 
       content.appendChild(title);
       content.appendChild(desc);
