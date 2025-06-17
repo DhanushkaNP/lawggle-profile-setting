@@ -2508,66 +2508,6 @@ function setupMediaAndPress(themediaandPress) {
       }
     }
 
-    function getMetadataByDomainForMediaPress(url, domain) {
-      if (url.includes("youtube.com") || url.includes("youtu.be")) {
-        return {
-          title: "YouTube Video",
-          description: "Click to watch this video on YouTube",
-          imageUrl: "https://placehold.co/300x200/FF0000/FFFFFF?text=YouTube",
-          favicon: "https://www.youtube.com/favicon.ico",
-          host: "youtube.com",
-        };
-      } else if (url.includes("linkedin.com")) {
-        return {
-          title: "LinkedIn Article",
-          description: "Professional content shared on LinkedIn",
-          imageUrl: "https://placehold.co/300x200/0077B5/FFFFFF?text=LinkedIn",
-          favicon: "https://www.linkedin.com/favicon.ico",
-          host: "linkedin.com",
-        };
-      } else if (url.includes("medium.com")) {
-        return {
-          title: "Medium Article",
-          description: "Read this story on Medium",
-          imageUrl: "https://placehold.co/300x200/000000/FFFFFF?text=Medium",
-          favicon: "https://medium.com/favicon.ico",
-          host: "medium.com",
-        };
-      } else if (url.includes("twitter.com") || url.includes("x.com")) {
-        return {
-          title: "Tweet",
-          description: "View this post on Twitter/X",
-          imageUrl: "https://placehold.co/300x200/1DA1F2/FFFFFF?text=Twitter",
-          favicon: "https://twitter.com/favicon.ico",
-          host: "twitter.com",
-        };
-      } else if (url.includes("instagram.com")) {
-        return {
-          title: "Instagram Post",
-          description: "View this post on Instagram",
-          imageUrl: "https://placehold.co/300x200/E1306C/FFFFFF?text=Instagram",
-          favicon: "https://www.instagram.com/favicon.ico",
-          host: "instagram.com",
-        };
-      } else if (url.includes("facebook.com")) {
-        return {
-          title: "Facebook Post",
-          description: "View this content on Facebook",
-          imageUrl: "https://placehold.co/300x200/4267B2/FFFFFF?text=Facebook",
-          favicon: "https://www.facebook.com/favicon.ico",
-          host: "facebook.com",
-        };
-      } else {
-        return {
-          title: `Article on ${domain}`,
-          description: `View this content on ${domain}`,
-          imageUrl: `https://placehold.co/300x200/333333/cccccc?text=${domain}`,
-          favicon: null,
-          host: domain,
-        };
-      }
-    }
-
     // Create Swiper container
     const swiperContainer = document.createElement("div");
     swiperContainer.classList.add("swiper", "media-swiper-ps");
@@ -2584,7 +2524,6 @@ function setupMediaAndPress(themediaandPress) {
     themediaandPress.forEach((mediaItem, index) => {
       const url = mediaItem.url || "#";
       const domain = extractDomainForMediaPress(url);
-      const meta = getMetadataByDomainForMediaPress(url, domain);
 
       const swiperSlide = document.createElement("div");
       swiperSlide.classList.add("swiper-slide", "swiper-slide-ps");
