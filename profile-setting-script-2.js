@@ -817,6 +817,29 @@ $(document).ready(async function () {
     });
   });
 
+  $("#editqas").click(function () {
+    const editContainer = document.getElementById("theeditqa");
+    const index = editContainer.getAttribute("itemindex");
+
+    const updatedTitle = document
+      .getElementById("edittheqaquizinput")
+      .value.trim();
+    const updatedDescription = document
+      .getElementById("editqaanswerinput")
+      .value.trim();
+
+    lawyerState.personalQA[index].title = updatedTitle;
+    lawyerState.personalQA[index].description = updatedDescription;
+
+    const qaWrapper = document.getElementById("qaquzicontainer");
+    qaWrapper.innerHTML = "";
+    lawyerState.personalQA.forEach((qaItem, idx) => {
+      createPersonalQAUI(qaItem, idx);
+    });
+
+    editContainer.style.display = "none";
+  });
+
   let deleteButtons = document.querySelectorAll(".deletebuttons");
 
   deleteButtons.forEach((thisbutton) => {
