@@ -389,7 +389,12 @@ document.addEventListener("DOMContentLoaded", async () => {
         );
         testimonialSwipperWrapper.innerHTML = "";
         lawyerState.testimonials.forEach((testimonial, idx) => {
-          createTestimonialUI(testimonial.url, testimonialSwipperWrapper, idx);
+          createTestimonialUI(
+            testimonial.url,
+            testimonial.thumbnail,
+            testimonialSwipperWrapper,
+            idx
+          );
         });
       }
 
@@ -405,7 +410,12 @@ document.addEventListener("DOMContentLoaded", async () => {
         );
         caseStudySwiperWrapper.innerHTML = "";
         lawyerState.caseStudies.forEach((caseStudy, idx) => {
-          createCaseStudyUI(caseStudy.url, caseStudySwiperWrapper, idx);
+          createCaseStudyUI(
+            caseStudy.url,
+            caseStudy.thumbnail,
+            caseStudySwiperWrapper,
+            idx
+          );
         });
       }
 
@@ -926,7 +936,12 @@ $(document).ready(async function () {
         );
         testimonialSwipperWrapper.innerHTML = "";
         lawyerState.testimonials.forEach((testimonial, idx) => {
-          createTestimonialUI(testimonial.url, testimonialSwipperWrapper, idx);
+          createTestimonialUI(
+            testimonial.url,
+            testimonial.thumbnail,
+            testimonialSwipperWrapper,
+            idx
+          );
         });
         await HideModals();
       }
@@ -953,7 +968,12 @@ $(document).ready(async function () {
         );
         caseStudySwiperWrapper.innerHTML = "";
         lawyerState.caseStudies.forEach((caseStudy, idx) => {
-          createCaseStudyUI(caseStudy.url, caseStudySwiperWrapper, idx);
+          createCaseStudyUI(
+            caseStudy.url,
+            caseStudy.thumbnail,
+            caseStudySwiperWrapper,
+            idx
+          );
         });
         await HideModals();
       }
@@ -1789,7 +1809,12 @@ async function updateallthefields(email, member = {}) {
         swiperWrapper.id = "testimonial-swiper-wrapper";
 
         clientTestimonials.forEach((testimonial, index) => {
-          createTestimonialUI(testimonial.url, swiperWrapper, index);
+          createTestimonialUI(
+            testimonial.url,
+            testimonial.thumbnail,
+            swiperWrapper,
+            index
+          );
         });
 
         testimonialSlider.append(swiperWrapper);
@@ -1844,7 +1869,12 @@ async function updateallthefields(email, member = {}) {
         swiperWrapper.id = "case-study-swiper-wrapper";
 
         caseStudyWalkthroughs.forEach((caseStudy, index) => {
-          createCaseStudyUI(caseStudy.url, swiperWrapper, index);
+          createCaseStudyUI(
+            caseStudy.url,
+            caseStudy.thumbnail,
+            swiperWrapper,
+            index
+          );
         });
 
         videocaseslider.append(swiperWrapper);
@@ -2211,7 +2241,12 @@ async function createCaseWinUI(title, description, index) {
   thecaseslider.append(thequizcarrier);
 }
 
-async function createTestimonialUI(videoUrl, testimonialSwipperWrapper, index) {
+async function createTestimonialUI(
+  videoUrl,
+  poster,
+  testimonialSwipperWrapper,
+  index
+) {
   // Create the main container
   const slide = document.createElement("div");
   slide.classList.add("swiper-slide", "testimonial-video-wrap");
@@ -2220,6 +2255,7 @@ async function createTestimonialUI(videoUrl, testimonialSwipperWrapper, index) {
   const testimonial = document.createElement("video");
   testimonial.classList.add("testimonial-video-ps");
   testimonial.src = videoUrl;
+  testimonial.poster = poster; // Set the poster image
   testimonial.controls = true;
   testimonial.playsInline = true;
 
@@ -2353,7 +2389,12 @@ async function createCertificateSwiper(certificates) {
   }
 }
 
-async function createCaseStudyUI(videoUrl, caseStudySwiperWrapper, index) {
+async function createCaseStudyUI(
+  videoUrl,
+  poster,
+  caseStudySwiperWrapper,
+  index
+) {
   // Create the main container
   const slide = document.createElement("div");
   slide.classList.add("swiper-slide", "case-study-video-wrap");
@@ -2362,6 +2403,7 @@ async function createCaseStudyUI(videoUrl, caseStudySwiperWrapper, index) {
   const caseStudyVideo = document.createElement("video");
   caseStudyVideo.classList.add("case-study-video-ps");
   caseStudyVideo.src = videoUrl;
+  caseStudyVideo.poster = poster; // Set the poster image
   caseStudyVideo.controls = true;
   caseStudyVideo.playsInline = true;
 
