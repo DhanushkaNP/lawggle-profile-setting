@@ -2567,7 +2567,11 @@ function setupMediaAndPress(themediaandPress) {
 
       const desc = document.createElement("p");
       desc.classList.add("media-descrip-ps");
-      desc.textContent = mediaItem.description;
+      if (mediaItem.description && mediaItem.description.length > 90) {
+        desc.textContent = mediaItem.description.slice(0, 90) + "...";
+      } else {
+        desc.textContent = mediaItem.description || "";
+      }
 
       const host = document.createElement("p");
       host.classList.add("media-host-ps");
