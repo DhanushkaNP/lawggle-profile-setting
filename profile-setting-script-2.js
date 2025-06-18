@@ -2368,6 +2368,10 @@ function createPersonalQAUI(qaItem, index) {
     let toeditindex = theeditButton.getAttribute("itemindex");
     let theeditcontainer = document.getElementById("theeditqa");
     theeditcontainer.style.display = "flex";
+    theeditcontainer.querySelector("#edittheqaquizinput").value =
+      lawyerState.personalQA[toeditindex].title;
+    theeditcontainer.querySelector("#editqaanswerinput").value =
+      lawyerState.personalQA[toeditindex].description;
     theeditcontainer.setAttribute("itemindex", toeditindex);
   });
 
