@@ -2145,13 +2145,13 @@ async function createCaseWinUI(title, description, index) {
       "lawyerState.notableCaseWins[toeditindex].title",
       lawyerState.notableCaseWins[toeditindex].title
     );
-    theeditcontainer.getElementById("edittheqaquizinput").value =
+    theeditcontainer.getElementById("editthetitleinputcase").value =
       lawyerState.notableCaseWins[toeditindex].title;
     console.log(
       "lawyerState.notableCaseWins[toeditindex].description",
       lawyerState.notableCaseWins[toeditindex].description
     );
-    theeditcontainer.getElementById("editqaanswerinput").value =
+    theeditcontainer.getElementById("editthedescriptioninputcase").value =
       lawyerState.notableCaseWins[toeditindex].description;
     theeditcontainer.setAttribute("itemindex", toeditindex);
   });
