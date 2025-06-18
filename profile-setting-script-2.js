@@ -840,6 +840,29 @@ $(document).ready(async function () {
     editContainer.style.display = "none";
   });
 
+  $("#editCaseWins").click(function () {
+    const editContainer = document.getElementById("theeditcases");
+    const index = editContainer.getAttribute("itemindex");
+
+    const updatedTitle = document
+      .getElementById("editthetitleinputcase")
+      .value.trim();
+    const updatedDescription = document
+      .getElementById("editthedescriptioninputcase")
+      .value.trim();
+
+    lawyerState.notableCaseWins[index].title = updatedTitle;
+    lawyerState.notableCaseWins[index].description = updatedDescription;
+
+    const caseWinsContainer = document.getElementById("casewinsContainer");
+    caseWinsContainer.innerHTML = "";
+    lawyerState.notableCaseWins.forEach((caseWin, idx) => {
+      createCaseWinUI(caseWin.title, caseWin.description, idx);
+    });
+
+    editContainer.style.display = "none";
+  });
+
   let deleteButtons = document.querySelectorAll(".deletebuttons");
 
   deleteButtons.forEach((thisbutton) => {
