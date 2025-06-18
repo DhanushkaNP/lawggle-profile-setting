@@ -2519,7 +2519,9 @@ function setUpProfileVideo(profileVideoUrl) {
     profileVideoUrl != undefined &&
     profileVideoUrl != ""
   ) {
-    document.getElementById("showcaseprofile").src = profileVideoUrl;
+    const profileVideo = document.getElementById("showcaseprofile");
+    profileVideo.src = profileVideoUrl.url;
+    profileVideo.poster = profileVideoUrl.thumbnail || "";
     document.getElementById("uploadfilesprompt").style.display = "none";
     document.getElementById("profileimagecontainer").style.display = "flex";
     document.getElementById("profile-vid-delete").style.display = "block";
