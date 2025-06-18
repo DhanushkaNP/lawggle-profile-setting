@@ -2141,8 +2141,16 @@ async function createCaseWinUI(title, description, index) {
     let toeditindex = theeditButton.getAttribute("itemindex");
     let theeditcontainer = document.getElementById("theeditcases");
     theeditcontainer.style.display = "flex";
+    console.log(
+      "lawyerState.notableCaseWins[toeditindex].title",
+      lawyerState.notableCaseWins[toeditindex].title
+    );
     theeditcontainer.getElementById("edittheqaquizinput").value =
       lawyerState.notableCaseWins[toeditindex].title;
+    console.log(
+      "lawyerState.notableCaseWins[toeditindex].description",
+      lawyerState.notableCaseWins[toeditindex].description
+    );
     theeditcontainer.getElementById("editqaanswerinput").value =
       lawyerState.notableCaseWins[toeditindex].description;
     theeditcontainer.setAttribute("itemindex", toeditindex);
