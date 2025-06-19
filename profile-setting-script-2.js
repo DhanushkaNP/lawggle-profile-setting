@@ -662,6 +662,7 @@ $(document).ready(async function () {
       errorEl.style.display = "block";
       return;
     } else {
+      const errorEl = document.getElementById("casewins-max-word-error-text");
       errorEl.style.display = "none";
     }
 
