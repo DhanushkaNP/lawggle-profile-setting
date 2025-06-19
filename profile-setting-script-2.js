@@ -644,11 +644,9 @@ $(document).ready(async function () {
   });
 
   $("#save-cases").click(async function () {
-    let errorEl = document.getElementById("casewins-error-text");
     if (lawyerState.notableCaseWins.length >= 3) {
+      const errorEl = document.getElementById("case-wins-error-text");
       errorEl.style.display = "block";
-      errorEl.innerText = "You can only add up to 3 notable case wins.";
-
       return;
     }
 
@@ -660,8 +658,8 @@ $(document).ready(async function () {
       .split(/\s+/)
       .filter(Boolean).length;
     if (wordCount > 150) {
+      const errorEl = document.getElementById("casewins-max-word-error-text");
       errorEl.style.display = "block";
-      errorEl.innerText = "Description cannot exceed 150 words.";
       return;
     } else {
       errorEl.style.display = "none";
