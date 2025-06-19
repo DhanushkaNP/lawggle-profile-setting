@@ -644,8 +644,8 @@ $(document).ready(async function () {
   });
 
   $("#save-cases").click(async function () {
+    const errorEl = document.getElementById("casewins-error-text");
     if (lawyerState.notableCaseWins.length >= 3) {
-      const errorEl = document.getElementById("casewins-error-text");
       if (errorEl) {
         errorEl.style.display = "block";
         errorEl.innerText = "You can only add up to 3 notable case wins.";
@@ -660,13 +660,10 @@ $(document).ready(async function () {
       .trim()
       .split(/\s+/)
       .filter(Boolean).length;
-    const errorEl = document.getElementById("casewins-error-text");
-
     if (wordCount > 150) {
-      if (errorEl) {
-        errorEl.style.display = "block";
-        errorEl.innerText = "Description cannot exceed 150 words.";
-      }
+      errorEl.style.display = "block";
+      errorEl.innerText = "Description cannot exceed 150 words.";
+
       return;
     } else if (errorEl) {
       errorEl.style.display = "none";
