@@ -387,6 +387,7 @@ document.addEventListener("DOMContentLoaded", async () => {
       if (uploaderId == "uploadtestimonials") {
         let thisuniqueId = await generateUniqueId();
         let thumbnail = await getVideoThumbnail(url).thumbnail;
+        console.log("Testimonial thumbnail:", thumbnail);
         lawyerState.testimonials.push({
           url,
           "unique id": thisuniqueId,
@@ -411,6 +412,7 @@ document.addEventListener("DOMContentLoaded", async () => {
       if (uploaderId == "casestudywalkthroughuploader") {
         let thisuniqueId = await generateUniqueId();
         let thumbnail = await getVideoThumbnail(url).thumbnail;
+        console.log("Case study thumbnail:", thumbnail);
         lawyerState.caseStudies.push({
           url,
           "unique id": thisuniqueId,
