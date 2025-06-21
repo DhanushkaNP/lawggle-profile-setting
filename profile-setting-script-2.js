@@ -2454,7 +2454,7 @@ async function createCaseStudyUI(
   const caseStudyVideo = document.createElement("video");
   caseStudyVideo.classList.add("case-study-video-ps");
   caseStudyVideo.src = videoUrl;
-  caseStudyVideo.poster = poster; // Set the poster image
+  caseStudyVideo.poster = poster ? poster + "?t=" + Date.now() : "";
   caseStudyVideo.controls = true;
   caseStudyVideo.playsInline = true;
 
