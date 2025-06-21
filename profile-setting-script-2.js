@@ -372,9 +372,10 @@ document.addEventListener("DOMContentLoaded", async () => {
       }
 
       if (uploaderId == "uploadfile") {
+        const thumbnail = await getVideoThumbnail(url).thumbnail;
         lawyerState.profileVideo = {
           url: url,
-          thumbnail: await getVideoThumbnail(url),
+          thumbnail,
         };
         console.log(
           "Profile video thumbnail:",
