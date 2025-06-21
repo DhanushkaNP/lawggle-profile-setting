@@ -372,7 +372,10 @@ document.addEventListener("DOMContentLoaded", async () => {
       }
 
       if (uploaderId == "uploadfile") {
-        lawyerState.profileVideo = url;
+        lawyerState.profileVideo = {
+          url: url,
+          thumbnail: await getVideoThumbnail(url),
+        };
         setUpProfileVideo(lawyerState.profileVideo);
       }
 
@@ -1424,6 +1427,24 @@ async function enrichMediaPress(url) {
     return await response.json();
   } catch (e) {
     console.error("Enrich media press error:", e);
+    return null;
+  }
+}
+
+async function getVideoThumbnail(url) {
+  try {
+    const response = await fetch(
+      "https://7zsvpwqz67pnyridifgchw7gda0sxhqy.lambda-url.eu-north-1.on.aws/enrich-video-thumbnail",
+      {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ url }),
+      }
+    );
+    if (!response.ok) throw new Error("Failed to get video thumbnail");
+    return await response.json();
+  } catch (e) {
+    console.error("Get video thumbnail error:", e);
     return null;
   }
 }
