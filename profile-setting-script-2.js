@@ -411,12 +411,13 @@ document.addEventListener("DOMContentLoaded", async () => {
 
       if (uploaderId == "casestudywalkthroughuploader") {
         let thisuniqueId = await generateUniqueId();
-        let thumbnail = await getVideoThumbnail(url).thumbnail;
+        let thumbnailResponse = await getVideoThumbnail(url);
+        console.log("Case study thumbnail response:", thumbnailResponse);
         console.log("Case study thumbnail:", thumbnail);
         lawyerState.caseStudies.push({
           url,
           "unique id": thisuniqueId,
-          thumbnail,
+          thumbnail: thumbnailResponse.thumbnail,
         });
         // Update DOM to show case study preview (implement as needed)
         const caseStudySwiperWrapper = document.getElementById(
