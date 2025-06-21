@@ -376,6 +376,10 @@ document.addEventListener("DOMContentLoaded", async () => {
           url: url,
           thumbnail: await getVideoThumbnail(url),
         };
+        console.log(
+          "Profile video thumbnail:",
+          lawyerState.profileVideo.thumbnail
+        );
         setUpProfileVideo(lawyerState.profileVideo);
       }
 
@@ -1442,6 +1446,7 @@ async function getVideoThumbnail(url) {
       }
     );
     if (!response.ok) throw new Error("Failed to get video thumbnail");
+    console.log("Video thumbnail response:", response);
     return await response.json();
   } catch (e) {
     console.error("Get video thumbnail error:", e);
