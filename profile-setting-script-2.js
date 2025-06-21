@@ -413,7 +413,6 @@ document.addEventListener("DOMContentLoaded", async () => {
         let thisuniqueId = await generateUniqueId();
         let thumbnailResponse = await getVideoThumbnail(url);
         console.log("Case study thumbnail response:", thumbnailResponse);
-        console.log("Case study thumbnail:", thumbnail);
         lawyerState.caseStudies.push({
           url,
           "unique id": thisuniqueId,
