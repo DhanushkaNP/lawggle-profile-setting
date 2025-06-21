@@ -687,18 +687,26 @@ $(document).ready(async function () {
   });
 
   $("#addMediaPress").click(async function () {
+    const errorEl = document.getElementById("media-press-error-text");
     if (lawyerState.mediaPressMentions.length >= 3) {
-      const errorEl = document.getElementById("media-press-error-text");
       errorEl.style.display = "block";
       return;
     }
-    let mediapresslink = document.getElementById("thepreviewlinkinput").value;
-    let thismediapressdata = await enrichMediaPress(mediapresslink);
-    if (thismediapressdata) {
-      console.log("Media Press Data:", thismediapressdata);
-      lawyerState.mediaPressMentions.push(thismediapressdata);
-      setupMediaAndPress(lawyerState.mediaPressMentions);
+    errorEl.style.display = "none";
+    const input = document.getElementById("thepreviewlinkinput");
+    const mediapresslink = input.value.trim();
+    if (!mediapresslink) return;
+
+    try {
+      const mediaPressData = await enrichMediaPress(mediapresslink);
+      if (mediaPressData) {
+        lawyerState.mediaPressMentions.push(mediaPressData);
+        setupMediaAndPress(lawyerState.mediaPressMentions);
+      }
+    } catch (e) {
+      console.error("Failed to add media press:", e);
     }
+    input.value = "";
   });
 
   $("#addInterests").click(async function () {
