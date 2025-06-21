@@ -386,12 +386,12 @@ document.addEventListener("DOMContentLoaded", async () => {
 
       if (uploaderId == "uploadtestimonials") {
         let thisuniqueId = await generateUniqueId();
-        let thumbnail = await getVideoThumbnail(url).thumbnail;
-        console.log("Testimonial thumbnail:", thumbnail);
+        let thumbnailResponse = await getVideoThumbnail(url);
+        console.log("Testimonial thumbnail:", thumbnailResponse);
         lawyerState.testimonials.push({
           url,
           "unique id": thisuniqueId,
-          thumbnail,
+          thumbnail: thumbnailResponse.thumbnail,
         });
         // Update DOM to show testimonial preview (implement as needed)
 
