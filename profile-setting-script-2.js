@@ -688,26 +688,17 @@ $(document).ready(async function () {
 
   $("#addMediaPress").click(async function () {
     if (lawyerState.mediaPressMentions.length >= 3) {
-      updateMediaPressAddButton();
+      const errorEl = document.getElementById("media-press-error-text");
+      errorEl.style.display = "block";
       return;
     }
     let mediapresslink = document.getElementById("thepreviewlinkinput").value;
-    let theuniqueId = await generateUniqueId();
-    let thismediapressdata = {
-      uniqueId: theuniqueId,
-      url: mediapresslink,
-    };
-    lawyerState.mediaPressMentions.push(thismediapressdata);
-    setupMediaAndPress(lawyerState.mediaPressMentions);
+    let thismediapressdata = await enrichMediaPress(mediapresslink);
+    if (thismediapressdata) {
+      lawyerState.mediaPressMentions.push(thismediapressdata);
+      setupMediaAndPress(lawyerState.mediaPressMentions);
+    }
   });
-
-  function updateMediaPressAddButton() {
-    const addBtn = document.getElementById("addMediaPress");
-    addBtn.classList.add("add-media-btn", "disabled");
-    addBtn.disabled = true;
-    const errorEl = document.getElementById("media-press-error-text");
-    errorEl.style.display = "block";
-  }
 
   $("#addInterests").click(async function () {
     let interestOrHobby = document.getElementById("interestedinput").value;
@@ -1407,6 +1398,24 @@ async function updateItem(email, data) {
     console.log(result);
   } catch (error) {
     console.error("Error updating item:", error);
+  }
+}
+
+async function enrichMediaPress(url) {
+  try {
+    const response = await fetch(
+      "https://7zsvpwqz67pnyridifgchw7gda0sxhqy.lambda-url.eu-north-1.on.aws/enrich-media-press",
+      {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ url }),
+      }
+    );
+    if (!response.ok) throw new Error("Failed to enrich media press");
+    return await response.json();
+  } catch (e) {
+    console.error("Enrich media press error:", e);
+    return null;
   }
 }
 
