@@ -695,6 +695,7 @@ $(document).ready(async function () {
     let mediapresslink = document.getElementById("thepreviewlinkinput").value;
     let thismediapressdata = await enrichMediaPress(mediapresslink);
     if (thismediapressdata) {
+      console.log("Media Press Data:", thismediapressdata);
       lawyerState.mediaPressMentions.push(thismediapressdata);
       setupMediaAndPress(lawyerState.mediaPressMentions);
     }
