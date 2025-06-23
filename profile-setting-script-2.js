@@ -59,7 +59,6 @@ let theLawyersHobbies = [];
 
 async function HideModals() {
   setTimeout(() => {
-    document.getElementById("thesavealertshow").style.display = "none";
     document.getElementById("thesaveqa").style.display = "none";
     document.getElementById("deletetheeducationcontainer").style.display =
       "none";
