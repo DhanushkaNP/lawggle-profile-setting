@@ -2638,6 +2638,7 @@ function setUpProfileVideo(profileVideoUrl) {
     // Clear existing src first to force reload
     profileVideo.src = "";
     profileVideo.poster = "";
+    profileVideo.controls = true;
 
     // Use a small delay to ensure the video element is reset
     setTimeout(() => {
