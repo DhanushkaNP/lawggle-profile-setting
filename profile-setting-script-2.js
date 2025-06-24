@@ -2633,37 +2633,58 @@ function setUpProfileVideo(profileVideoUrl) {
     profileVideoUrl != undefined &&
     profileVideoUrl != ""
   ) {
-    const profileVideo = document.getElementById("showcaseprofile");
+    const oldVideo = document.getElementById("showcaseprofile");
+    let videoContainer = null;
 
-    // Clear existing src first to force reload
-    profileVideo.src = "";
-    profileVideo.poster = "";
-    profileVideo.controls = true;
+    // Find the correct container - first try to get the old video's parent
+    if (oldVideo && oldVideo.parentNode) {
+      videoContainer = oldVideo.parentNode;
+    }
 
-    // Use a small delay to ensure the video element is reset
-    setTimeout(() => {
-      profileVideo.src = profileVideoUrl.url;
-      if (profileVideoUrl.thumbnail) {
-        // Add cache busting parameter to ensure fresh load
-        const posterUrl =
-          profileVideoUrl.thumbnail +
-          (profileVideoUrl.thumbnail.includes("?") ? "&" : "?") +
-          "t=" +
-          Date.now();
-        profileVideo.poster = posterUrl;
+    // Remove the old video element completely
+    if (oldVideo) {
+      oldVideo.remove();
+    }
 
-        // Preload the poster image to ensure it's available
-        const img = new Image();
-        img.onload = () => {
-          // Force the video element to acknowledge the poster
-          profileVideo.load();
-        };
-        img.src = posterUrl;
-      }
+    // Create a completely new video element
+    const newVideo = document.createElement("video");
+    newVideo.id = "showcaseprofile";
+    newVideo.className = oldVideo
+      ? oldVideo.className
+      : "showcase-profile-video"; // Preserve or set default classes
+    newVideo.controls = true;
+    newVideo.playsInline = true;
+    newVideo.preload = "metadata";
 
-      // Force the video to load metadata which includes the poster
-      profileVideo.load();
-    }, 100);
+    // Set the video source first
+    newVideo.src = profileVideoUrl.url;
+
+    if (profileVideoUrl.thumbnail) {
+      // Add cache busting to ensure fresh load
+      const posterUrl =
+        profileVideoUrl.thumbnail +
+        (profileVideoUrl.thumbnail.includes("?") ? "&" : "?") +
+        "t=" +
+        Date.now();
+
+      // Set poster directly and then preload to ensure it loads
+      newVideo.poster = posterUrl;
+
+      // Preload the poster image to ensure it's cached
+      const img = new Image();
+      img.onload = () => {
+        // Force reload after poster is confirmed loaded
+        newVideo.load();
+      };
+      img.onerror = () => {
+        // Even if preload fails, try to load the video
+        newVideo.load();
+      };
+      img.src = posterUrl;
+    }
+
+    // Insert the new video element back into the container
+    videoContainer.appendChild(newVideo);
 
     document.getElementById("uploadfilesprompt").style.display = "none";
     document.getElementById("profileimagecontainer").style.display = "flex";
