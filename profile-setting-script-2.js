@@ -2660,27 +2660,7 @@ function setUpProfileVideo(profileVideoUrl) {
     newVideo.src = profileVideoUrl.url;
 
     if (profileVideoUrl.thumbnail) {
-      // Add cache busting to ensure fresh load
-      const posterUrl =
-        profileVideoUrl.thumbnail +
-        (profileVideoUrl.thumbnail.includes("?") ? "&" : "?") +
-        "t=" +
-        Date.now();
-
-      // Set poster directly and then preload to ensure it loads
-      newVideo.poster = posterUrl;
-
-      // Preload the poster image to ensure it's cached
-      const img = new Image();
-      img.onload = () => {
-        // Force reload after poster is confirmed loaded
-        newVideo.load();
-      };
-      img.onerror = () => {
-        // Even if preload fails, try to load the video
-        newVideo.load();
-      };
-      img.src = posterUrl;
+      newVideo.poster = profileVideoUrl.thumbnail;
     }
 
     // Insert the new video element back into the container
