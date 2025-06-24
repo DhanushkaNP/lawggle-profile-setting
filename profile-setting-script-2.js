@@ -2395,74 +2395,45 @@ async function createCertificateSwiper(certificates) {
 
     certificateSlider.append(prevBtn, nextBtn, swiperWrapper, pagination);
 
-    if (window.innerWidth > 1024) {
-      loadSwiperJS().then(() => {
-        new Swiper(certificateSlider, {
-          spaceBetween: 25,
-          breakpoints: {
-            320: {
-              slidesPerView: 1,
-              spaceBetween: 0,
-            },
-            1024: {
-              slidesPerView: 3,
-              spaceBetween: 25,
-            },
+    loadSwiperJS().then(() => {
+      new Swiper(certificateSlider, {
+        spaceBetween: 16,
+        slidesOffsetAfter: 30,
+        centeredSlides: false,
+        pagination: {
+          el: pagination,
+          clickable: true,
+        },
+        navigation: {
+          nextEl: nextBtn,
+          prevEl: prevBtn,
+        },
+        // Disable swiping on desktop, enable on mobile
+        allowTouchMove: window.innerWidth < 1024,
+        breakpoints: {
+          0: {
+            slidesPerView: 1.1,
+            allowTouchMove: true,
+            centeredSlides: false,
+            slidesOffsetAfter: 30,
           },
-        });
+          1024: {
+            slidesPerView: 1,
+            allowTouchMove: false,
+            centeredSlides: true, // Center the single slide
+            slidesOffsetAfter: 0, // Remove offset for true centering
+          },
+        },
+        on: {
+          touchStart: function () {
+            this.el.style.transition = "none";
+          },
+          touchEnd: function () {
+            this.el.style.transition = "";
+          },
+        },
       });
-    } else if (window.innerWidth < 1024) {
-      loadSwiperJS().then(() => {
-        new Swiper(certificateSlider, {
-          slidesPerView: 1,
-          spaceBetween: 15,
-          slidesOffsetAfter: 20,
-          centeredSlides: true,
-          shortSwipes: true,
-
-          freeMode: false,
-          touchStartPreventDefault: false,
-          preventClicks: false,
-          preventClicksPropagation: false,
-          allowTouchMove: true,
-          simulateTouch: true,
-
-          resistance: true,
-          resistanceRatio: 0.5,
-          breakpoints: {
-            320: {
-              slidesPerView: 1,
-              spaceBetween: 0,
-            },
-            768: {
-              slidesPerView: 2,
-              spaceBetween: 15,
-              allowTouchMove: true,
-            },
-            1024: {
-              slidesPerView: 3,
-              spaceBetween: 25,
-            },
-          },
-
-          on: {
-            touchStart: function () {
-              this.el.style.transition = "none";
-            },
-            touchEnd: function () {
-              this.el.style.transition = "";
-            },
-            // slideChange: function () {
-            //   // Stop all videos when sliding
-            //   const videos = this.el.querySelectorAll("video");
-            //   videos.forEach((video) => {
-            //     video.pause();
-            //   });
-            // },
-          },
-        });
-      });
-    }
+    });
   } else {
     document.getElementById("certificate-swiper").innerHTML = "";
   }
