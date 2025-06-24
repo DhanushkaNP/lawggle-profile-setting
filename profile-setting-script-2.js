@@ -369,9 +369,9 @@ document.addEventListener("DOMContentLoaded", async () => {
       } else {
         url = info.cdnUrl;
       }
-
       if (uploaderId == "uploadfile") {
-        const thumbnail = await getVideoThumbnail(url).thumbnail;
+        const thumbnailResponse = await getVideoThumbnail(url);
+        const thumbnail = thumbnailResponse?.thumbnail;
         lawyerState.profileVideo = {
           url: url,
           thumbnail,
