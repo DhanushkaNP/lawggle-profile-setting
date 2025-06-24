@@ -874,6 +874,28 @@ $(document).ready(async function () {
       .getElementById("editthedescriptioninputcase")
       .value.trim();
 
+    // Add word limit validation for description
+    const wordCount = updatedDescription
+      .trim()
+      .split(/\s+/)
+      .filter(Boolean).length;
+    if (wordCount > 150) {
+      const errorEl = document.getElementById(
+        "casewins-edit-max-word-error-text"
+      );
+      if (errorEl) {
+        errorEl.style.display = "block";
+      }
+      return;
+    } else {
+      const errorEl = document.getElementById(
+        "casewins-edit-max-word-error-text"
+      );
+      if (errorEl) {
+        errorEl.style.display = "none";
+      }
+    }
+
     lawyerState.notableCaseWins[index].title = updatedTitle;
     lawyerState.notableCaseWins[index].description = updatedDescription;
 
