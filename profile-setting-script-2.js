@@ -2634,8 +2634,36 @@ function setUpProfileVideo(profileVideoUrl) {
     profileVideoUrl != ""
   ) {
     const profileVideo = document.getElementById("showcaseprofile");
-    profileVideo.src = profileVideoUrl.url;
-    profileVideo.poster = profileVideoUrl.thumbnail || "";
+
+    // Clear existing src first to force reload
+    profileVideo.src = "";
+    profileVideo.poster = "";
+
+    // Use a small delay to ensure the video element is reset
+    setTimeout(() => {
+      profileVideo.src = profileVideoUrl.url;
+      if (profileVideoUrl.thumbnail) {
+        // Add cache busting parameter to ensure fresh load
+        const posterUrl =
+          profileVideoUrl.thumbnail +
+          (profileVideoUrl.thumbnail.includes("?") ? "&" : "?") +
+          "t=" +
+          Date.now();
+        profileVideo.poster = posterUrl;
+
+        // Preload the poster image to ensure it's available
+        const img = new Image();
+        img.onload = () => {
+          // Force the video element to acknowledge the poster
+          profileVideo.load();
+        };
+        img.src = posterUrl;
+      }
+
+      // Force the video to load metadata which includes the poster
+      profileVideo.load();
+    }, 100);
+
     document.getElementById("uploadfilesprompt").style.display = "none";
     document.getElementById("profileimagecontainer").style.display = "flex";
     document.getElementById("profile-vid-delete").style.display = "block";
