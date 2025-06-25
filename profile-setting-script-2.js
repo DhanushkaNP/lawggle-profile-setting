@@ -2667,7 +2667,12 @@ function setUpProfileVideo(profileVideoUrl) {
     videoContainer.appendChild(newVideo);
 
     document.getElementById("uploadfilesprompt").style.display = "none";
-    document.getElementById("profileimagecontainer").style.display = "flex";
+    const profileImageContainer = document.getElementById(
+      "profileimagecontainer"
+    );
+    if (profileImageContainer) {
+      profileImageContainer.style.display = "none";
+    }
     document.getElementById("profile-vid-delete").style.display = "block";
   } else {
     document.getElementById("uploadfilesprompt").style.display = "flex";
