@@ -1347,7 +1347,7 @@ $(document).ready(async function () {
         const memberId = currentMember?.data?.id; // fallback ID
 
         // Redirect to preview URL with member ID
-        window.location.href = `/profile-view-preview?id=${memberId}`;
+        window.open(`/profile-view-preview?id=${memberId}`, "_blank");
       } catch (error) {
         console.error("Error preparing preview data:", error);
         // Show error message to user
