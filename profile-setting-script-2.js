@@ -1272,6 +1272,89 @@ $(document).ready(async function () {
       await HideModals();
     });
 
+  // Preview button functionality
+  document
+    .getElementById("preview-button")
+    .addEventListener("click", async () => {
+      try {
+        // Collect all current form data (same as save but without validation)
+        const currentData = {
+          "profile image": lawyerState.profileImage,
+          "profile banner": lawyerState.profileBanner,
+          "profile video": lawyerState.profileVideo,
+          "client video testimonials": [...lawyerState.testimonials],
+          "case study walkthroughs": [...lawyerState.caseStudies],
+          certificates: [...lawyerState.certificates],
+
+          pronouns: await readselectnoImage("selectpronouns"),
+          name: document.getElementById("firstlastname").value,
+          "min hourly rate": document.getElementById("minRate").value,
+          "max hourly rate": document.getElementById("maxRate").value,
+          "firm url": document.getElementById("firmurl").value,
+          "area of expertise": await readselectnoImage("expertiseSelect"),
+          AllEducation: [...lawyerState.allEducation],
+          "dynamic bio": document.getElementById("dynamicbio").value.trim(),
+          address: lawyerState.userGeoLocationDetails,
+          "free consultation": lawyerState.offerConsultation,
+          "offer contingency": lawyerState.offerContingency,
+          "community pro bono work": lawyerState.proBonoWork,
+          "social media": [
+            {
+              platform: "Twitter",
+              url: document.getElementById("thexlink").value,
+            },
+            {
+              platform: "Linkedin",
+              url: document.getElementById("thelinkedinlink").value,
+            },
+            {
+              platform: "Facebook",
+              url: document.getElementById("thefacebooklink").value,
+            },
+            {
+              platform: "Instagram",
+              url: document.getElementById("theinstagramlink").value,
+            },
+          ],
+          languages: await readselect("thelanguage"),
+          "interests and hobbies": lawyerState.interestsAndHobbies,
+          "media press mentions": lawyerState.mediaPressMentions,
+          "notable case wins": lawyerState.notableCaseWins,
+          "personal qa": lawyerState.personalQA,
+          "awards recognition":
+            document.getElementById("awardsrecognition").value,
+          "client centric mission": document.getElementById(
+            "clientcentricMission"
+          ).value,
+          // Add timestamp for preview
+          previewTimestamp: new Date().toISOString(),
+        };
+
+        // Save to local storage
+        localStorage.setItem(
+          "lawggle_profile_preview",
+          JSON.stringify(currentData)
+        );
+
+        // Optional: Save user email for context
+        const userEmail = localStorage.getItem("userEmail");
+        if (userEmail) {
+          localStorage.setItem("lawggle_preview_email", userEmail);
+        }
+
+        // Get current Memberstack member ID and redirect to preview URL
+        const currentMember = await window.$memberstackDom.getCurrentMember();
+        const memberId = currentMember?.data?.id; // fallback ID
+
+        // Redirect to preview URL with member ID
+        window.location.href = `/profile-view-preview?id=${memberId}`;
+      } catch (error) {
+        console.error("Error preparing preview data:", error);
+        // Show error message to user
+        alert("Error preparing preview. Please try again.");
+      }
+    });
+
   //Memberstack read
   window.$memberstackDom.getCurrentMember().then(async ({ data: member }) => {
     if (member) {
@@ -2655,6 +2738,7 @@ function setUpProfileVideo(profileVideoUrl) {
     newVideo.controls = true;
     newVideo.playsInline = true;
     newVideo.preload = "metadata";
+    ``;
 
     // Set the video source first
     newVideo.src = profileVideoUrl.url;
