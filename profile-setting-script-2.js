@@ -1153,20 +1153,8 @@ $(document).ready(async function () {
       const maxRate = document.getElementById("maxRate").value;
       const rateErrorEl = document.getElementById("rate-error-text");
 
-      if (!minRate && !maxRate) {
-        rateErrorEl.innerText =
-          "Please enter both minimum and maximum hourly rates.";
-        rateErrorEl.style.display = "block";
-        hasError = true;
-      } else if (!minRate) {
-        rateErrorEl.innerText = "Please enter a minimum hourly rate.";
-        rateErrorEl.style.display = "block";
-        hasError = true;
-      } else if (!maxRate) {
-        rateErrorEl.innerText = "Please enter a maximum hourly rate.";
-        rateErrorEl.style.display = "block";
-        hasError = true;
-      } else if (Number(maxRate) <= Number(minRate)) {
+      // Only validate rates if both are provided
+      if (minRate && maxRate && Number(maxRate) <= Number(minRate)) {
         rateErrorEl.innerText =
           "Maximum rate must be greater than minimum rate.";
         rateErrorEl.style.display = "block";
