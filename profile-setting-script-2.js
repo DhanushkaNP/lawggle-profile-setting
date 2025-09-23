@@ -982,7 +982,7 @@ $(document).ready(async function () {
       }
       if (buttonIdentifier == "mediapress") {
         let theindextodelete = document
-          .getElementById("deleteclientstestimonials")
+          .getElementById("pressdeletecontainer")
           .getAttribute("itemindex");
         lawyerState.mediaPressMentions.splice(theindextodelete, 1);
         document.getElementById("addMediaPress").classList.remove("disabled");
@@ -1040,7 +1040,7 @@ $(document).ready(async function () {
 
       if (buttonIdentifier == "interestsHobbies") {
         let theindextodelete = document
-          .getElementById("deleteclientstestimonials")
+          .getElementById("deleteInterests")
           .getAttribute("itemindex");
         lawyerState.interestsAndHobbies.splice(theindextodelete, 1);
         document.getElementById("Hobbymaincontainer").innerHTML = "";
