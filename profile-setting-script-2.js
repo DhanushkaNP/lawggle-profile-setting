@@ -1376,44 +1376,66 @@ $(document).ready(async function () {
     const style = document.createElement("style");
     style.innerHTML = `
         ${containerSelector} {
-          overflow-x: hidden;
-          width: 100%;
+          overflow-x: hidden !important;
+          width: 100% !important;
         }
     
         ${containerSelector} * {
-          box-sizing: border-box;
+          box-sizing: border-box !important;
         }
     
         ${containerSelector} .select2-container {
-          max-width: 100%;
+          max-width: 100% !important;
           width: 100% !important;
         }
     
         ${containerSelector} .select2-selection {
-          max-width: 100%;
+          max-width: 100% !important;
           width: 100% !important;
+          min-height: auto !important;
+          height: auto !important;
+        }
+    
+        ${containerSelector} .select2-selection--multiple {
+          max-width: 100% !important;
+          width: 100% !important;
+          min-height: auto !important;
+          height: auto !important;
+          overflow: hidden !important;
         }
     
         ${containerSelector} .select2-selection__rendered {
           display: flex !important;
           flex-wrap: wrap !important;
-          align-items: center;
-          gap: 6px;
-          max-width: 100%;
-          overflow: hidden;
+          align-items: flex-start !important;
+          gap: 4px !important;
+          max-width: 100% !important;
+          width: 100% !important;
+          overflow: visible !important;
           white-space: normal !important;
+          padding: 4px !important;
         }
     
         ${containerSelector} .select2-selection__choice {
-          padding-right: 8px !important;
+          padding: 4px 8px !important;
           border-radius: 8px !important;
           margin: 2px !important;
-          flex-shrink: 0;
+          flex-shrink: 0 !important;
+          display: inline-block !important;
+          max-width: calc(100% - 8px) !important;
+          word-break: break-word !important;
         }
     
         ${containerSelector} .select2-search--inline {
-          flex-basis: auto;
-          min-width: 100px;
+          flex-basis: auto !important;
+          min-width: 80px !important;
+          width: auto !important;
+          margin: 2px !important;
+        }
+    
+        ${containerSelector} .select2-search__field {
+          min-width: 80px !important;
+          width: auto !important;
         }
       `;
     document.head.appendChild(style);
