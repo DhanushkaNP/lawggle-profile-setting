@@ -1482,11 +1482,11 @@ $(document).ready(async function () {
         const text = $(this).text();
         const image = $(this).data("image");
 
-        if (elementId == "mySelect") {
-          document.getElementById("expertiseSelect").innerHTML = "";
-          await addExperties(["Business & Corporate Law"]);
-          await configureSelect("expertiseSelect", "#expertiseContain");
-        }
+        // if (elementId == "mySelect") {
+        //   document.getElementById("expertiseSelect").innerHTML = "";
+        //   await addExperties(["Business & Corporate Law"]);
+        //   await configureSelect("expertiseSelect", "#expertiseContain");
+        // }
 
         console.log("Selected: ", {
           value,
