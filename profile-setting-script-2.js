@@ -1374,48 +1374,48 @@ $(document).ready(async function () {
   async function configureSelect(theid, containerId, theselected) {
     const containerSelector = `${containerId}`;
     const style = document.createElement("style");
-    // style.innerHTML = `
-    //     ${containerSelector} {
-    //       overflow-x: hidden;
-    //       width: 100%;
-    //     }
-
-    //     ${containerSelector} * {
-    //       box-sizing: border-box;
-    //     }
-
-    //     ${containerSelector} .select2-container {
-    //       max-width: 100%;
-    //       width: 100% !important;
-    //     }
-
-    //     ${containerSelector} .select2-selection {
-    //       max-width: 100%;
-    //       width: 100% !important;
-    //     }
-
-    //     ${containerSelector} .select2-selection__rendered {
-    //       display: flex !important;
-    //       flex-wrap: wrap !important;
-    //       align-items: center;
-    //       gap: 6px;
-    //       max-width: 100%;
-    //       overflow: hidden;
-    //       white-space: normal !important;
-    //     }
-
-    //     ${containerSelector} .select2-selection__choice {
-    //       padding-right: 8px !important;
-    //       border-radius: 8px !important;
-    //       margin: 2px !important;
-    //       flex-shrink: 0;
-    //     }
-
-    //     ${containerSelector} .select2-search--inline {
-    //       flex-basis: auto;
-    //       min-width: 100px;
-    //     }
-    //   `;
+    style.innerHTML = `
+        ${containerSelector} {
+          overflow-x: hidden;
+          width: 100%;
+        }
+    
+        ${containerSelector} * {
+          box-sizing: border-box;
+        }
+    
+        ${containerSelector} .select2-container {
+          max-width: 100%;
+          width: 100% !important;
+        }
+    
+        ${containerSelector} .select2-selection {
+          max-width: 100%;
+          width: 100% !important;
+        }
+    
+        ${containerSelector} .select2-selection__rendered {
+          display: flex !important;
+          flex-wrap: wrap !important;
+          align-items: center;
+          gap: 6px;
+          max-width: 100%;
+          overflow: hidden;
+          white-space: normal !important;
+        }
+    
+        ${containerSelector} .select2-selection__choice {
+          padding-right: 8px !important;
+          border-radius: 8px !important;
+          margin: 2px !important;
+          flex-shrink: 0;
+        }
+    
+        ${containerSelector} .select2-search--inline {
+          flex-basis: auto;
+          min-width: 100px;
+        }
+      `;
     document.head.appendChild(style);
 
     let elementId = theid;
