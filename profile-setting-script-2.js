@@ -1422,12 +1422,12 @@ $(document).ready(async function () {
     if (theid === "expertiseSelect") {
       const expertiseStyle = document.createElement("style");
       expertiseStyle.innerHTML = `
-        #expertiseContain .select2-selection--multiple {
+        #thesubselectcontain .select2-selection--multiple {
           height: auto !important;
           min-height: 38px !important;
         }
         
-        #expertiseContain .select2-selection__rendered {
+        #thesubselectcontain .select2-selection__rendered {
           display: flex !important;
           flex-wrap: wrap !important;
           align-items: flex-start !important;
@@ -1436,7 +1436,7 @@ $(document).ready(async function () {
           padding: 4px !important;
         }
         
-        #expertiseContain .select2-selection__choice {
+        #thesubselectcontain .select2-selection__choice {
           margin: 2px !important;
           padding: 4px 8px !important;
           max-width: calc(100% - 4px) !important;
@@ -1444,7 +1444,7 @@ $(document).ready(async function () {
           flex-shrink: 1 !important;
         }
         
-        #expertiseContain .select2-search--inline {
+        #thesubselectcontain .select2-search--inline {
           margin: 2px !important;
           min-width: 80px !important;
         }
@@ -1482,11 +1482,11 @@ $(document).ready(async function () {
         const text = $(this).text();
         const image = $(this).data("image");
 
-        // if (elementId == "mySelect") {
-        //   document.getElementById("expertiseSelect").innerHTML = "";
-        //   await addExperties(["Business & Corporate Law"]);
-        //   await configureSelect("expertiseSelect", "#expertiseContain");
-        // }
+        if (elementId == "mySelect") {
+          document.getElementById("expertiseSelect").innerHTML = "";
+          await addExperties(["Business & Corporate Law"]);
+          await configureSelect("expertiseSelect", "#expertiseContain");
+        }
 
         console.log("Selected: ", {
           value,
