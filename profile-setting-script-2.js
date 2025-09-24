@@ -1418,6 +1418,40 @@ $(document).ready(async function () {
       `;
     document.head.appendChild(style);
 
+    // Add specific CSS for expertiseSelect to fix wrapping
+    if (theid === "expertiseSelect") {
+      const expertiseStyle = document.createElement("style");
+      expertiseStyle.innerHTML = `
+        #expertiseContain .select2-selection--multiple {
+          height: auto !important;
+          min-height: 38px !important;
+        }
+        
+        #expertiseContain .select2-selection__rendered {
+          display: flex !important;
+          flex-wrap: wrap !important;
+          align-items: flex-start !important;
+          max-width: 100% !important;
+          width: 100% !important;
+          padding: 4px !important;
+        }
+        
+        #expertiseContain .select2-selection__choice {
+          margin: 2px !important;
+          padding: 4px 8px !important;
+          max-width: calc(100% - 4px) !important;
+          word-wrap: break-word !important;
+          flex-shrink: 1 !important;
+        }
+        
+        #expertiseContain .select2-search--inline {
+          margin: 2px !important;
+          min-width: 80px !important;
+        }
+      `;
+      document.head.appendChild(expertiseStyle);
+    }
+
     let elementId = theid;
     $(`#${elementId}`).select2({
       templateResult: formatOption,
